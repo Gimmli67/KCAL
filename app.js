@@ -865,6 +865,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('editor-search').addEventListener('keydown', e => { if (e.key === 'Enter') populateEditorFoodDropdown($('editor-search').value); });
     $('editor-show-all').addEventListener('click', () => { $('editor-search').value = ''; populateEditorFoodDropdown(); });
     $('editor-food-select').addEventListener('change', editorLoad);
+    $('editor-food-select').addEventListener('click', editorLoad);
     $('editor-delete').addEventListener('click', editorDelete);
     $('editor-save').addEventListener('click', editorSave);
     $('editor-clear').addEventListener('click', editorClear);

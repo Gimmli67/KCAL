@@ -228,7 +228,7 @@ button:active {
   grid-template-columns: 1fr 70px 70px;
   gap: 6px;
   font-size: 11px;
-  color: var(--overlay);
+  color: var(--text);
   margin-bottom: 4px;
   padding: 0 2px;
 }
