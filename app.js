@@ -32,6 +32,34 @@ function loadAll() {
     try { templates = JSON.parse(localStorage.getItem('kcal_templates')) || []; } catch { templates = []; }
 }
 
+async function loadInitialData() {
+    let changed = false;
+    if (db.length === 0) {
+        try {
+            const res = await fetch('kcal_datenbank.json');
+            if (res.ok) { db = await res.json(); if (!Array.isArray(db)) db = [db]; saveDB(); changed = true; }
+        } catch {}
+    }
+    if (meals.length === 0) {
+        try {
+            const res = await fetch('kcal_mahlzeiten.json');
+            if (res.ok) { meals = await res.json(); if (!Array.isArray(meals)) meals = [meals]; saveMeals(); changed = true; }
+        } catch {}
+    }
+    if (templates.length === 0) {
+        try {
+            const res = await fetch('kcal_vorlagen.json');
+            if (res.ok) { templates = await res.json(); if (!Array.isArray(templates)) templates = [templates]; saveTemplates(); changed = true; }
+        } catch {}
+    }
+    if (changed) {
+        populateMenuFoodDropdown();
+        populateEditorFoodDropdown();
+        populateTemplateDropdown();
+        refreshHistory();
+    }
+}
+
 function saveDB() { localStorage.setItem('kcal_db', JSON.stringify(db)); }
 function saveMeals() { localStorage.setItem('kcal_meals', JSON.stringify(meals)); }
 function saveTemplates() { localStorage.setItem('kcal_templates', JSON.stringify(templates)); }
@@ -670,6 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
     populateEditorFoodDropdown();
     populateTemplateDropdown();
     refreshHistory();
+    loadInitialData();
 
     // --- Tab Navigation ---
     document.querySelectorAll('.nav-btn').forEach(btn => {
