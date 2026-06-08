@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KCAL-Rechner</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>KCAL- &amp; NAEHRSTOFFRECHNER</h1>
+  </header>
+
+  <main>
+    <!-- ===== TAB: MENUE ===== -->
+    <section id="tab-menu" class="tab-content active">
+      <div class="group">
+        <div class="group-header">Barcode Scanner</div>
+        <div class="row">
+          <input type="text" id="menu-barcode" placeholder="Barcode eingeben..." inputmode="numeric">
+          <button class="btn-green" id="menu-barcode-search">Suchen</button>
+          <button id="menu-barcode-cam">Kamera</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-header">Menue zusammenstellen</div>
+        <div class="field">
+          <label>Mahlzeit:</label>
+          <select id="menu-meal-type">
+            <option>Fruehstueck</option>
+            <option selected>Mittagessen</option>
+            <option>Abendessen</option>
+            <option>Snack</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Lebensmittel:</label>
+          <select id="menu-food-select"></select>
+        </div>
+        <div class="row">
+          <input type="text" id="menu-amount" placeholder="Menge (g/ml)" inputmode="decimal">
+          <button class="btn-green" id="menu-add">Hinzufuegen</button>
+          <button class="btn-red" id="menu-remove">Entfernen</button>
+        </div>
+        <div id="menu-list" class="list-box"></div>
+
+        <div class="group-header" style="margin-top:12px">Vorlagen</div>
+        <div class="row">
+          <select id="menu-template-select"></select>
+        </div>
+        <div class="row">
+          <button class="btn-green" id="menu-template-load">Laden</button>
+          <button class="btn-red" id="menu-template-delete">Entfernen</button>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="menu-calculate">Berechnen</button>
+        <button class="btn-green" id="menu-save">Speichern</button>
+        <button id="menu-as-template">Als Vorlage</button>
+        <button id="menu-clear">Leeren</button>
+      </div>
+
+      <div id="menu-status" class="status"></div>
+    </section>
+
+    <!-- ===== TAB: EDITOR ===== -->
+    <section id="tab-editor" class="tab-content">
+      <div class="group">
+        <div class="group-header">Scanner</div>
+        <div class="row">
+          <input type="text" id="editor-barcode" placeholder="Barcode eingeben..." inputmode="numeric">
+          <button class="btn-green" id="editor-barcode-search">Suchen</button>
+          <button id="editor-barcode-cam">Kamera</button>
+        </div>
+        <button class="btn-green full-width" id="editor-label-scan" style="margin-top:8px">
+          Naehrwerttabelle aus Foto scannen
+        </button>
+      </div>
+
+      <div class="group">
+        <div class="group-header">Gespeicherte Lebensmittel</div>
+        <div class="row">
+          <input type="text" id="editor-search" placeholder="Suchbegriff...">
+          <button id="editor-search-btn">Suchen</button>
+          <button id="editor-show-all">Alle</button>
+        </div>
+        <div class="row">
+          <select id="editor-food-select"></select>
+        </div>
+        <div class="row">
+          <button class="btn-green" id="editor-load">Laden</button>
+          <button class="btn-red" id="editor-delete">Entfernen</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="group-header">Naehrwerte pro 100 Einheiten</div>
+        <div class="field">
+          <label>Lebensmittel:</label>
+          <input type="text" id="ed-name">
+        </div>
+        <div class="field">
+          <label>Einheit:</label>
+          <select id="ed-unit">
+            <option value="ml">ml</option>
+            <option value="g" selected>g</option>
+          </select>
+        </div>
+
+        <div class="nutrient-grid">
+          <div class="nutrient-header">
+            <span></span><span>pro 100</span><span id="ed-calc-header"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Kalorien (kcal)</label>
+            <input type="text" id="ed-kcal" inputmode="decimal">
+            <span class="calc" id="ed-kcal-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Fett (g)</label>
+            <input type="text" id="ed-fett" inputmode="decimal">
+            <span class="calc" id="ed-fett-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>dav. gesaettigt</label>
+            <input type="text" id="ed-gesaettigt" inputmode="decimal">
+            <span class="calc" id="ed-gesaettigt-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Kohlenhydrate (g)</label>
+            <input type="text" id="ed-kh" inputmode="decimal">
+            <span class="calc" id="ed-kh-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>dav. Zucker (g)</label>
+            <input type="text" id="ed-zucker" inputmode="decimal">
+            <span class="calc" id="ed-zucker-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Eiweiss (g)</label>
+            <input type="text" id="ed-eiweiss" inputmode="decimal">
+            <span class="calc" id="ed-eiweiss-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Salz (g)</label>
+            <input type="text" id="ed-salz" inputmode="decimal">
+            <span class="calc" id="ed-salz-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Ballaststoffe (g)</label>
+            <input type="text" id="ed-ballaststoffe" inputmode="decimal">
+            <span class="calc" id="ed-ballaststoffe-calc"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Tatsaechliche Menge:</label>
+          <input type="text" id="ed-amount" inputmode="decimal" placeholder="z.B. 150">
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button class="btn-green" id="editor-save">Speichern</button>
+        <button id="editor-clear">Felder leeren</button>
+      </div>
+
+      <div id="editor-status" class="status"></div>
+    </section>
+
+    <!-- ===== TAB: VERLAUF ===== -->
+    <section id="tab-history" class="tab-content">
+      <div id="history-content" class="history-view"></div>
+      <button id="history-refresh" style="margin-top:12px;width:100%">Aktualisieren</button>
+    </section>
+
+    <!-- ===== TAB: DATEN ===== -->
+    <section id="tab-data" class="tab-content">
+      <div class="group">
+        <div class="group-header">Daten Import / Export</div>
+        <p class="info-text">
+          Importiere deine bestehenden JSON-Dateien vom Desktop-Script
+          oder exportiere die aktuellen Daten als Backup.
+        </p>
+
+        <div class="field">
+          <label>Lebensmittel-Datenbank:</label>
+          <div class="row">
+            <button id="import-db">Importieren</button>
+            <button id="export-db">Exportieren</button>
+          </div>
+          <input type="file" id="import-db-file" accept=".json" style="display:none">
+        </div>
+
+        <div class="field">
+          <label>Mahlzeiten-Verlauf:</label>
+          <div class="row">
+            <button id="import-meals">Importieren</button>
+            <button id="export-meals">Exportieren</button>
+          </div>
+          <input type="file" id="import-meals-file" accept=".json" style="display:none">
+        </div>
+
+        <div class="field">
+          <label>Vorlagen:</label>
+          <div class="row">
+            <button id="import-templates">Importieren</button>
+            <button id="export-templates">Exportieren</button>
+          </div>
+          <input type="file" id="import-templates-file" accept=".json" style="display:none">
+        </div>
+      </div>
+
+      <div id="data-status" class="status"></div>
+    </section>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav id="bottom-nav">
+    <button class="nav-btn active" data-tab="menu">Menue</button>
+    <button class="nav-btn" data-tab="editor">Editor</button>
+    <button class="nav-btn" data-tab="history">Verlauf</button>
+    <button class="nav-btn" data-tab="data">Daten</button>
+  </nav>
+
+  <!-- Scanner Modal -->
+  <div id="scanner-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Barcode Scanner</span>
+        <button id="scanner-close" class="btn-red">Schliessen</button>
+      </div>
+      <div id="scanner-reader"></div>
+    </div>
+  </div>
+
+  <!-- Result Modal -->
+  <div id="result-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span id="result-title">Ergebnis</span>
+        <button id="result-close" class="btn-red">Schliessen</button>
+      </div>
+      <pre id="result-text"></pre>
+    </div>
+  </div>
+
+  <!-- OCR Progress Modal -->
+  <div id="ocr-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header"><span>Etikett wird gescannt...</span></div>
+      <div id="ocr-progress"><div id="ocr-progress-bar"></div></div>
+      <div id="ocr-status-text">Initialisiere OCR...</div>
+    </div>
+  </div>
+
+  <!-- Hidden file input for label scanning -->
+  <input type="file" id="label-file-input" accept="image/*" capture="environment" style="display:none">
+
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
