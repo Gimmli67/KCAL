@@ -330,26 +330,26 @@ function editorLoad() {
 }
 
 function updateEditorCalc() {
-    if (!editorLoadedFood) return;
     const amount = parseNum($('ed-amount').value);
-    if (!amount || amount <= 0) { $('editor-food-calculated').innerHTML = ''; return; }
-    const f = amount / 100;
-    const food = editorLoadedFood;
-    const rows = [
-        ['Kalorien', `${(food.Kcal * f).toFixed(1)} kcal`],
-        ['Fett', `${(food.Fett * f).toFixed(1)} g`],
-        ['dav. gesaettigt', `${(food.Gesaettigt * f).toFixed(1)} g`],
-        ['Kohlenhydrate', `${(food.Kohlenhydrate * f).toFixed(1)} g`],
-        ['dav. Zucker', `${(food.Zucker * f).toFixed(1)} g`],
-        ['Eiweiss', `${(food.Eiweiss * f).toFixed(1)} g`],
-        ['Salz', `${(food.Salz * f).toFixed(1)} g`],
-        ['Ballaststoffe', `${(food.Ballaststoffe * f).toFixed(1)} g`]
+    const fields = [
+        ['ed-kcal', 'ed-kcal-calc'], ['ed-fett', 'ed-fett-calc'],
+        ['ed-gesaettigt', 'ed-gesaettigt-calc'], ['ed-kh', 'ed-kh-calc'],
+        ['ed-zucker', 'ed-zucker-calc'], ['ed-eiweiss', 'ed-eiweiss-calc'],
+        ['ed-salz', 'ed-salz-calc'], ['ed-ballaststoffe', 'ed-ballaststoffe-calc']
     ];
-    $('editor-food-calculated').innerHTML =
-        `<div class="group-header" style="margin-top:8px">Naehrwerte fuer ${Math.round(amount)}${food.Einheit}</div>` +
-        rows.map(([label, val]) =>
-            `<div class="pn-row"><span class="pn-label">${label}</span><span class="pn-value">${val}</span></div>`
-        ).join('');
+    const header = $('ed-calc-header');
+    if (!amount || amount <= 0) {
+        if (header) header.textContent = '';
+        fields.forEach(([, c]) => { if ($(c)) $(c).textContent = ''; });
+        return;
+    }
+    const unit = editorLoadedFood ? editorLoadedFood.Einheit : 'g';
+    if (header) header.textContent = `pro ${Math.round(amount)}${unit}`;
+    const f = amount / 100;
+    fields.forEach(([inputId, calcId]) => {
+        const v = parseNum($(inputId).value);
+        if ($(calcId)) $(calcId).textContent = v !== null ? (v * f).toFixed(1) : '';
+    });
 }
 
 // ===== Editor: Loeschen =====
