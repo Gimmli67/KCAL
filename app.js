@@ -172,6 +172,7 @@ function showFoodDisplay(food) {
 // ===== Menu List =====
 function refreshMenuList() {
     const box = $('menu-list');
+    if (!box) return;
     box.innerHTML = '';
     menuList.forEach((item, i) => {
         const div = document.createElement('div');
@@ -753,6 +754,7 @@ function importData(file, callback) {
 
 // ===== Initialisierung =====
 document.addEventListener('DOMContentLoaded', () => {
+  try {
     loadAll();
     populateMenuFoodDropdown();
     populateEditorFoodDropdown();
@@ -809,44 +811,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Menue: Aktionen (deaktiviert - kommt spaeter) ---
-
-    // --- Editor: Barcode ---
-    $('editor-barcode-search').addEventListener('click', editorBarcodeSearch);
-    $('editor-barcode').addEventListener('keydown', e => { if (e.key === 'Enter') editorBarcodeSearch(); });
-    $('editor-barcode-cam').addEventListener('click', () => {
-        startBarcodeScanner(code => {
-            $('editor-barcode').value = code;
-            $('editor-status').textContent = `Barcode erkannt: ${code}`;
-            editorBarcodeSearch();
-        });
-    });
-
-    // --- Editor: Etikett scannen ---
-    $('editor-label-scan').addEventListener('click', () => $('label-file-input').click());
-    $('label-file-input').addEventListener('change', async e => {
-        const file = e.target.files[0];
-        if (!file) return;
-        e.target.value = '';
-
-        const result = await scanLabel(file);
-        if (!result) return;
-
-        const v = result.values;
-        if (v.Kcal !== undefined) $('ed-kcal').value = v.Kcal;
-        if (v.Fett !== undefined) $('ed-fett').value = v.Fett;
-        if (v.Gesaettigt !== undefined) $('ed-gesaettigt').value = v.Gesaettigt;
-        if (v.Kohlenhydrate !== undefined) $('ed-kh').value = v.Kohlenhydrate;
-        if (v.Zucker !== undefined) $('ed-zucker').value = v.Zucker;
-        if (v.Eiweiss !== undefined) $('ed-eiweiss').value = v.Eiweiss;
-        if (v.Salz !== undefined) $('ed-salz').value = v.Salz;
-        if (v.Ballaststoffe !== undefined) $('ed-ballaststoffe').value = v.Ballaststoffe;
-        $('ed-unit').value = 'g';
-        updateCalcFields();
-
-        const count = Object.keys(v).length;
-        $('editor-status').textContent = `Etikett gescannt: ${count} von 8 Werten erkannt. Bitte pruefen!`;
-        showResultModal('OCR-Ergebnis (zur Kontrolle)', result.text);
-    });
 
     // --- Editor: Aktionen ---
     $('editor-search-btn').addEventListener('click', () => populateEditorFoodDropdown($('editor-search').value));
@@ -925,4 +889,8 @@ document.addEventListener('DOMContentLoaded', () => {
             $('data-status').textContent = `Neu geladen: ${db.length} LM, ${meals.length} Mahlzeiten, ${templates.length} Vorlagen.`;
         });
     });
+
+  } catch (e) {
+    console.error('Init error:', e);
+  }
 });
