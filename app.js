@@ -137,18 +137,34 @@ function autoSaveFood(food) {
     if (!food.Lebensmittel) return 'none';
     const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
     if (exists >= 0) {
-        // Bereits vorhanden - nur im Dropdown auswaehlen, nicht ueberschreiben
-        populateMenuFoodDropdown();
-        $('menu-food-select').value = exists;
+        showFoodDisplay(db[exists]);
         return 'exists';
     }
     db.push(food);
     saveDB();
-    populateMenuFoodDropdown();
     populateEditorFoodDropdown();
-    const idx = db.length - 1;
-    $('menu-food-select').value = idx;
+    showFoodDisplay(food);
     return 'new';
+}
+
+// ===== Naehrwerte anzeigen =====
+function showFoodDisplay(food) {
+    $('food-display').classList.remove('hidden');
+    $('food-display-name').textContent = food.Lebensmittel;
+
+    const rows = [
+        ['Kalorien', `${food.Kcal} kcal`],
+        ['Fett', `${food.Fett} g`],
+        ['dav. gesaettigt', `${food.Gesaettigt} g`],
+        ['Kohlenhydrate', `${food.Kohlenhydrate} g`],
+        ['dav. Zucker', `${food.Zucker} g`],
+        ['Eiweiss', `${food.Eiweiss} g`],
+        ['Salz', `${food.Salz} g`],
+        ['Ballaststoffe', `${food.Ballaststoffe} g`]
+    ];
+    $('food-display-nutrients').innerHTML = rows.map(([label, val]) =>
+        `<div class="pn-row"><span class="pn-label">${label}</span><span class="pn-value">${val}</span></div>`
+    ).join('');
 }
 
 // ===== Menu List =====
@@ -790,15 +806,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Menue: Aktionen ---
-    $('menu-add').addEventListener('click', menuAdd);
-    $('menu-remove').addEventListener('click', menuRemove);
-    $('menu-clear').addEventListener('click', menuClear);
-    $('menu-calculate').addEventListener('click', menuCalculate);
-    $('menu-save').addEventListener('click', menuSave);
-    $('menu-as-template').addEventListener('click', menuSaveAsTemplate);
-    $('menu-template-load').addEventListener('click', menuLoadTemplate);
-    $('menu-template-delete').addEventListener('click', menuDeleteTemplate);
+    // --- Menue: Aktionen (deaktiviert - kommt spaeter) ---
 
     // --- Editor: Barcode ---
     $('editor-barcode-search').addEventListener('click', editorBarcodeSearch);

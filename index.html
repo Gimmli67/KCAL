@@ -13,7 +13,7 @@
   </header>
 
   <main>
-    <!-- ===== TAB: MENUE ===== -->
+    <!-- ===== TAB: FOOD SCAN ===== -->
     <section id="tab-menu" class="tab-content active">
 
       <!-- Scan my Food -->
@@ -29,34 +29,10 @@
         </button>
       </div>
 
-      <!-- Lebensmittel -->
-      <div class="group">
-        <div class="group-header">Lebensmittel</div>
-        <div class="field">
-          <select id="menu-food-select"></select>
-        </div>
-        <div class="row">
-          <input type="text" id="menu-amount" placeholder="Menge (g/ml)" inputmode="decimal">
-          <button class="btn-green" id="menu-add">Add</button>
-          <button class="btn-red" id="menu-remove">Remove</button>
-        </div>
-        <div id="menu-list" class="list-box"></div>
-
-        <div class="group-header" style="margin-top:12px">Vorlagen</div>
-        <div class="row">
-          <select id="menu-template-select"></select>
-        </div>
-        <div class="row">
-          <button class="btn-green" id="menu-template-load">Laden</button>
-          <button class="btn-red" id="menu-template-delete">Entfernen</button>
-        </div>
-      </div>
-
-      <div class="button-row">
-        <button id="menu-calculate">Berechnen</button>
-        <button class="btn-green" id="menu-save">Speichern</button>
-        <button id="menu-as-template">Als Vorlage</button>
-        <button id="menu-clear">Leeren</button>
+      <!-- Naehrwerte Anzeige (nach Scan) -->
+      <div id="food-display" class="group hidden">
+        <div id="food-display-name" class="product-name"></div>
+        <div id="food-display-nutrients"></div>
       </div>
 
       <div id="menu-status" class="status"></div>
@@ -220,7 +196,7 @@
 
   <!-- Bottom Navigation -->
   <nav id="bottom-nav">
-    <button class="nav-btn active" data-tab="menu">Menue</button>
+    <button class="nav-btn active" data-tab="menu">Food Scan</button>
     <button class="nav-btn" data-tab="editor">Editor</button>
     <button class="nav-btn" data-tab="history">Verlauf</button>
     <button class="nav-btn" data-tab="data">Daten</button>
