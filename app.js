@@ -114,20 +114,21 @@ function populateTemplateDropdown() {
 
 // ===== Auto-Save nach Scan =====
 function autoSaveFood(food) {
-    if (!food.Lebensmittel) return;
+    if (!food.Lebensmittel) return 'none';
     const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
     if (exists >= 0) {
-        db[exists] = food;
-    } else {
-        db.push(food);
+        // Bereits vorhanden - nur im Dropdown auswaehlen, nicht ueberschreiben
+        populateMenuFoodDropdown();
+        $('menu-food-select').value = exists;
+        return 'exists';
     }
+    db.push(food);
     saveDB();
     populateMenuFoodDropdown();
     populateEditorFoodDropdown();
-
-    // Im Dropdown auswaehlen
-    const idx = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
-    if (idx >= 0) $('menu-food-select').value = idx;
+    const idx = db.length - 1;
+    $('menu-food-select').value = idx;
+    return 'new';
 }
 
 // ===== Menu List =====
@@ -178,9 +179,13 @@ async function menuBarcodeSearch() {
         const food = await lookupBarcode(barcode);
         if (!food) { $('menu-status').textContent = `Produkt nicht gefunden: ${barcode}`; return; }
 
-        autoSaveFood(food);
+        const result = autoSaveFood(food);
         $('menu-barcode').value = '';
-        $('menu-status').textContent = `'${food.Lebensmittel}' gespeichert und ausgewaehlt. (${food.Kcal} kcal/100${food.Einheit})`;
+        if (result === 'exists') {
+            $('menu-status').textContent = `'${food.Lebensmittel}' bereits vorhanden - ausgewaehlt. (${food.Kcal} kcal/100${food.Einheit})`;
+        } else {
+            $('menu-status').textContent = `'${food.Lebensmittel}' neu gespeichert. (${food.Kcal} kcal/100${food.Einheit})`;
+        }
     } catch (e) {
         $('menu-status').textContent = `Fehler: ${e.message}`;
     }
@@ -757,8 +762,12 @@ document.addEventListener('DOMContentLoaded', () => {
             Eiweiss: v.Eiweiss ?? 0, Salz: v.Salz ?? 0, Ballaststoffe: v.Ballaststoffe ?? 0
         };
 
-        autoSaveFood(food);
-        $('menu-status').textContent = `'${name.trim()}' gespeichert und ausgewaehlt. (${food.Kcal} kcal/100g)`;
+        const result = autoSaveFood(food);
+        if (result === 'exists') {
+            $('menu-status').textContent = `'${name.trim()}' bereits vorhanden - ausgewaehlt. (${food.Kcal} kcal/100g)`;
+        } else {
+            $('menu-status').textContent = `'${name.trim()}' neu gespeichert. (${food.Kcal} kcal/100g)`;
+        }
     });
 
     // --- Menue: Aktionen ---
