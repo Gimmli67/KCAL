@@ -34,29 +34,49 @@ function loadAll() {
 
 async function loadInitialData() {
     let changed = false;
+
     if (db.length === 0) {
         try {
-            const res = await fetch('kcal_datenbank.json');
-            if (res.ok) { db = await res.json(); if (!Array.isArray(db)) db = [db]; saveDB(); changed = true; }
-        } catch {}
+            const res = await fetch('kcal_datenbank.json?' + Date.now());
+            if (res.ok) {
+                const data = await res.json();
+                db = Array.isArray(data) ? data : [data];
+                saveDB();
+                changed = true;
+            }
+        } catch (e) { console.log('DB fetch error:', e); }
     }
+
     if (meals.length === 0) {
         try {
-            const res = await fetch('kcal_mahlzeiten.json');
-            if (res.ok) { meals = await res.json(); if (!Array.isArray(meals)) meals = [meals]; saveMeals(); changed = true; }
-        } catch {}
+            const res = await fetch('kcal_mahlzeiten.json?' + Date.now());
+            if (res.ok) {
+                const data = await res.json();
+                meals = Array.isArray(data) ? data : [data];
+                saveMeals();
+                changed = true;
+            }
+        } catch (e) { console.log('Meals fetch error:', e); }
     }
+
     if (templates.length === 0) {
         try {
-            const res = await fetch('kcal_vorlagen.json');
-            if (res.ok) { templates = await res.json(); if (!Array.isArray(templates)) templates = [templates]; saveTemplates(); changed = true; }
-        } catch {}
+            const res = await fetch('kcal_vorlagen.json?' + Date.now());
+            if (res.ok) {
+                const data = await res.json();
+                templates = Array.isArray(data) ? data : [data];
+                saveTemplates();
+                changed = true;
+            }
+        } catch (e) { console.log('Templates fetch error:', e); }
     }
+
     if (changed) {
         populateMenuFoodDropdown();
         populateEditorFoodDropdown();
         populateTemplateDropdown();
         refreshHistory();
+        console.log('Daten geladen:', db.length, 'LM,', meals.length, 'Mahlzeiten,', templates.length, 'Vorlagen');
     }
 }
 
@@ -882,5 +902,17 @@ document.addEventListener('DOMContentLoaded', () => {
     $('export-templates').addEventListener('click', () => {
         exportData(templates, 'kcal_vorlagen.json');
         $('data-status').textContent = 'Vorlagen exportiert.';
+    });
+
+    // --- Reset: Daten neu laden ---
+    $('reset-reload').addEventListener('click', () => {
+        if (!confirm('Lokale Daten loeschen und vom Server neu laden?')) return;
+        localStorage.removeItem('kcal_db');
+        localStorage.removeItem('kcal_meals');
+        localStorage.removeItem('kcal_templates');
+        db = []; meals = []; templates = [];
+        loadInitialData().then(() => {
+            $('data-status').textContent = `Neu geladen: ${db.length} LM, ${meals.length} Mahlzeiten, ${templates.length} Vorlagen.`;
+        });
     });
 });
