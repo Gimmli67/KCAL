@@ -782,8 +782,8 @@ document.addEventListener('DOMContentLoaded', () => {
             Eiweiss: v.Eiweiss ?? 0, Salz: v.Salz ?? 0, Ballaststoffe: v.Ballaststoffe ?? 0
         };
 
-        const result = autoSaveFood(food);
-        if (result === 'exists') {
+        const saveResult = autoSaveFood(food);
+        if (saveResult === 'exists') {
             $('menu-status').textContent = `'${name.trim()}' bereits vorhanden - ausgewaehlt. (${food.Kcal} kcal/100g)`;
         } else {
             $('menu-status').textContent = `'${name.trim()}' neu gespeichert. (${food.Kcal} kcal/100g)`;
