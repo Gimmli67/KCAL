@@ -314,22 +314,16 @@ function editorLoad() {
     if (!food) return;
     editorLoadedFood = food;
 
-    // Naehrwerte-Anzeige
-    $('editor-food-display').classList.remove('hidden');
-    $('editor-food-name').textContent = food.Lebensmittel;
-    const rows = [
-        ['Kalorien', `${food.Kcal} kcal`],
-        ['Fett', `${food.Fett} g`],
-        ['dav. gesaettigt', `${food.Gesaettigt} g`],
-        ['Kohlenhydrate', `${food.Kohlenhydrate} g`],
-        ['dav. Zucker', `${food.Zucker} g`],
-        ['Eiweiss', `${food.Eiweiss} g`],
-        ['Salz', `${food.Salz} g`],
-        ['Ballaststoffe', `${food.Ballaststoffe} g`]
-    ];
-    $('editor-food-nutrients').innerHTML = rows.map(([label, val]) =>
-        `<div class="pn-row"><span class="pn-label">${label}</span><span class="pn-value">${val}</span></div>`
-    ).join('');
+    // Felder befuellen
+    $('ed-name').value = food.Lebensmittel || '';
+    $('ed-kcal').value = food.Kcal ?? '';
+    $('ed-fett').value = food.Fett ?? '';
+    $('ed-gesaettigt').value = food.Gesaettigt ?? '';
+    $('ed-kh').value = food.Kohlenhydrate ?? '';
+    $('ed-zucker').value = food.Zucker ?? '';
+    $('ed-eiweiss').value = food.Eiweiss ?? '';
+    $('ed-salz').value = food.Salz ?? '';
+    $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
     $('ed-amount').value = '';
     $('editor-food-calculated').innerHTML = '';
     $('editor-status').textContent = `'${food.Lebensmittel}' geladen.`;
