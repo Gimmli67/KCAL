@@ -344,7 +344,7 @@ function updateEditorCalc() {
         return;
     }
     const unit = editorLoadedFood ? editorLoadedFood.Einheit : 'g';
-    if (header) header.textContent = `pro ${Math.round(amount)}${unit}`;
+    if (header) header.innerHTML = `<span style="color:#a6e3a1;font-weight:700">Effectiv</span>`;
     const f = amount / 100;
     fields.forEach(([inputId, calcId]) => {
         const v = parseNum($(inputId).value);
