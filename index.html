@@ -41,7 +41,7 @@
     <!-- ===== TAB: EDITOR ===== -->
     <section id="tab-editor" class="tab-content">
       <div class="group">
-        <div class="group-header">Gespeicherte Lebensmittel</div>
+        <div class="group-header">Stored Food</div>
         <div class="row">
           <input type="text" id="editor-search" placeholder="Suchbegriff...">
           <button id="editor-search-btn">Suchen</button>
@@ -56,69 +56,60 @@
         </div>
       </div>
 
+      <!-- Naehrwerte Anzeige (nach Laden) -->
+      <div id="editor-food-display" class="group hidden">
+        <div id="editor-food-name" class="product-name"></div>
+        <div id="editor-food-nutrients"></div>
+        <div class="field" style="margin-top:10px">
+          <label>Tatsaechliche Menge:</label>
+          <input type="text" id="ed-amount" inputmode="decimal" placeholder="z.B. 150">
+        </div>
+        <div id="editor-food-calculated"></div>
+      </div>
+
       <div class="group">
         <div class="group-header">Naehrwerte pro 100 Einheiten</div>
         <div class="field">
           <label>Lebensmittel:</label>
           <input type="text" id="ed-name">
         </div>
-        <div class="field">
-          <label>Einheit:</label>
-          <select id="ed-unit">
-            <option value="ml">ml</option>
-            <option value="g" selected>g</option>
-          </select>
-        </div>
 
         <div class="nutrient-grid">
           <div class="nutrient-header">
-            <span></span><span>pro 100</span><span id="ed-calc-header"></span>
+            <span></span><span>pro 100</span>
           </div>
           <div class="nutrient-row">
             <label>Kalorien (kcal)</label>
             <input type="text" id="ed-kcal" inputmode="decimal">
-            <span class="calc" id="ed-kcal-calc"></span>
           </div>
           <div class="nutrient-row">
             <label>Fett (g)</label>
             <input type="text" id="ed-fett" inputmode="decimal">
-            <span class="calc" id="ed-fett-calc"></span>
           </div>
           <div class="nutrient-row">
             <label>dav. gesaettigt</label>
             <input type="text" id="ed-gesaettigt" inputmode="decimal">
-            <span class="calc" id="ed-gesaettigt-calc"></span>
           </div>
           <div class="nutrient-row">
             <label>Kohlenhydrate (g)</label>
             <input type="text" id="ed-kh" inputmode="decimal">
-            <span class="calc" id="ed-kh-calc"></span>
           </div>
           <div class="nutrient-row">
             <label>dav. Zucker (g)</label>
             <input type="text" id="ed-zucker" inputmode="decimal">
-            <span class="calc" id="ed-zucker-calc"></span>
           </div>
           <div class="nutrient-row">
             <label>Eiweiss (g)</label>
             <input type="text" id="ed-eiweiss" inputmode="decimal">
-            <span class="calc" id="ed-eiweiss-calc"></span>
           </div>
           <div class="nutrient-row">
             <label>Salz (g)</label>
             <input type="text" id="ed-salz" inputmode="decimal">
-            <span class="calc" id="ed-salz-calc"></span>
           </div>
           <div class="nutrient-row">
             <label>Ballaststoffe (g)</label>
             <input type="text" id="ed-ballaststoffe" inputmode="decimal">
-            <span class="calc" id="ed-ballaststoffe-calc"></span>
           </div>
-        </div>
-
-        <div class="field">
-          <label>Tatsaechliche Menge:</label>
-          <input type="text" id="ed-amount" inputmode="decimal" placeholder="z.B. 150">
         </div>
       </div>
 

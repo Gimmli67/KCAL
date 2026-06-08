@@ -254,7 +254,7 @@ async function editorBarcodeSearch() {
 // ===== Editor: Felder befuellen =====
 function fillEditorFields(food) {
     $('ed-name').value = food.Lebensmittel || '';
-    $('ed-unit').value = food.Einheit || 'g';
+    if ($('ed-unit')) $('ed-unit').value = food.Einheit || 'g';
     $('ed-kcal').value = food.Kcal ?? '';
     $('ed-fett').value = food.Fett ?? '';
     $('ed-gesaettigt').value = food.Gesaettigt ?? '';
@@ -270,7 +270,7 @@ function fillEditorFields(food) {
 // ===== Editor: Effektive Werte berechnen =====
 function updateCalcFields() {
     const amount = parseNum($('ed-amount').value);
-    const unit = $('ed-unit').value;
+    const unit = $('ed-unit') ? $('ed-unit').value : 'g';
     const fields = [
         ['ed-kcal', 'ed-kcal-calc'], ['ed-fett', 'ed-fett-calc'],
         ['ed-gesaettigt', 'ed-gesaettigt-calc'], ['ed-kh', 'ed-kh-calc'],
@@ -303,7 +303,7 @@ function editorSave() {
         vals[id] = v;
     }
 
-    const unit = $('ed-unit').value;
+    const unit = $('ed-unit') ? $('ed-unit').value : 'g';
     const entry = {
         Lebensmittel: name, Einheit: unit,
         Kcal: vals.kcal, Fett: vals.fett, Gesaettigt: vals.gesaettigt,
@@ -323,11 +323,57 @@ function editorSave() {
 }
 
 // ===== Editor: Laden =====
+let editorLoadedFood = null;
+
 function editorLoad() {
     const sel = $('editor-food-select');
     if (sel.selectedIndex < 0) { $('editor-status').textContent = 'Kein Eintrag ausgewaehlt.'; return; }
-    fillEditorFields(db[parseInt(sel.value)]);
-    $('editor-status').textContent = `'${db[parseInt(sel.value)].Lebensmittel}' geladen.`;
+    const food = db[parseInt(sel.value)];
+    editorLoadedFood = food;
+    fillEditorFields(food);
+
+    // Naehrwerte-Anzeige
+    $('editor-food-display').classList.remove('hidden');
+    $('editor-food-name').textContent = food.Lebensmittel;
+    const rows = [
+        ['Kalorien', `${food.Kcal} kcal`],
+        ['Fett', `${food.Fett} g`],
+        ['dav. gesaettigt', `${food.Gesaettigt} g`],
+        ['Kohlenhydrate', `${food.Kohlenhydrate} g`],
+        ['dav. Zucker', `${food.Zucker} g`],
+        ['Eiweiss', `${food.Eiweiss} g`],
+        ['Salz', `${food.Salz} g`],
+        ['Ballaststoffe', `${food.Ballaststoffe} g`]
+    ];
+    $('editor-food-nutrients').innerHTML = rows.map(([label, val]) =>
+        `<div class="pn-row"><span class="pn-label">${label}</span><span class="pn-value">${val}</span></div>`
+    ).join('');
+    $('ed-amount').value = '';
+    $('editor-food-calculated').innerHTML = '';
+    $('editor-status').textContent = `'${food.Lebensmittel}' geladen.`;
+}
+
+function updateEditorCalc() {
+    if (!editorLoadedFood) return;
+    const amount = parseNum($('ed-amount').value);
+    if (!amount || amount <= 0) { $('editor-food-calculated').innerHTML = ''; return; }
+    const f = amount / 100;
+    const food = editorLoadedFood;
+    const rows = [
+        ['Kalorien', `${(food.Kcal * f).toFixed(1)} kcal`],
+        ['Fett', `${(food.Fett * f).toFixed(1)} g`],
+        ['dav. gesaettigt', `${(food.Gesaettigt * f).toFixed(1)} g`],
+        ['Kohlenhydrate', `${(food.Kohlenhydrate * f).toFixed(1)} g`],
+        ['dav. Zucker', `${(food.Zucker * f).toFixed(1)} g`],
+        ['Eiweiss', `${(food.Eiweiss * f).toFixed(1)} g`],
+        ['Salz', `${(food.Salz * f).toFixed(1)} g`],
+        ['Ballaststoffe', `${(food.Ballaststoffe * f).toFixed(1)} g`]
+    ];
+    $('editor-food-calculated').innerHTML =
+        `<div class="group-header" style="margin-top:8px">Naehrwerte fuer ${Math.round(amount)}${food.Einheit}</div>` +
+        rows.map(([label, val]) =>
+            `<div class="pn-row"><span class="pn-label">${label}</span><span class="pn-value">${val}</span></div>`
+        ).join('');
 }
 
 // ===== Editor: Loeschen =====
@@ -347,9 +393,11 @@ function editorDelete() {
 // ===== Editor: Felder leeren =====
 function editorClear() {
     ['ed-name', 'ed-kcal', 'ed-fett', 'ed-gesaettigt', 'ed-kh', 'ed-zucker',
-     'ed-eiweiss', 'ed-salz', 'ed-ballaststoffe', 'ed-amount'].forEach(id => $(id).value = '');
-    $('ed-unit').value = 'g';
-    updateCalcFields();
+     'ed-eiweiss', 'ed-salz', 'ed-ballaststoffe', 'ed-amount'].forEach(id => {
+        if ($(id)) $(id).value = '';
+    });
+    if ($('editor-food-display')) $('editor-food-display').classList.add('hidden');
+    editorLoadedFood = null;
     $('editor-status').textContent = 'Felder geleert.';
 }
 
@@ -821,12 +869,8 @@ document.addEventListener('DOMContentLoaded', () => {
     $('editor-save').addEventListener('click', editorSave);
     $('editor-clear').addEventListener('click', editorClear);
 
-    // --- Editor: Berechnete Werte ---
-    ['ed-kcal', 'ed-fett', 'ed-gesaettigt', 'ed-kh', 'ed-zucker',
-     'ed-eiweiss', 'ed-salz', 'ed-ballaststoffe', 'ed-amount'].forEach(id => {
-        $(id).addEventListener('input', updateCalcFields);
-    });
-    $('ed-unit').addEventListener('change', updateCalcFields);
+    // --- Editor: Menge berechnen ---
+    $('ed-amount').addEventListener('input', updateEditorCalc);
 
     // --- Verlauf ---
     $('history-refresh').addEventListener('click', refreshHistory);
