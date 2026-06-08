@@ -15,28 +15,36 @@
   <main>
     <!-- ===== TAB: MENUE ===== -->
     <section id="tab-menu" class="tab-content active">
+
+      <!-- Scan my Food -->
       <div class="group">
-        <div class="group-header">Barcode Scanner</div>
+        <div class="group-header">Scan my Food</div>
         <div class="row">
           <input type="text" id="menu-barcode" placeholder="Barcode eingeben..." inputmode="numeric">
           <button class="btn-green" id="menu-barcode-search">Suchen</button>
           <button id="menu-barcode-cam">Kamera</button>
         </div>
+        <button class="btn-green full-width" id="menu-label-scan" style="margin-top:8px">
+          Naehrwerttabelle aus Foto scannen
+        </button>
       </div>
 
-      <div class="group">
-        <div class="group-header">Menue zusammenstellen</div>
-        <div class="field">
-          <label>Mahlzeit:</label>
-          <select id="menu-meal-type">
-            <option>Fruehstueck</option>
-            <option selected>Mittagessen</option>
-            <option>Abendessen</option>
-            <option>Snack</option>
-          </select>
+      <!-- Produkt-Anzeige nach Scan (versteckt bis Scan erfolgreich) -->
+      <div id="product-card" class="group hidden">
+        <div class="group-header">Gefundenes Produkt</div>
+        <div id="product-card-name" class="product-name"></div>
+        <input type="text" id="product-card-name-input" placeholder="Produktname eingeben..." style="display:none;width:100%;margin-bottom:8px">
+        <div id="product-card-nutrients"></div>
+        <div class="row" style="margin-top:10px">
+          <button class="btn-green" id="product-card-save" style="flex:1">In Datenbank speichern</button>
+          <button class="btn-red" id="product-card-close">Schliessen</button>
         </div>
+      </div>
+
+      <!-- Lebensmittel -->
+      <div class="group">
+        <div class="group-header">Lebensmittel</div>
         <div class="field">
-          <label>Lebensmittel:</label>
           <select id="menu-food-select"></select>
         </div>
         <div class="row">
@@ -256,8 +264,9 @@
     </div>
   </div>
 
-  <!-- Hidden file input for label scanning -->
+  <!-- Hidden file inputs for label scanning -->
   <input type="file" id="label-file-input" accept="image/*" capture="environment" style="display:none">
+  <input type="file" id="label-file-input-menu" accept="image/*" capture="environment" style="display:none">
 
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
