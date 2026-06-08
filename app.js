@@ -112,75 +112,22 @@ function populateTemplateDropdown() {
     });
 }
 
-// ===== Product Card =====
-let scannedProduct = null;
-
-function showProductCard(food, needsName) {
-    scannedProduct = food;
-    $('product-card').classList.remove('hidden');
-
-    if (needsName) {
-        $('product-card-name').style.display = 'none';
-        $('product-card-name-input').style.display = 'block';
-        $('product-card-name-input').value = food.Lebensmittel || '';
-        $('product-card-name-input').focus();
-    } else {
-        $('product-card-name').style.display = 'block';
-        $('product-card-name').textContent = food.Lebensmittel;
-        $('product-card-name-input').style.display = 'none';
-    }
-
-    const rows = [
-        ['Kalorien', `${food.Kcal} kcal`],
-        ['Fett', `${food.Fett} g`],
-        ['dav. gesaettigt', `${food.Gesaettigt} g`],
-        ['Kohlenhydrate', `${food.Kohlenhydrate} g`],
-        ['dav. Zucker', `${food.Zucker} g`],
-        ['Eiweiss', `${food.Eiweiss} g`],
-        ['Salz', `${food.Salz} g`],
-        ['Ballaststoffe', `${food.Ballaststoffe} g`]
-    ];
-    $('product-card-nutrients').innerHTML = rows.map(([label, val]) =>
-        `<div class="pn-row"><span class="pn-label">${label}</span><span class="pn-value">${val}</span></div>`
-    ).join('');
-
-    const exists = db.some(d => d.Lebensmittel === food.Lebensmittel);
-    $('product-card-save').textContent = exists ? 'Bereits gespeichert' : 'In Datenbank speichern';
-    $('product-card-save').disabled = exists;
-}
-
-function hideProductCard() {
-    $('product-card').classList.add('hidden');
-    scannedProduct = null;
-}
-
-function saveProductToDb() {
-    if (!scannedProduct) return;
-
-    // Name aus Input holen falls sichtbar
-    if ($('product-card-name-input').style.display !== 'none') {
-        const name = $('product-card-name-input').value.trim();
-        if (!name) { $('menu-status').textContent = 'Bitte Produktname eingeben.'; return; }
-        scannedProduct.Lebensmittel = name;
-    }
-
-    const exists = db.findIndex(d => d.Lebensmittel === scannedProduct.Lebensmittel);
+// ===== Auto-Save nach Scan =====
+function autoSaveFood(food) {
+    if (!food.Lebensmittel) return;
+    const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
     if (exists >= 0) {
-        db[exists] = scannedProduct;
+        db[exists] = food;
     } else {
-        db.push(scannedProduct);
+        db.push(food);
     }
     saveDB();
     populateMenuFoodDropdown();
     populateEditorFoodDropdown();
 
     // Im Dropdown auswaehlen
-    const idx = db.findIndex(d => d.Lebensmittel === scannedProduct.Lebensmittel);
+    const idx = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
     if (idx >= 0) $('menu-food-select').value = idx;
-
-    $('product-card-save').textContent = 'Gespeichert!';
-    $('product-card-save').disabled = true;
-    $('menu-status').textContent = `'${scannedProduct.Lebensmittel}' in Datenbank gespeichert.`;
 }
 
 // ===== Menu List =====
@@ -231,14 +178,9 @@ async function menuBarcodeSearch() {
         const food = await lookupBarcode(barcode);
         if (!food) { $('menu-status').textContent = `Produkt nicht gefunden: ${barcode}`; return; }
 
-        // Produkt-Karte anzeigen
-        showProductCard(food, false);
+        autoSaveFood(food);
         $('menu-barcode').value = '';
-        $('menu-status').textContent = `'${food.Lebensmittel}' gefunden!`;
-
-        // Falls bereits in DB, im Dropdown auswaehlen
-        const idx = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
-        if (idx >= 0) $('menu-food-select').value = idx;
+        $('menu-status').textContent = `'${food.Lebensmittel}' gespeichert und ausgewaehlt. (${food.Kcal} kcal/100${food.Einheit})`;
     } catch (e) {
         $('menu-status').textContent = `Fehler: ${e.message}`;
     }
@@ -802,22 +744,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!result) return;
 
         const v = result.values;
+        const count = Object.keys(v).length;
+        $('menu-status').textContent = `Etikett gescannt: ${count} von 8 Werten erkannt.`;
+
+        const name = prompt('Produktname eingeben:');
+        if (!name || !name.trim()) { $('menu-status').textContent = 'Abgebrochen - kein Name eingegeben.'; return; }
+
         const food = {
-            Lebensmittel: '', Einheit: 'g',
+            Lebensmittel: name.trim(), Einheit: 'g',
             Kcal: v.Kcal ?? 0, Fett: v.Fett ?? 0, Gesaettigt: v.Gesaettigt ?? 0,
             Kohlenhydrate: v.Kohlenhydrate ?? 0, Zucker: v.Zucker ?? 0,
             Eiweiss: v.Eiweiss ?? 0, Salz: v.Salz ?? 0, Ballaststoffe: v.Ballaststoffe ?? 0
         };
 
-        const count = Object.keys(v).length;
-        showProductCard(food, true);
-        $('menu-status').textContent = `Etikett gescannt: ${count} von 8 Werten erkannt. Bitte pruefen!`;
-        showResultModal('OCR-Ergebnis (zur Kontrolle)', result.text);
+        autoSaveFood(food);
+        $('menu-status').textContent = `'${name.trim()}' gespeichert und ausgewaehlt. (${food.Kcal} kcal/100g)`;
     });
-
-    // --- Menue: Produkt-Karte ---
-    $('product-card-save').addEventListener('click', saveProductToDb);
-    $('product-card-close').addEventListener('click', hideProductCard);
 
     // --- Menue: Aktionen ---
     $('menu-add').addEventListener('click', menuAdd);
