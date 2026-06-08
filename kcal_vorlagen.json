@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "Hönli mit Ghacktem",
+    "Positionen": [
+      {
+        "Lebensmittel": "M-Classic Hörnli (Eierteigwaren)",
+        "Einheit": "g",
+        "Menge": 80.0
+      },
+      {
+        "Lebensmittel": "Hackfleisch Rind",
+        "Einheit": "g",
+        "Menge": 150.0
+      }
+    ]
+  },
+  {
+    "Name": "Saft und Knoppers",
+    "Positionen": [
+      {
+        "Lebensmittel": "Skyr High Protein Mango/Passion",
+        "Einheit": "ml",
+        "Menge": 330.0
+      },
+      {
+        "Lebensmittel": "Knoppers Einzelpack",
+        "Einheit": "g",
+        "Menge": 25.0
+      }
+    ]
+  }
+]

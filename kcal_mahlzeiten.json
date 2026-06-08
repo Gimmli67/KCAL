@@ -1,0 +1,60 @@
+[
+  {
+    "Datum": "2026-06-05",
+    "Zeit": "10:23",
+    "Mahlzeit": "Abendessen",
+    "Positionen": [
+      {
+        "Lebensmittel": "M-Classic Hörnli (Eierteigwaren)",
+        "Menge": 80.0,
+        "Einheit": "g",
+        "Kcal": 288.8
+      },
+      {
+        "Lebensmittel": "Hackfleisch Rind",
+        "Menge": 150.0,
+        "Einheit": "g",
+        "Kcal": 288.0
+      },
+      {
+        "Lebensmittel": "Bilz Stellare",
+        "Menge": 330.0,
+        "Einheit": "ml",
+        "Kcal": 69.3
+      }
+    ],
+    "Summe": {
+      "Kcal": 646.1,
+      "Fett": 23.2,
+      "Kohlenhydrate": 70.9,
+      "Zucker": 13.8,
+      "Eiweiss": 39.7
+    }
+  },
+  {
+    "Datum": "2026-06-05",
+    "Zeit": "12:53",
+    "Mahlzeit": "Mittagessen",
+    "Positionen": [
+      {
+        "Lebensmittel": "M-Classic Hörnli (Eierteigwaren)",
+        "Menge": 80.0,
+        "Einheit": "g",
+        "Kcal": 288.8
+      },
+      {
+        "Lebensmittel": "Hackfleisch Rind",
+        "Menge": 150.0,
+        "Einheit": "g",
+        "Kcal": 288.0
+      }
+    ],
+    "Summe": {
+      "Kcal": 576.8,
+      "Fett": 23.2,
+      "Kohlenhydrate": 54.4,
+      "Zucker": 0.9,
+      "Eiweiss": 39.7
+    }
+  }
+]
