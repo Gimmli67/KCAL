@@ -96,6 +96,7 @@ function switchTab(name) {
 // ===== Dropdown Population =====
 function populateMenuFoodDropdown() {
     const sel = $('menu-food-select');
+    if (!sel) return;
     sel.innerHTML = '';
     db.forEach((item, i) => {
         const opt = document.createElement('option');
@@ -123,6 +124,7 @@ function populateEditorFoodDropdown(filter) {
 
 function populateTemplateDropdown() {
     const sel = $('menu-template-select');
+    if (!sel) return;
     sel.innerHTML = '';
     templates.forEach((t, i) => {
         const opt = document.createElement('option');
