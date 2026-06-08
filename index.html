@@ -69,7 +69,7 @@
       <div class="group">
         <div class="group-header">Food per 100 units</div>
         <div class="field">
-          <label>Lebensmittel:</label>
+          <label>Food:</label>
           <input type="text" id="ed-name">
         </div>
 
@@ -117,13 +117,23 @@
         <button id="editor-clear">Clear</button>
       </div>
 
+      <div class="button-row">
+        <button class="btn-meal" id="btn-zmorge">z'Morge</button>
+        <button class="btn-meal" id="btn-zmittag">z'Mittag</button>
+        <button class="btn-meal" id="btn-znacht">z'Nacht</button>
+      </div>
+
       <div id="editor-status" class="status"></div>
     </section>
 
     <!-- ===== TAB: VERLAUF ===== -->
     <section id="tab-history" class="tab-content">
+      <nav class="meal-tabs">
+        <button class="meal-tab active" data-meal="zmorge">z'Morge</button>
+        <button class="meal-tab" data-meal="zmittag">z'Mittag</button>
+        <button class="meal-tab" data-meal="znacht">z'Nacht</button>
+      </nav>
       <div id="history-content" class="history-view"></div>
-      <button id="history-refresh" style="margin-top:12px;width:100%">Aktualisieren</button>
     </section>
 
     <!-- ===== TAB: DATEN ===== -->

@@ -267,27 +267,9 @@ function fillEditorFields(food) {
     updateCalcFields();
 }
 
-// ===== Editor: Effektive Werte berechnen =====
+// ===== Editor: Effektive Werte berechnen (alt - nicht mehr verwendet) =====
 function updateCalcFields() {
-    const amount = parseNum($('ed-amount').value);
-    const unit = $('ed-unit') ? $('ed-unit').value : 'g';
-    const fields = [
-        ['ed-kcal', 'ed-kcal-calc'], ['ed-fett', 'ed-fett-calc'],
-        ['ed-gesaettigt', 'ed-gesaettigt-calc'], ['ed-kh', 'ed-kh-calc'],
-        ['ed-zucker', 'ed-zucker-calc'], ['ed-eiweiss', 'ed-eiweiss-calc'],
-        ['ed-salz', 'ed-salz-calc'], ['ed-ballaststoffe', 'ed-ballaststoffe-calc']
-    ];
-    if (!amount || amount <= 0) {
-        $('ed-calc-header').textContent = '';
-        fields.forEach(([, c]) => $(c).textContent = '');
-        return;
-    }
-    $('ed-calc-header').textContent = `pro ${Math.round(amount)}${unit}`;
-    const f = amount / 100;
-    fields.forEach(([inputId, calcId]) => {
-        const v = parseNum($(inputId).value);
-        $(calcId).textContent = v !== null ? (v * f).toFixed(1) : '';
-    });
+    // Wird nicht mehr benoetigt - updateEditorCalc ersetzt diese Funktion
 }
 
 // ===== Editor: Speichern =====
@@ -327,10 +309,10 @@ let editorLoadedFood = null;
 
 function editorLoad() {
     const sel = $('editor-food-select');
-    if (sel.selectedIndex < 0) { $('editor-status').textContent = 'Kein Eintrag ausgewaehlt.'; return; }
+    if (sel.selectedIndex < 0) return;
     const food = db[parseInt(sel.value)];
+    if (!food) return;
     editorLoadedFood = food;
-    fillEditorFields(food);
 
     // Naehrwerte-Anzeige
     $('editor-food-display').classList.remove('hidden');
@@ -577,32 +559,73 @@ function menuDeleteTemplate() {
     $('menu-status').textContent = `Vorlage '${name}' entfernt.`;
 }
 
+// ===== Mahlzeit speichern (z'Morge / z'Mittag / z'Nacht) =====
+function saveMealFromEditor(mealType) {
+    if (!editorLoadedFood) {
+        $('editor-status').textContent = 'Bitte zuerst ein Lebensmittel auswaehlen.';
+        return;
+    }
+    const amount = parseNum($('ed-amount').value);
+    if (!amount || amount <= 0) {
+        $('editor-status').textContent = 'Bitte Effective Volume eingeben.';
+        return;
+    }
+
+    const food = editorLoadedFood;
+    const f = amount / 100;
+
+    meals.push({
+        Datum: today(),
+        Zeit: nowTime(),
+        Mahlzeit: mealType,
+        Positionen: [{
+            Lebensmittel: food.Lebensmittel,
+            Menge: amount,
+            Einheit: food.Einheit,
+            Kcal: Math.round(food.Kcal * f * 10) / 10
+        }],
+        Summe: {
+            Kcal: Math.round(food.Kcal * f * 10) / 10,
+            Fett: Math.round(food.Fett * f * 10) / 10,
+            Kohlenhydrate: Math.round(food.Kohlenhydrate * f * 10) / 10,
+            Zucker: Math.round(food.Zucker * f * 10) / 10,
+            Eiweiss: Math.round(food.Eiweiss * f * 10) / 10
+        }
+    });
+    saveMeals();
+    $('editor-status').textContent = `${food.Lebensmittel} (${Math.round(amount)}${food.Einheit}) als ${mealType} gespeichert.`;
+}
+
 // ===== Verlauf =====
+let currentMealTab = 'zmorge';
+const MEAL_NAMES = { zmorge: "z'Morge", zmittag: "z'Mittag", znacht: "z'Nacht" };
+
 function refreshHistory() {
     const content = $('history-content');
+    if (!content) return;
     const todayStr = today();
-    const todayMeals = meals.filter(m => m.Datum === todayStr);
+    const mealName = MEAL_NAMES[currentMealTab];
+    const mealEntries = meals.filter(m => m.Datum === todayStr && m.Mahlzeit === mealName);
 
     const lines = [];
     lines.push('==================================================');
-    lines.push(`  TAGESVERLAUF - ${todayStr}`);
+    lines.push(`  ${mealName} - ${todayStr}`);
     lines.push('==================================================');
 
-    if (todayMeals.length === 0) {
+    if (mealEntries.length === 0) {
         lines.push('');
-        lines.push('  Heute noch keine Mahlzeiten gespeichert.');
+        lines.push(`  Noch nichts fuer ${mealName} gespeichert.`);
     } else {
         const tag = { kcal: 0, fett: 0, kh: 0, zucker: 0, eiweiss: 0 };
 
-        todayMeals.forEach(m => {
+        mealEntries.forEach(m => {
             lines.push('');
-            lines.push(`  ${m.Mahlzeit} (${m.Zeit})`);
+            lines.push(`  ${m.Zeit}`);
             lines.push('  ' + '-'.repeat(44));
             m.Positionen.forEach(p => {
                 const mg = Math.round(p.Menge);
                 lines.push(`    ${(p.Lebensmittel || '').padEnd(24)} ${String(mg).padStart(4)}${p.Einheit} ${String(p.Kcal).padStart(6)} kcal`);
             });
-            lines.push(`    ${'Summe:'.padEnd(24)} ${String(m.Summe.Kcal).padStart(11)} kcal`);
             tag.kcal += m.Summe.Kcal;
             tag.fett += m.Summe.Fett;
             tag.kh += m.Summe.Kohlenhydrate;
@@ -612,28 +635,13 @@ function refreshHistory() {
 
         lines.push('');
         lines.push('==================================================');
-        lines.push(`  ${'TAGESGESAMT'.padEnd(22)} ${'Ist'.padStart(8)} ${'Ziel'.padStart(6)}`);
+        lines.push(`  ${'TOTAL'.padEnd(22)} ${'Ist'.padStart(8)} ${'Ziel'.padStart(6)}`);
         lines.push('==================================================');
         lines.push(`  ${'Kalorien (kcal)'.padEnd(22)} ${tag.kcal.toFixed(1).padStart(8)} ${String(GOALS.kcal).padStart(6)}`);
         lines.push(`  ${'Fett (g)'.padEnd(22)} ${tag.fett.toFixed(1).padStart(8)} ${String(GOALS.fett).padStart(6)}`);
         lines.push(`  ${'Kohlenhydrate (g)'.padEnd(22)} ${tag.kh.toFixed(1).padStart(8)} ${String(GOALS.kohlenhydrate).padStart(6)}`);
         lines.push(`  ${'Zucker (g)'.padEnd(22)} ${tag.zucker.toFixed(1).padStart(8)} ${String(GOALS.zucker).padStart(6)}`);
         lines.push(`  ${'Eiweiss (g)'.padEnd(22)} ${tag.eiweiss.toFixed(1).padStart(8)} ${String(GOALS.eiweiss).padStart(6)}`);
-        lines.push('==================================================');
-        lines.push('');
-        lines.push('  VERBLEIBEND');
-        lines.push('--------------------------------------------------');
-
-        const rest = [
-            ['Kalorien (kcal)', GOALS.kcal - tag.kcal],
-            ['Fett (g)', GOALS.fett - tag.fett],
-            ['Kohlenhydrate (g)', GOALS.kohlenhydrate - tag.kh],
-            ['Zucker (g)', GOALS.zucker - tag.zucker],
-            ['Eiweiss (g)', GOALS.eiweiss - tag.eiweiss]
-        ];
-        rest.forEach(([label, v]) => {
-            lines.push(`  ${label.padEnd(22)} ${v.toFixed(1).padStart(8)}  ${v < 0 ? 'UEBER' : 'ok'}`);
-        });
         lines.push('==================================================');
     }
 
@@ -873,8 +881,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Editor: Menge berechnen ---
     $('ed-amount').addEventListener('input', updateEditorCalc);
 
-    // --- Verlauf ---
-    $('history-refresh').addEventListener('click', refreshHistory);
+    // --- Mahlzeit-Buttons ---
+    $('btn-zmorge').addEventListener('click', () => saveMealFromEditor("z'Morge"));
+    $('btn-zmittag').addEventListener('click', () => saveMealFromEditor("z'Mittag"));
+    $('btn-znacht').addEventListener('click', () => saveMealFromEditor("z'Nacht"));
+
+    // --- Verlauf: Meal Tabs ---
+    document.querySelectorAll('.meal-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.meal-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentMealTab = btn.dataset.meal;
+            refreshHistory();
+        });
+    });
 
     // --- Modals ---
     $('scanner-close').addEventListener('click', stopBarcodeScanner);

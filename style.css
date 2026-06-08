@@ -193,6 +193,43 @@ button:active {
   display: none !important;
 }
 
+/* === Meal Buttons === */
+.btn-meal {
+  background: var(--overlay);
+  color: var(--text);
+  flex: 1;
+  font-size: 15px;
+  padding: 12px 8px;
+  border-radius: 8px;
+}
+.btn-meal:active {
+  background: var(--primary);
+  color: var(--bg);
+}
+
+/* === Meal Tabs (Verlauf) === */
+.meal-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.meal-tab {
+  flex: 1;
+  background: var(--surface);
+  color: var(--subtext);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.meal-tab.active {
+  background: var(--primary);
+  color: var(--bg);
+  border-color: var(--primary);
+  font-weight: 700;
+}
+
 /* === List Box (Menu Items) === */
 .list-box {
   background: var(--bg);
