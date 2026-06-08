@@ -864,7 +864,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('editor-search-btn').addEventListener('click', () => populateEditorFoodDropdown($('editor-search').value));
     $('editor-search').addEventListener('keydown', e => { if (e.key === 'Enter') populateEditorFoodDropdown($('editor-search').value); });
     $('editor-show-all').addEventListener('click', () => { $('editor-search').value = ''; populateEditorFoodDropdown(); });
-    $('editor-load').addEventListener('click', editorLoad);
+    $('editor-food-select').addEventListener('change', editorLoad);
     $('editor-delete').addEventListener('click', editorDelete);
     $('editor-save').addEventListener('click', editorSave);
     $('editor-clear').addEventListener('click', editorClear);

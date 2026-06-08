@@ -44,27 +44,26 @@
         <div class="group-header">Stored Food</div>
         <div class="row">
           <input type="text" id="editor-search" placeholder="Suchbegriff...">
-          <button id="editor-search-btn">Suchen</button>
-          <button id="editor-show-all">Alle</button>
+          <button id="editor-search-btn">Search</button>
+          <button id="editor-show-all">All</button>
         </div>
         <div class="row">
           <select id="editor-food-select"></select>
         </div>
         <div class="row">
-          <button class="btn-green" id="editor-load">Laden</button>
-          <button class="btn-red" id="editor-delete">Entfernen</button>
+          <button class="btn-red" id="editor-delete">Remove</button>
         </div>
-      </div>
 
-      <!-- Naehrwerte Anzeige (nach Laden) -->
-      <div id="editor-food-display" class="group hidden">
-        <div id="editor-food-name" class="product-name"></div>
-        <div id="editor-food-nutrients"></div>
-        <div class="field" style="margin-top:10px">
-          <label>Tatsaechliche Menge:</label>
-          <input type="text" id="ed-amount" inputmode="decimal" placeholder="z.B. 150">
+        <!-- Naehrwerte (erscheint automatisch bei Auswahl) -->
+        <div id="editor-food-display" class="hidden" style="margin-top:12px">
+          <div id="editor-food-name" class="product-name"></div>
+          <div id="editor-food-nutrients"></div>
+          <div class="field" style="margin-top:12px">
+            <label>Effective Volume:</label>
+            <input type="text" id="ed-amount" inputmode="decimal" placeholder="Menge eingeben...">
+          </div>
+          <div id="editor-food-calculated"></div>
         </div>
-        <div id="editor-food-calculated"></div>
       </div>
 
       <div class="group">
@@ -114,8 +113,8 @@
       </div>
 
       <div class="button-row">
-        <button class="btn-green" id="editor-save">Speichern</button>
-        <button id="editor-clear">Felder leeren</button>
+        <button class="btn-green" id="editor-save">Save</button>
+        <button id="editor-clear">Clear</button>
       </div>
 
       <div id="editor-status" class="status"></div>
