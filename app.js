@@ -76,7 +76,7 @@ async function loadInitialData() {
         populateEditorFoodDropdown();
         populateTemplateDropdown();
         refreshHistory();
-        console.log('Daten geladen:', db.length, 'LM,', meals.length, 'Mahlzeiten,', templates.length, 'Vorlagen');
+        console.log('Daten geladen:', db.length, 'LM,', meals.length, 'Mahlzeiten,', templates.length, 'Menus');
     }
 }
 
@@ -461,8 +461,7 @@ function refreshMenuOverview() {
     templates.forEach((tpl, tplIdx) => {
         let totalKcal = 0;
         tpl.Positionen.forEach(p => {
-            const kcalPer100 = p.Kcal || 0;
-            totalKcal += kcalPer100 * (p.Menge || 0) / 100;
+            totalKcal += (p.Kcal || 0) * (p.Menge || 0) / 100;
         });
 
         const card = document.createElement('div');
@@ -489,20 +488,13 @@ function refreshMenuOverview() {
         actions.className = 'button-row';
         actions.style.marginTop = '8px';
 
-        const btnZmorge = document.createElement('button');
-        btnZmorge.className = 'btn-meal';
-        btnZmorge.textContent = "z'Morge";
-        btnZmorge.addEventListener('click', () => useMenuAsMeal(tplIdx, "z'Morge"));
-
-        const btnZmittag = document.createElement('button');
-        btnZmittag.className = 'btn-meal';
-        btnZmittag.textContent = "z'Mittag";
-        btnZmittag.addEventListener('click', () => useMenuAsMeal(tplIdx, "z'Mittag"));
-
-        const btnZnacht = document.createElement('button');
-        btnZnacht.className = 'btn-meal';
-        btnZnacht.textContent = "z'Nacht";
-        btnZnacht.addEventListener('click', () => useMenuAsMeal(tplIdx, "z'Nacht"));
+        ["z'Morge", "z'Mittag", "z'Nacht"].forEach(meal => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-meal';
+            btn.textContent = meal;
+            btn.addEventListener('click', () => useMenuAsMeal(tplIdx, meal));
+            actions.appendChild(btn);
+        });
 
         const btnDelete = document.createElement('button');
         btnDelete.className = 'btn-red';
@@ -515,9 +507,6 @@ function refreshMenuOverview() {
             $('menus-status').textContent = `Menu '${tpl.Name}' entfernt.`;
         });
 
-        actions.appendChild(btnZmorge);
-        actions.appendChild(btnZmittag);
-        actions.appendChild(btnZnacht);
         actions.appendChild(btnDelete);
         card.appendChild(actions);
 
@@ -1041,13 +1030,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!e.target.files[0]) return;
         importData(e.target.files[0], data => {
             templates = data; saveTemplates(); populateTemplateDropdown();
-            $('data-status').textContent = `${data.length} Vorlagen importiert.`;
+            $('data-status').textContent = `${data.length} Menus importiert.`;
         });
         e.target.value = '';
     });
     $('export-templates').addEventListener('click', () => {
         exportData(templates, 'kcal_vorlagen.json');
-        $('data-status').textContent = 'Vorlagen exportiert.';
+        $('data-status').textContent = 'Speisekarte exportiert.';
     });
 
     // --- Reset: Daten neu laden ---
@@ -1059,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
         db = []; meals = []; templates = [];
         loadInitialData().then(() => {
             updateDailyCircles();
-            $('data-status').textContent = `Neu geladen: ${db.length} LM, ${meals.length} Mahlzeiten, ${templates.length} Vorlagen.`;
+            $('data-status').textContent = `Neu geladen: ${db.length} LM, ${meals.length} Mahlzeiten, ${templates.length} Menus.`;
         });
     });
 

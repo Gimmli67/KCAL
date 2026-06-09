@@ -237,16 +237,6 @@
       <div id="editor-status" class="status"></div>
     </section>
 
-    <!-- ===== TAB: VERLAUF ===== -->
-    <section id="tab-history" class="tab-content">
-      <nav class="meal-tabs">
-        <button class="meal-tab active" data-meal="zmorge">z'Morge</button>
-        <button class="meal-tab" data-meal="zmittag">z'Mittag</button>
-        <button class="meal-tab" data-meal="znacht">z'Nacht</button>
-      </nav>
-      <div id="history-content" class="history-view"></div>
-    </section>
-
     <!-- ===== TAB: MENUS ===== -->
     <section id="tab-menus" class="tab-content">
 
@@ -278,11 +268,21 @@
 
       <!-- Gespeicherte Menus (Speisekarte) -->
       <div class="group">
-        <div class="group-header">Saved Menus</div>
+        <div class="group-header">Speisekarte</div>
         <div id="menu-overview"></div>
       </div>
 
       <div id="menus-status" class="status"></div>
+    </section>
+
+    <!-- ===== TAB: VERLAUF ===== -->
+    <section id="tab-history" class="tab-content">
+      <nav class="meal-tabs">
+        <button class="meal-tab active" data-meal="zmorge">z'Morge</button>
+        <button class="meal-tab" data-meal="zmittag">z'Mittag</button>
+        <button class="meal-tab" data-meal="znacht">z'Nacht</button>
+      </nav>
+      <div id="history-content" class="history-view"></div>
     </section>
 
     <!-- ===== TAB: DATEN ===== -->
@@ -313,7 +313,7 @@
         </div>
 
         <div class="field">
-          <label>Vorlagen:</label>
+          <label>Speisekarte:</label>
           <div class="row">
             <button id="import-templates">Importieren</button>
             <button id="export-templates">Exportieren</button>
@@ -335,8 +335,8 @@
   <nav id="bottom-nav">
     <button class="nav-btn active" data-tab="menu">Food Scan</button>
     <button class="nav-btn" data-tab="editor">Editor</button>
-    <button class="nav-btn" data-tab="history">Verlauf</button>
     <button class="nav-btn" data-tab="menus">Menus</button>
+    <button class="nav-btn" data-tab="history">Verlauf</button>
     <button class="nav-btn" data-tab="data">Daten</button>
   </nav>
 
