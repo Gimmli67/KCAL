@@ -13,7 +13,7 @@ Einfache 3-Datei-Struktur unter `WebBased/`:
 - **Food Scan** - Barcode-Suche (Open Food Facts API), Kamera-Scan, OCR Etikett-Scanner (Tesseract.js), Manual Entry, Daily Status Kreise
 - **Editor** - Lebensmittel bearbeiten/speichern, Effective Volume Berechnung, als Mahlzeit speichern (z'Morge/z'Mittag/z'Nacht)
 - **Verlauf** - Tages-Verlauf pro Mahlzeit
-- **Menus** - Menu aus mehreren Produkten zusammenstellen, als Mahlzeit speichern, Templates laden/speichern
+- **Menus** - Speisekarte/Rezeptbuch: Menus aus Produkten zusammenstellen mit Name, werden NICHT ans Tagessoll angerechnet. Erst bei Verwendung als Mahlzeit (z'Morge/z'Mittag/z'Nacht) zaehlt es zum Tag.
 - **Daten** - Import/Export JSON, Reset
 
 ## Daten

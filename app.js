@@ -91,7 +91,7 @@ function switchTab(name) {
     $('tab-' + name).classList.add('active');
     document.querySelector(`.nav-btn[data-tab="${name}"]`).classList.add('active');
     if (name === 'history') refreshHistory();
-    if (name === 'menus') { populateMenuFoodDropdown(); refreshMenuList(); }
+    if (name === 'menus') { populateMenuFoodDropdown(); refreshMenuList(); refreshMenuOverview(); }
 }
 
 // ===== Dropdown Population =====
@@ -420,72 +420,126 @@ function menuClear() {
     $('menus-status').textContent = 'Menue geleert.';
 }
 
-// ===== Menue: Berechnen =====
-function menuCalculate() {
-    if (menuList.length === 0) { $('menus-status').textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
-
-    const s = { kcal: 0, fett: 0, ges: 0, kh: 0, zucker: 0, eiweiss: 0, salz: 0, ball: 0 };
-    const lines = [];
-    lines.push('==================================================');
-    lines.push('  MENUE-UEBERSICHT');
-    lines.push('==================================================');
-
-    menuList.forEach(m => {
-        const f = m.Menge / 100;
-        const kc = m.Kcal * f, fe = m.Fett * f, ge = m.Gesaettigt * f;
-        const kh = m.Kohlenhydrate * f, zu = m.Zucker * f;
-        const ei = m.Eiweiss * f, sa = m.Salz * f, ba = m.Ballaststoffe * f;
-        s.kcal += kc; s.fett += fe; s.ges += ge; s.kh += kh;
-        s.zucker += zu; s.eiweiss += ei; s.salz += sa; s.ball += ba;
-        lines.push(`  ${m.Lebensmittel} (${Math.round(m.Menge)}${m.Einheit})`);
-        lines.push(`    Kcal:${kc.toFixed(1).padStart(7)} F:${fe.toFixed(1).padStart(5)} KH:${kh.toFixed(1).padStart(5)} E:${ei.toFixed(1).padStart(5)}`);
-        lines.push('');
-    });
-
-    lines.push('==================================================');
-    lines.push(`  ${'NAEHRSTOFF'.padEnd(22)} ${'GESAMT'.padStart(8)} ${'ZIEL'.padStart(6)}`);
-    lines.push('==================================================');
-    lines.push(`  ${'Kalorien (kcal)'.padEnd(22)} ${s.kcal.toFixed(1).padStart(8)} ${String(GOALS.kcal).padStart(6)}`);
-    lines.push(`  ${'Fett (g)'.padEnd(22)} ${s.fett.toFixed(1).padStart(8)} ${String(GOALS.fett).padStart(6)}`);
-    lines.push(`  ${'  dav. gesaettigt'.padEnd(22)} ${s.ges.toFixed(1).padStart(8)}`);
-    lines.push(`  ${'Kohlenhydrate (g)'.padEnd(22)} ${s.kh.toFixed(1).padStart(8)} ${String(GOALS.kohlenhydrate).padStart(6)}`);
-    lines.push(`  ${'  dav. Zucker (g)'.padEnd(22)} ${s.zucker.toFixed(1).padStart(8)} ${String(GOALS.zucker).padStart(6)}`);
-    lines.push(`  ${'Eiweiss (g)'.padEnd(22)} ${s.eiweiss.toFixed(1).padStart(8)} ${String(GOALS.eiweiss).padStart(6)}`);
-    lines.push(`  ${'Salz (g)'.padEnd(22)} ${s.salz.toFixed(1).padStart(8)}`);
-    lines.push(`  ${'Ballaststoffe (g)'.padEnd(22)} ${s.ball.toFixed(1).padStart(8)}`);
-    lines.push('==================================================');
-    lines.push('');
-    lines.push('  VERBLEIBEND');
-    lines.push('--------------------------------------------------');
-
-    const rest = [
-        ['Kalorien (kcal)', GOALS.kcal - s.kcal],
-        ['Fett (g)', GOALS.fett - s.fett],
-        ['Kohlenhydrate (g)', GOALS.kohlenhydrate - s.kh],
-        ['Zucker (g)', GOALS.zucker - s.zucker],
-        ['Eiweiss (g)', GOALS.eiweiss - s.eiweiss]
-    ];
-    rest.forEach(([label, v]) => {
-        lines.push(`  ${label.padEnd(22)} ${v.toFixed(1).padStart(8)}  ${v < 0 ? 'UEBER' : 'ok'}`);
-    });
-    lines.push('==================================================');
-
-    showResultModal('Menue-Uebersicht', lines.join('\n'));
-    $('menus-status').textContent = `${menuList.length} Pos., ${Math.round(s.kcal)} kcal von ${GOALS.kcal}`;
-}
-
-// ===== Menue: Als Mahlzeit speichern =====
-function menuSaveMeal(mealType) {
+// ===== Menue: Als Rezept speichern =====
+function menuSaveRecipe() {
     const statusEl = $('menus-status');
+    const name = $('menu-name').value.trim();
+    if (!name) { statusEl.textContent = 'Bitte Menuname eingeben.'; return; }
     if (menuList.length === 0) { statusEl.textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
 
+    const positions = menuList.map(m => ({
+        Lebensmittel: m.Lebensmittel, Einheit: m.Einheit, Menge: m.Menge,
+        Kcal: m.Kcal, Fett: m.Fett, Gesaettigt: m.Gesaettigt,
+        Kohlenhydrate: m.Kohlenhydrate, Zucker: m.Zucker, Eiweiss: m.Eiweiss,
+        Salz: m.Salz, Ballaststoffe: m.Ballaststoffe
+    }));
+
+    const idx = templates.findIndex(t => t.Name === name);
+    if (idx >= 0) { templates[idx] = { Name: name, Positionen: positions }; }
+    else { templates.push({ Name: name, Positionen: positions }); }
+
+    saveTemplates();
+    menuList = [];
+    selectedMenuIndex = -1;
+    $('menu-name').value = '';
+    refreshMenuList();
+    refreshMenuOverview();
+    statusEl.textContent = `Menu '${name}' gespeichert.`;
+}
+
+// ===== Menue-Uebersicht (Speisekarte) =====
+function refreshMenuOverview() {
+    const container = $('menu-overview');
+    if (!container) return;
+    container.innerHTML = '';
+
+    if (templates.length === 0) {
+        container.innerHTML = '<div style="color:var(--subtext);text-align:center;padding:12px">Noch keine Menus gespeichert.</div>';
+        return;
+    }
+
+    templates.forEach((tpl, tplIdx) => {
+        let totalKcal = 0;
+        tpl.Positionen.forEach(p => {
+            const kcalPer100 = p.Kcal || 0;
+            totalKcal += kcalPer100 * (p.Menge || 0) / 100;
+        });
+
+        const card = document.createElement('div');
+        card.className = 'menu-card';
+
+        const header = document.createElement('div');
+        header.className = 'menu-card-header';
+        header.innerHTML = `<span class="menu-card-name">${tpl.Name}</span><span class="menu-card-kcal">${Math.round(totalKcal)} kcal</span>`;
+        card.appendChild(header);
+
+        const items = document.createElement('div');
+        items.className = 'menu-card-items';
+        tpl.Positionen.forEach(p => {
+            const menge = Math.round(p.Menge || 0);
+            const kcal = Math.round((p.Kcal || 0) * menge / 100);
+            const div = document.createElement('div');
+            div.className = 'menu-card-item';
+            div.textContent = `${p.Lebensmittel} - ${menge}${p.Einheit} (${kcal} kcal)`;
+            items.appendChild(div);
+        });
+        card.appendChild(items);
+
+        const actions = document.createElement('div');
+        actions.className = 'button-row';
+        actions.style.marginTop = '8px';
+
+        const btnZmorge = document.createElement('button');
+        btnZmorge.className = 'btn-meal';
+        btnZmorge.textContent = "z'Morge";
+        btnZmorge.addEventListener('click', () => useMenuAsMeal(tplIdx, "z'Morge"));
+
+        const btnZmittag = document.createElement('button');
+        btnZmittag.className = 'btn-meal';
+        btnZmittag.textContent = "z'Mittag";
+        btnZmittag.addEventListener('click', () => useMenuAsMeal(tplIdx, "z'Mittag"));
+
+        const btnZnacht = document.createElement('button');
+        btnZnacht.className = 'btn-meal';
+        btnZnacht.textContent = "z'Nacht";
+        btnZnacht.addEventListener('click', () => useMenuAsMeal(tplIdx, "z'Nacht"));
+
+        const btnDelete = document.createElement('button');
+        btnDelete.className = 'btn-red';
+        btnDelete.textContent = 'Delete';
+        btnDelete.addEventListener('click', () => {
+            if (!confirm(`Menu '${tpl.Name}' entfernen?`)) return;
+            templates.splice(tplIdx, 1);
+            saveTemplates();
+            refreshMenuOverview();
+            $('menus-status').textContent = `Menu '${tpl.Name}' entfernt.`;
+        });
+
+        actions.appendChild(btnZmorge);
+        actions.appendChild(btnZmittag);
+        actions.appendChild(btnZnacht);
+        actions.appendChild(btnDelete);
+        card.appendChild(actions);
+
+        container.appendChild(card);
+    });
+}
+
+// ===== Menu als Mahlzeit verwenden (zaehlt zum Tagessoll) =====
+function useMenuAsMeal(tplIdx, mealType) {
+    const tpl = templates[tplIdx];
+    if (!tpl) return;
+
     const s = { kcal: 0, fett: 0, kh: 0, zucker: 0, eiweiss: 0 };
-    const positions = menuList.map(m => {
-        const f = m.Menge / 100;
-        s.kcal += m.Kcal * f; s.fett += m.Fett * f; s.kh += m.Kohlenhydrate * f;
-        s.zucker += m.Zucker * f; s.eiweiss += m.Eiweiss * f;
-        return { Lebensmittel: m.Lebensmittel, Menge: m.Menge, Einheit: m.Einheit,
-                 Kcal: Math.round(m.Kcal * f * 10) / 10 };
+    const positions = tpl.Positionen.map(p => {
+        const f = (p.Menge || 0) / 100;
+        s.kcal += (p.Kcal || 0) * f;
+        s.fett += (p.Fett || 0) * f;
+        s.kh += (p.Kohlenhydrate || 0) * f;
+        s.zucker += (p.Zucker || 0) * f;
+        s.eiweiss += (p.Eiweiss || 0) * f;
+        return { Lebensmittel: p.Lebensmittel, Menge: p.Menge, Einheit: p.Einheit,
+                 Kcal: Math.round((p.Kcal || 0) * f * 10) / 10 };
     });
 
     meals.push({
@@ -499,64 +553,7 @@ function menuSaveMeal(mealType) {
     });
     saveMeals();
     updateDailyCircles();
-    statusEl.textContent = `${mealType} gespeichert (${today()} ${nowTime()}) - ${Math.round(s.kcal)} kcal`;
-}
-
-// ===== Menue: Als Vorlage =====
-function menuSaveAsTemplate() {
-    if (menuList.length === 0) { $('menus-status').textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
-    const name = prompt('Name fuer die Vorlage:');
-    if (!name || !name.trim()) return;
-
-    const positions = menuList.map(m => ({
-        Lebensmittel: m.Lebensmittel, Einheit: m.Einheit, Menge: m.Menge
-    }));
-    const idx = templates.findIndex(t => t.Name === name.trim());
-    if (idx >= 0) { templates[idx] = { Name: name.trim(), Positionen: positions }; }
-    else { templates.push({ Name: name.trim(), Positionen: positions }); }
-
-    saveTemplates();
-    populateTemplateDropdown();
-    $('menus-status').textContent = `Vorlage '${name.trim()}' gespeichert.`;
-}
-
-// ===== Vorlage: Laden =====
-function menuLoadTemplate() {
-    const sel = $('menu-template-select');
-    if (sel.selectedIndex < 0) { $('menus-status').textContent = 'Keine Vorlage ausgewaehlt.'; return; }
-
-    const tpl = templates[parseInt(sel.value)];
-    menuList = [];
-    selectedMenuIndex = -1;
-    const notFound = [];
-
-    tpl.Positionen.forEach(pos => {
-        const d = db.find(x => x.Lebensmittel === pos.Lebensmittel);
-        if (!d) { notFound.push(pos.Lebensmittel); return; }
-        menuList.push({
-            Lebensmittel: d.Lebensmittel, Einheit: d.Einheit, Menge: pos.Menge,
-            Kcal: d.Kcal, Fett: d.Fett, Gesaettigt: d.Gesaettigt,
-            Kohlenhydrate: d.Kohlenhydrate, Zucker: d.Zucker, Eiweiss: d.Eiweiss,
-            Salz: d.Salz, Ballaststoffe: d.Ballaststoffe
-        });
-    });
-    refreshMenuList();
-    $('menus-status').textContent = notFound.length > 0
-        ? `Geladen. ACHTUNG: ${notFound.join(', ')} nicht in DB!`
-        : `'${tpl.Name}' geladen. (${menuList.length} Pos.)`;
-}
-
-// ===== Vorlage: Loeschen =====
-function menuDeleteTemplate() {
-    const sel = $('menu-template-select');
-    if (sel.selectedIndex < 0) { $('menus-status').textContent = 'Keine Vorlage ausgewaehlt.'; return; }
-    const idx = parseInt(sel.value);
-    const name = templates[idx].Name;
-    if (!confirm(`Vorlage '${name}' entfernen?`)) return;
-    templates.splice(idx, 1);
-    saveTemplates();
-    populateTemplateDropdown();
-    $('menus-status').textContent = `Vorlage '${name}' entfernt.`;
+    $('menus-status').textContent = `'${tpl.Name}' als ${mealType} gespeichert - ${Math.round(s.kcal)} kcal`;
 }
 
 // ===== Mahlzeit speichern (z'Morge / z'Mittag / z'Nacht) =====
@@ -976,17 +973,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('menu-add').addEventListener('click', menuAdd);
     $('menu-remove').addEventListener('click', menuRemove);
     $('menu-clear').addEventListener('click', menuClear);
-    $('menu-calculate').addEventListener('click', menuCalculate);
-
-    // --- Menus Tab: Als Mahlzeit speichern ---
-    $('menu-save-zmorge').addEventListener('click', () => menuSaveMeal("z'Morge"));
-    $('menu-save-zmittag').addEventListener('click', () => menuSaveMeal("z'Mittag"));
-    $('menu-save-znacht').addEventListener('click', () => menuSaveMeal("z'Nacht"));
-
-    // --- Menus Tab: Vorlagen ---
-    $('menu-tpl-load').addEventListener('click', menuLoadTemplate);
-    $('menu-tpl-save').addEventListener('click', menuSaveAsTemplate);
-    $('menu-tpl-delete').addEventListener('click', menuDeleteTemplate);
+    $('menu-save-recipe').addEventListener('click', menuSaveRecipe);
 
     // --- Editor: Aktionen ---
     $('editor-search-btn').addEventListener('click', () => populateEditorFoodDropdown($('editor-search').value));

@@ -249,8 +249,14 @@
 
     <!-- ===== TAB: MENUS ===== -->
     <section id="tab-menus" class="tab-content">
+
+      <!-- Neues Menu erstellen -->
       <div class="group">
         <div class="group-header">Menu zusammenstellen</div>
+        <div class="field">
+          <label>Menuname:</label>
+          <input type="text" id="menu-name" placeholder="z.B. Fischstaebli und Spinat">
+        </div>
         <div class="row">
           <input type="text" id="menu-search" placeholder="Lebensmittel suchen...">
           <button id="menu-search-btn">Search</button>
@@ -263,36 +269,17 @@
           <button class="btn-green" id="menu-add">Add</button>
           <button class="btn-red" id="menu-remove">Remove</button>
         </div>
-      </div>
-
-      <div class="group">
-        <div class="group-header">Menu Items</div>
         <div class="list-box" id="menu-list"></div>
         <div class="button-row" style="margin-top:8px">
-          <button id="menu-calculate">Calculate</button>
+          <button class="btn-green" id="menu-save-recipe">Save Menu</button>
           <button class="btn-red" id="menu-clear">Clear</button>
         </div>
       </div>
 
+      <!-- Gespeicherte Menus (Speisekarte) -->
       <div class="group">
-        <div class="group-header">Save as Meal</div>
-        <div class="button-row">
-          <button class="btn-meal" id="menu-save-zmorge">z'Morge</button>
-          <button class="btn-meal" id="menu-save-zmittag">z'Mittag</button>
-          <button class="btn-meal" id="menu-save-znacht">z'Nacht</button>
-        </div>
-      </div>
-
-      <div class="group">
-        <div class="group-header">Templates</div>
-        <div class="row">
-          <select id="menu-template-select"></select>
-        </div>
-        <div class="button-row">
-          <button id="menu-tpl-load">Load</button>
-          <button class="btn-green" id="menu-tpl-save">Save</button>
-          <button class="btn-red" id="menu-tpl-delete">Delete</button>
-        </div>
+        <div class="group-header">Saved Menus</div>
+        <div id="menu-overview"></div>
       </div>
 
       <div id="menus-status" class="status"></div>

@@ -491,6 +491,49 @@ button:active {
   color: var(--text);
 }
 
+/* === Menu Cards (Speisekarte) === */
+.menu-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.menu-card:last-child {
+  margin-bottom: 0;
+}
+.menu-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.menu-card-name {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 15px;
+}
+.menu-card-kcal {
+  font-weight: 700;
+  color: var(--green);
+  font-size: 14px;
+}
+.menu-card-items {
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+}
+.menu-card-item {
+  font-size: 12px;
+  color: var(--subtext);
+  padding: 3px 0;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+.menu-card .button-row button {
+  font-size: 12px;
+  padding: 8px 6px;
+  min-width: 0;
+}
+
 /* === Scrollbar === */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
