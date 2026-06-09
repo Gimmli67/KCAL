@@ -91,16 +91,21 @@ function switchTab(name) {
     $('tab-' + name).classList.add('active');
     document.querySelector(`.nav-btn[data-tab="${name}"]`).classList.add('active');
     if (name === 'history') refreshHistory();
+    if (name === 'menus') { populateMenuFoodDropdown(); refreshMenuList(); }
 }
 
 // ===== Dropdown Population =====
-function populateMenuFoodDropdown() {
+function populateMenuFoodDropdown(filter) {
     const sel = $('menu-food-select');
     if (!sel) return;
     sel.innerHTML = '';
-    db.forEach((item, i) => {
+    const filtered = filter
+        ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
+        : db;
+    filtered.forEach(item => {
+        const origIndex = db.indexOf(item);
         const opt = document.createElement('option');
-        opt.value = i;
+        opt.value = origIndex;
         opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal`;
         sel.appendChild(opt);
     });
@@ -325,7 +330,7 @@ function editorLoad() {
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
     $('ed-amount').value = '';
-    $('editor-food-calculated').innerHTML = '';
+    if ($('editor-food-calculated')) $('editor-food-calculated').innerHTML = '';
     $('editor-status').textContent = `'${food.Lebensmittel}' geladen.`;
 }
 
@@ -380,9 +385,9 @@ function editorClear() {
 // ===== Menue: Hinzufuegen =====
 function menuAdd() {
     const sel = $('menu-food-select');
-    if (sel.selectedIndex < 0) { $('menu-status').textContent = 'Bitte Lebensmittel waehlen.'; return; }
+    if (sel.selectedIndex < 0) { $('menus-status').textContent = 'Bitte Lebensmittel waehlen.'; return; }
     const amount = parseNum($('menu-amount').value);
-    if (!amount || amount <= 0) { $('menu-status').textContent = 'Bitte gueltige Menge eingeben.'; return; }
+    if (!amount || amount <= 0) { $('menus-status').textContent = 'Bitte gueltige Menge eingeben.'; return; }
 
     const d = db[parseInt(sel.value)];
     menuList.push({
@@ -394,17 +399,17 @@ function menuAdd() {
     $('menu-amount').value = '';
     selectedMenuIndex = -1;
     refreshMenuList();
-    $('menu-status').textContent = `'${d.Lebensmittel}' hinzugefuegt. (${menuList.length} Positionen)`;
+    $('menus-status').textContent = `'${d.Lebensmittel}' hinzugefuegt. (${menuList.length} Positionen)`;
 }
 
 // ===== Menue: Entfernen =====
 function menuRemove() {
-    if (selectedMenuIndex < 0) { $('menu-status').textContent = 'Bitte Eintrag in Liste antippen.'; return; }
+    if (selectedMenuIndex < 0) { $('menus-status').textContent = 'Bitte Eintrag in Liste antippen.'; return; }
     const name = menuList[selectedMenuIndex].Lebensmittel;
     menuList.splice(selectedMenuIndex, 1);
     selectedMenuIndex = -1;
     refreshMenuList();
-    $('menu-status').textContent = `'${name}' entfernt.`;
+    $('menus-status').textContent = `'${name}' entfernt.`;
 }
 
 // ===== Menue: Leeren =====
@@ -412,12 +417,12 @@ function menuClear() {
     menuList = [];
     selectedMenuIndex = -1;
     refreshMenuList();
-    $('menu-status').textContent = 'Menue geleert.';
+    $('menus-status').textContent = 'Menue geleert.';
 }
 
 // ===== Menue: Berechnen =====
 function menuCalculate() {
-    if (menuList.length === 0) { $('menu-status').textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
+    if (menuList.length === 0) { $('menus-status').textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
 
     const s = { kcal: 0, fett: 0, ges: 0, kh: 0, zucker: 0, eiweiss: 0, salz: 0, ball: 0 };
     const lines = [];
@@ -466,14 +471,14 @@ function menuCalculate() {
     lines.push('==================================================');
 
     showResultModal('Menue-Uebersicht', lines.join('\n'));
-    $('menu-status').textContent = `${menuList.length} Pos., ${Math.round(s.kcal)} kcal von ${GOALS.kcal}`;
+    $('menus-status').textContent = `${menuList.length} Pos., ${Math.round(s.kcal)} kcal von ${GOALS.kcal}`;
 }
 
-// ===== Menue: Speichern =====
-function menuSave() {
-    if (menuList.length === 0) { $('menu-status').textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
+// ===== Menue: Als Mahlzeit speichern =====
+function menuSaveMeal(mealType) {
+    const statusEl = $('menus-status');
+    if (menuList.length === 0) { statusEl.textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
 
-    const mealType = 'Mahlzeit';
     const s = { kcal: 0, fett: 0, kh: 0, zucker: 0, eiweiss: 0 };
     const positions = menuList.map(m => {
         const f = m.Menge / 100;
@@ -493,12 +498,13 @@ function menuSave() {
         }
     });
     saveMeals();
-    $('menu-status').textContent = `${mealType} gespeichert (${today()} ${nowTime()}) - ${Math.round(s.kcal)} kcal`;
+    updateDailyCircles();
+    statusEl.textContent = `${mealType} gespeichert (${today()} ${nowTime()}) - ${Math.round(s.kcal)} kcal`;
 }
 
 // ===== Menue: Als Vorlage =====
 function menuSaveAsTemplate() {
-    if (menuList.length === 0) { $('menu-status').textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
+    if (menuList.length === 0) { $('menus-status').textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
     const name = prompt('Name fuer die Vorlage:');
     if (!name || !name.trim()) return;
 
@@ -511,13 +517,13 @@ function menuSaveAsTemplate() {
 
     saveTemplates();
     populateTemplateDropdown();
-    $('menu-status').textContent = `Vorlage '${name.trim()}' gespeichert.`;
+    $('menus-status').textContent = `Vorlage '${name.trim()}' gespeichert.`;
 }
 
 // ===== Vorlage: Laden =====
 function menuLoadTemplate() {
     const sel = $('menu-template-select');
-    if (sel.selectedIndex < 0) { $('menu-status').textContent = 'Keine Vorlage ausgewaehlt.'; return; }
+    if (sel.selectedIndex < 0) { $('menus-status').textContent = 'Keine Vorlage ausgewaehlt.'; return; }
 
     const tpl = templates[parseInt(sel.value)];
     menuList = [];
@@ -535,7 +541,7 @@ function menuLoadTemplate() {
         });
     });
     refreshMenuList();
-    $('menu-status').textContent = notFound.length > 0
+    $('menus-status').textContent = notFound.length > 0
         ? `Geladen. ACHTUNG: ${notFound.join(', ')} nicht in DB!`
         : `'${tpl.Name}' geladen. (${menuList.length} Pos.)`;
 }
@@ -543,14 +549,14 @@ function menuLoadTemplate() {
 // ===== Vorlage: Loeschen =====
 function menuDeleteTemplate() {
     const sel = $('menu-template-select');
-    if (sel.selectedIndex < 0) { $('menu-status').textContent = 'Keine Vorlage ausgewaehlt.'; return; }
+    if (sel.selectedIndex < 0) { $('menus-status').textContent = 'Keine Vorlage ausgewaehlt.'; return; }
     const idx = parseInt(sel.value);
     const name = templates[idx].Name;
     if (!confirm(`Vorlage '${name}' entfernen?`)) return;
     templates.splice(idx, 1);
     saveTemplates();
     populateTemplateDropdown();
-    $('menu-status').textContent = `Vorlage '${name}' entfernt.`;
+    $('menus-status').textContent = `Vorlage '${name}' entfernt.`;
 }
 
 // ===== Mahlzeit speichern (z'Morge / z'Mittag / z'Nacht) =====
@@ -904,7 +910,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Menue: Aktionen (deaktiviert - kommt spaeter) ---
+    // --- Manual Entry: zum Editor wechseln mit leeren Feldern ---
+    $('menu-manual-entry').addEventListener('click', () => {
+        editorClear();
+        switchTab('editor');
+    });
+
+    // --- Menus Tab: Lebensmittel suchen ---
+    $('menu-search-btn').addEventListener('click', () => populateMenuFoodDropdown($('menu-search').value));
+    $('menu-search').addEventListener('keydown', e => { if (e.key === 'Enter') populateMenuFoodDropdown($('menu-search').value); });
+
+    // --- Menus Tab: Aktionen ---
+    $('menu-add').addEventListener('click', menuAdd);
+    $('menu-remove').addEventListener('click', menuRemove);
+    $('menu-clear').addEventListener('click', menuClear);
+    $('menu-calculate').addEventListener('click', menuCalculate);
+
+    // --- Menus Tab: Als Mahlzeit speichern ---
+    $('menu-save-zmorge').addEventListener('click', () => menuSaveMeal("z'Morge"));
+    $('menu-save-zmittag').addEventListener('click', () => menuSaveMeal("z'Mittag"));
+    $('menu-save-znacht').addEventListener('click', () => menuSaveMeal("z'Nacht"));
+
+    // --- Menus Tab: Vorlagen ---
+    $('menu-tpl-load').addEventListener('click', menuLoadTemplate);
+    $('menu-tpl-save').addEventListener('click', menuSaveAsTemplate);
+    $('menu-tpl-delete').addEventListener('click', menuDeleteTemplate);
 
     // --- Editor: Aktionen ---
     $('editor-search-btn').addEventListener('click', () => populateEditorFoodDropdown($('editor-search').value));
