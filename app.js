@@ -622,10 +622,11 @@ function updateDailyCircles() {
         const valEl = $('circle-' + id + '-val');
         if (circle) {
             circle.style.strokeDashoffset = offset;
+            circle.classList.remove('over', 'warn');
             if (pct > 100) {
                 circle.classList.add('over');
-            } else {
-                circle.classList.remove('over');
+            } else if (pct > 80) {
+                circle.classList.add('warn');
             }
         }
         if (valEl) valEl.textContent = pct + '%';
