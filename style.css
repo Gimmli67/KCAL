@@ -437,6 +437,53 @@ button:active {
   line-height: 1.6;
 }
 
+/* === Status Circles === */
+.status-circles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.circle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90px;
+}
+.circle-svg {
+  width: 80px;
+  height: 80px;
+  transform: rotate(-90deg);
+}
+.circle-bg {
+  fill: none;
+  stroke: var(--overlay);
+  stroke-width: 8;
+}
+.circle-fg {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 326.7;
+  stroke-dashoffset: 326.7;
+  transition: stroke-dashoffset 0.6s ease, stroke 0.3s ease;
+}
+.circle-fg.over {
+  stroke: var(--red);
+}
+.circle-label {
+  font-size: 10px;
+  color: var(--subtext);
+  margin-top: 4px;
+  text-align: center;
+}
+.circle-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
 /* === Scrollbar === */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }

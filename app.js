@@ -587,7 +587,49 @@ function saveMealFromEditor(mealType) {
         }
     });
     saveMeals();
+    updateDailyCircles();
     $('editor-status').textContent = `${food.Lebensmittel} (${Math.round(amount)}${food.Einheit}) als ${mealType} gespeichert.`;
+}
+
+// ===== Daily Status Circles =====
+function updateDailyCircles() {
+    const todayStr = today();
+    const todayMeals = meals.filter(m => m.Datum === todayStr);
+
+    const totals = { kcal: 0, eiweiss: 0, kh: 0, fett: 0, zucker: 0 };
+    todayMeals.forEach(m => {
+        totals.kcal += m.Summe.Kcal || 0;
+        totals.eiweiss += m.Summe.Eiweiss || 0;
+        totals.kh += m.Summe.Kohlenhydrate || 0;
+        totals.fett += m.Summe.Fett || 0;
+        totals.zucker += m.Summe.Zucker || 0;
+    });
+
+    const circumference = 2 * Math.PI * 52; // 326.7
+    const items = [
+        ['kcal', totals.kcal, GOALS.kcal],
+        ['eiweiss', totals.eiweiss, GOALS.eiweiss],
+        ['kh', totals.kh, GOALS.kohlenhydrate],
+        ['fett', totals.fett, GOALS.fett],
+        ['zucker', totals.zucker, GOALS.zucker]
+    ];
+
+    items.forEach(([id, current, goal]) => {
+        const pct = goal > 0 ? Math.round((current / goal) * 100) : 0;
+        const ratio = Math.min(current / goal, 1);
+        const offset = circumference * (1 - ratio);
+        const circle = $('circle-' + id);
+        const valEl = $('circle-' + id + '-val');
+        if (circle) {
+            circle.style.strokeDashoffset = offset;
+            if (pct > 100) {
+                circle.classList.add('over');
+            } else {
+                circle.classList.remove('over');
+            }
+        }
+        if (valEl) valEl.textContent = pct + '%';
+    });
 }
 
 // ===== Verlauf =====
@@ -811,6 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
     populateTemplateDropdown();
     refreshHistory();
     loadInitialData();
+    updateDailyCircles();
 
     // --- Tab Navigation ---
     document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -945,6 +988,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('kcal_templates');
         db = []; meals = []; templates = [];
         loadInitialData().then(() => {
+            updateDailyCircles();
             $('data-status').textContent = `Neu geladen: ${db.length} LM, ${meals.length} Mahlzeiten, ${templates.length} Vorlagen.`;
         });
     });
