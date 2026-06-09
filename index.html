@@ -36,6 +36,68 @@
         <div id="food-display-nutrients"></div>
       </div>
 
+      <!-- Manual Entry Formular -->
+      <div id="manual-entry-form" class="group hidden">
+        <div class="group-header">Manual Entry</div>
+        <div class="field">
+          <label>Produktname:</label>
+          <input type="text" id="me-name" placeholder="Name eingeben...">
+        </div>
+        <div class="field">
+          <label>Effective Volume:</label>
+          <input type="text" id="me-amount" inputmode="decimal" placeholder="Menge eingeben...">
+        </div>
+        <div class="nutrient-grid">
+          <div class="nutrient-header">
+            <span></span><span>pro 100</span><span id="me-calc-header"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Kalorien (kcal)</label>
+            <input type="text" id="me-kcal" inputmode="decimal" placeholder="0">
+            <span class="calc" id="me-kcal-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Fett (g)</label>
+            <input type="text" id="me-fett" inputmode="decimal" placeholder="0">
+            <span class="calc" id="me-fett-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>dav. gesaettigt</label>
+            <input type="text" id="me-gesaettigt" inputmode="decimal" placeholder="0">
+            <span class="calc" id="me-gesaettigt-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Kohlenhydrate (g)</label>
+            <input type="text" id="me-kh" inputmode="decimal" placeholder="0">
+            <span class="calc" id="me-kh-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>dav. Zucker (g)</label>
+            <input type="text" id="me-zucker" inputmode="decimal" placeholder="0">
+            <span class="calc" id="me-zucker-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Eiweiss (g)</label>
+            <input type="text" id="me-eiweiss" inputmode="decimal" placeholder="0">
+            <span class="calc" id="me-eiweiss-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Salz (g)</label>
+            <input type="text" id="me-salz" inputmode="decimal" placeholder="0">
+            <span class="calc" id="me-salz-calc"></span>
+          </div>
+          <div class="nutrient-row">
+            <label>Ballaststoffe (g)</label>
+            <input type="text" id="me-ballaststoffe" inputmode="decimal" placeholder="0">
+            <span class="calc" id="me-ballaststoffe-calc"></span>
+          </div>
+        </div>
+        <div class="button-row">
+          <button class="btn-green" id="me-save">Save</button>
+          <button class="btn-red" id="me-cancel">Cancel</button>
+        </div>
+      </div>
+
       <!-- Tages-Status Kreise -->
       <div class="group">
         <div class="group-header">Daily Status</div>

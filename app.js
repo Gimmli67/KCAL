@@ -910,10 +910,62 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Manual Entry: zum Editor wechseln mit leeren Feldern ---
+    // --- Manual Entry: Formular ein-/ausblenden ---
     $('menu-manual-entry').addEventListener('click', () => {
-        editorClear();
-        switchTab('editor');
+        const form = $('manual-entry-form');
+        form.classList.toggle('hidden');
+        if (!form.classList.contains('hidden')) {
+            ['me-name','me-kcal','me-fett','me-gesaettigt','me-kh','me-zucker','me-eiweiss','me-salz','me-ballaststoffe']
+                .forEach(id => { if ($(id)) $(id).value = ''; });
+        }
+    });
+    $('me-save').addEventListener('click', () => {
+        const name = $('me-name').value.trim();
+        if (!name) { $('menu-status').textContent = 'Bitte Produktname eingeben.'; return; }
+
+        const food = {
+            Lebensmittel: name, Einheit: 'g',
+            Kcal: parseNum($('me-kcal').value) || 0,
+            Fett: parseNum($('me-fett').value) || 0,
+            Gesaettigt: parseNum($('me-gesaettigt').value) || 0,
+            Kohlenhydrate: parseNum($('me-kh').value) || 0,
+            Zucker: parseNum($('me-zucker').value) || 0,
+            Eiweiss: parseNum($('me-eiweiss').value) || 0,
+            Salz: parseNum($('me-salz').value) || 0,
+            Ballaststoffe: parseNum($('me-ballaststoffe').value) || 0
+        };
+
+        const saveResult = autoSaveFood(food);
+        $('manual-entry-form').classList.add('hidden');
+        if (saveResult === 'exists') {
+            $('menu-status').textContent = `'${name}' bereits vorhanden - ausgewaehlt.`;
+        } else {
+            $('menu-status').textContent = `'${name}' neu gespeichert. (${food.Kcal} kcal/100g)`;
+        }
+    });
+    $('me-cancel').addEventListener('click', () => {
+        $('manual-entry-form').classList.add('hidden');
+    });
+    $('me-amount').addEventListener('input', () => {
+        const amount = parseNum($('me-amount').value);
+        const fields = [
+            ['me-kcal','me-kcal-calc'],['me-fett','me-fett-calc'],
+            ['me-gesaettigt','me-gesaettigt-calc'],['me-kh','me-kh-calc'],
+            ['me-zucker','me-zucker-calc'],['me-eiweiss','me-eiweiss-calc'],
+            ['me-salz','me-salz-calc'],['me-ballaststoffe','me-ballaststoffe-calc']
+        ];
+        const header = $('me-calc-header');
+        if (!amount || amount <= 0) {
+            if (header) header.textContent = '';
+            fields.forEach(([,c]) => { if ($(c)) $(c).textContent = ''; });
+            return;
+        }
+        if (header) header.innerHTML = '<span style="color:#a6e3a1;font-weight:700">Effectiv</span>';
+        const f = amount / 100;
+        fields.forEach(([inputId, calcId]) => {
+            const v = parseNum($(inputId).value);
+            if ($(calcId)) $(calcId).textContent = v !== null ? (v * f).toFixed(1) : '';
+        });
     });
 
     // --- Menus Tab: Lebensmittel suchen ---
