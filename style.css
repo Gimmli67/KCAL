@@ -607,10 +607,11 @@ button:active {
 }
 
 /* === AquaTrack === */
-.aqua-drop-row {
+.aqua-drop-center {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
+  margin-bottom: 8px;
 }
 .aqua-drop {
   position: relative;
@@ -639,9 +640,6 @@ button:active {
   font-weight: 700;
   color: var(--text);
 }
-.aqua-right {
-  flex: 1;
-}
 .aqua-bar-container {
   background: var(--surface);
   border-radius: 10px;
@@ -659,7 +657,7 @@ button:active {
   font-size: 14px;
   font-weight: 700;
   color: #74c7ec;
-  margin-bottom: 6px;
+  margin-top: 4px;
 }
 .btn-aqua {
   background: #74c7ec;

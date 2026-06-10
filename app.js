@@ -859,19 +859,25 @@ function renderDailyMeals(todayMeals) {
 // ===== Verlauf =====
 let currentMealTab = 'zmorge';
 let historyDate = today();
-const MEAL_NAMES = { zmorge: "z'Morge", zmittag: "z'Mittag", znacht: "z'Nacht" };
+const MEAL_NAMES = { zmorge: "z'Morge", zmittag: "z'Mittag", znacht: "z'Nacht", aqua: "Aqua" };
 
 function refreshHistory() {
     const content = $('history-content');
     if (!content) return;
     const dateEl = $('history-date');
     if (dateEl) dateEl.value = historyDate;
+
+    if (currentMealTab === 'aqua') {
+        refreshAquaHistory(content);
+        return;
+    }
+
     const mealName = MEAL_NAMES[currentMealTab];
     const mealEntries = meals.filter(m => m.Datum === historyDate && m.Mahlzeit === mealName);
 
     const lines = [];
     lines.push('==================================================');
-    lines.push(`  ${mealName} - ${todayStr}`);
+    lines.push(`  ${mealName} - ${historyDate}`);
     lines.push('==================================================');
 
     if (mealEntries.length === 0) {
@@ -904,6 +910,60 @@ function refreshHistory() {
         lines.push(`  ${'Kohlenhydrate (g)'.padEnd(22)} ${tag.kh.toFixed(1).padStart(8)} ${String(GOALS.kohlenhydrate).padStart(6)}`);
         lines.push(`  ${'Zucker (g)'.padEnd(22)} ${tag.zucker.toFixed(1).padStart(8)} ${String(GOALS.zucker).padStart(6)}`);
         lines.push(`  ${'Eiweiss (g)'.padEnd(22)} ${tag.eiweiss.toFixed(1).padStart(8)} ${String(GOALS.eiweiss).padStart(6)}`);
+        lines.push('==================================================');
+    }
+
+    content.textContent = lines.join('\n');
+}
+
+function refreshAquaHistory(content) {
+    const log = loadAquaLog();
+    const dayEntries = log.filter(e => e.Datum === historyDate);
+
+    // Drinks aus Mahlzeiten
+    const mealDrinks = [];
+    meals.filter(m => m.Datum === historyDate).forEach(m => {
+        m.Positionen.forEach(p => {
+            if (p.Einheit === 'ml') {
+                mealDrinks.push({ Zeit: m.Zeit, Name: p.Lebensmittel, Menge: p.Menge || 0 });
+            }
+        });
+    });
+
+    const lines = [];
+    lines.push('==================================================');
+    lines.push(`  AquaTrack - ${historyDate}`);
+    lines.push('==================================================');
+
+    let totalMl = 0;
+
+    if (dayEntries.length === 0 && mealDrinks.length === 0) {
+        lines.push('');
+        lines.push('  Keine Eintraege.');
+    } else {
+        if (dayEntries.length > 0) {
+            lines.push('');
+            lines.push('  Quick-Add:');
+            lines.push('  ' + '-'.repeat(44));
+            dayEntries.forEach(e => {
+                totalMl += e.Menge;
+                lines.push(`    ${e.Zeit}  ${(e.Name || '').padEnd(20)} ${String(e.Menge).padStart(5)} ml`);
+            });
+        }
+        if (mealDrinks.length > 0) {
+            lines.push('');
+            lines.push('  Drinks aus Mahlzeiten:');
+            lines.push('  ' + '-'.repeat(44));
+            mealDrinks.forEach(d => {
+                totalMl += d.Menge;
+                lines.push(`    ${d.Zeit}  ${(d.Name || '').padEnd(20)} ${String(Math.round(d.Menge)).padStart(5)} ml`);
+            });
+        }
+
+        const pct = Math.round((totalMl / GOALS.aqua) * 100);
+        lines.push('');
+        lines.push('==================================================');
+        lines.push(`  TOTAL: ${Math.round(totalMl)} / ${GOALS.aqua} ml (${pct}%)`);
         lines.push('==================================================');
     }
 
