@@ -365,8 +365,9 @@ function editorLoad() {
     $('ed-eiweiss').value = food.Eiweiss ?? '';
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
-    $('ed-amount').value = '';
+    $('ed-amount').value = food.Gesamtmenge || '';
     if ($('editor-food-calculated')) $('editor-food-calculated').innerHTML = '';
+    updateEditorCalc();
     $('editor-status').textContent = `'${food.Lebensmittel}' geladen.`;
 }
 
@@ -658,6 +659,59 @@ function updateDailyCircles() {
             }
         }
         if (valEl) valEl.textContent = pct + '%';
+    });
+
+    renderDailyMeals(todayMeals);
+}
+
+function renderDailyMeals(todayMeals) {
+    const container = $('daily-meals-list');
+    if (!container) return;
+
+    const mealTypes = ["z'Morge", "z'Mittag", "z'Nacht"];
+    let html = '';
+    let totalKcal = 0;
+
+    mealTypes.forEach(type => {
+        const items = todayMeals.filter(m => m.Mahlzeit === type);
+        if (items.length === 0) return;
+
+        let mealKcal = 0;
+        items.forEach(m => { mealKcal += m.Summe.Kcal || 0; });
+        totalKcal += mealKcal;
+
+        html += `<div class="daily-meal-group">`;
+        html += `<div class="daily-meal-header">${type} <span class="daily-meal-sum">(${Math.round(mealKcal)} kcal)</span></div>`;
+        items.forEach(m => {
+            m.Positionen.forEach((p, pi) => {
+                const mealIdx = todayMeals.indexOf(m);
+                const kcal = Math.round(p.Kcal);
+                html += `<div class="daily-meal-item">${p.Lebensmittel} - ${kcal} kcal <span class="daily-meal-delete" data-meal="${mealIdx}" data-pos="${pi}" title="Remove">✕</span></div>`;
+            });
+        });
+        html += `</div>`;
+    });
+
+    if (html) {
+        html += `<div class="daily-meal-total">Total: ${Math.round(totalKcal)} / ${GOALS.kcal} kcal</div>`;
+    }
+
+    container.innerHTML = html || '<div class="daily-meal-item" style="color:var(--subtext)">Noch keine Mahlzeiten heute</div>';
+
+    container.querySelectorAll('.daily-meal-delete').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const todayStr = today();
+            const todayMealsList = meals.filter(m => m.Datum === todayStr);
+            const mi = parseInt(btn.dataset.meal);
+            const meal = todayMealsList[mi];
+            if (!meal) return;
+            const globalIdx = meals.indexOf(meal);
+            if (globalIdx >= 0) {
+                meals.splice(globalIdx, 1);
+                saveMeals();
+                updateDailyCircles();
+            }
+        });
     });
 }
 

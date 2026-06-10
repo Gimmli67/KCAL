@@ -190,6 +190,46 @@ button:active {
   margin-left: auto;
   box-sizing: content-box;
 }
+.daily-meal-group {
+  margin-bottom: 10px;
+}
+.daily-meal-header {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+.daily-meal-item {
+  font-size: 13px;
+  color: var(--text);
+  padding: 2px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.daily-meal-sum {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--subtext);
+}
+.daily-meal-delete {
+  color: var(--red, #f38ba8);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0 4px;
+  opacity: 0.6;
+}
+.daily-meal-delete:hover {
+  opacity: 1;
+}
+.daily-meal-total {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary);
+}
 .pn-row {
   display: flex;
   justify-content: space-between;
