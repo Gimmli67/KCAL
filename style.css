@@ -688,26 +688,22 @@ button:active {
   opacity: 0.8;
   transform: scale(0.97);
 }
-
-#aqua-log-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 6px;
-}
-.aqua-log-btn {
-  font-size: 11px;
-  padding: 4px 8px;
-  border: none;
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--subtext);
-  cursor: pointer;
-}
-.aqua-log-btn:active {
+.btn-aqua-remove {
   background: var(--red);
   color: var(--bg);
+  flex: 1;
+  font-size: 12px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
 }
+.btn-aqua-remove:active {
+  opacity: 0.8;
+  transform: scale(0.97);
+}
+
 
 /* === Toast === */
 #toast-msg {

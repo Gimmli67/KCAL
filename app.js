@@ -720,6 +720,21 @@ function addAquaEntry(name, ml) {
     showToast(`✓ ${name} +${ml}ml`);
 }
 
+function removeAquaEntry(name, ml) {
+    const log = loadAquaLog();
+    const todayStr = today();
+    for (let i = log.length - 1; i >= 0; i--) {
+        if (log[i].Datum === todayStr && log[i].Name === name && log[i].Menge === ml) {
+            log.splice(i, 1);
+            saveAquaLog(log);
+            updateAquaTrack();
+            showToast(`✕ ${name} -${ml}ml`);
+            return;
+        }
+    }
+    showToast(`Kein ${name} zum Entfernen`);
+}
+
 function updateAquaTrack() {
     const todayStr = today();
 
@@ -750,29 +765,6 @@ function updateAquaTrack() {
     if (dropPct) dropPct.textContent = pct + '%';
     if (info) info.style.color = reached ? 'var(--green)' : '#74c7ec';
 
-    // Log-Buttons rendern
-    const logList = $('aqua-log-list');
-    if (logList) {
-        const todayEntries = log.filter(e => e.Datum === todayStr);
-        if (todayEntries.length === 0) {
-            logList.innerHTML = '';
-        } else {
-            logList.innerHTML = todayEntries.map(e =>
-                `<button class="aqua-log-btn" data-idx="${log.indexOf(e)}">${e.Name} ${e.Menge}ml ✕</button>`
-            ).join('');
-            logList.querySelectorAll('.aqua-log-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const idx = parseInt(btn.dataset.idx);
-                    const entry = log[idx];
-                    if (!entry) return;
-                    log.splice(idx, 1);
-                    saveAquaLog(log);
-                    updateAquaTrack();
-                    showToast(`✕ ${entry.Name} -${entry.Menge}ml`);
-                });
-            });
-        }
-    }
 }
 
 // ===== Daily Status Circles =====
@@ -1205,6 +1197,9 @@ document.addEventListener('DOMContentLoaded', () => {
     $('aqua-wasser').addEventListener('click', () => addAquaEntry('Wasser', 750));
     $('aqua-espresso').addEventListener('click', () => addAquaEntry('Espresso', 30));
     $('aqua-kaffee').addEventListener('click', () => addAquaEntry('Kaffee', 200));
+    $('aqua-wasser-rm').addEventListener('click', () => removeAquaEntry('Wasser', 750));
+    $('aqua-espresso-rm').addEventListener('click', () => removeAquaEntry('Espresso', 30));
+    $('aqua-kaffee-rm').addEventListener('click', () => removeAquaEntry('Kaffee', 200));
     updateAquaTrack();
 
     // --- Menue: Barcode ---
