@@ -172,21 +172,22 @@ button:active {
   align-items: baseline;
   margin-bottom: 10px;
 }
-.product-name-row #food-display-name {
+.product-name {
   font-size: 17px;
   font-weight: 700;
   color: var(--primary);
 }
 .product-quantity-input {
-  width: 52px;
-  font-size: 13px;
-  font-weight: 600;
+  width: 42px;
+  height: 22px;
+  font-size: 12px;
   color: var(--subtext);
   background: var(--surface1);
   border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 1px 4px;
+  border-radius: 4px;
+  padding: 0 4px;
   text-align: right;
+  flex-shrink: 0;
 }
 .pn-row {
   display: flex;
