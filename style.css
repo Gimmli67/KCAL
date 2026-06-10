@@ -166,11 +166,27 @@ button:active {
 }
 
 /* === Product Card === */
-.product-name {
+.product-name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.product-name-row #food-display-name {
   font-size: 17px;
   font-weight: 700;
   color: var(--primary);
-  margin-bottom: 10px;
+}
+.product-quantity-input {
+  width: 70px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--subtext);
+  background: var(--surface1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 6px;
+  text-align: right;
 }
 .pn-row {
   display: flex;

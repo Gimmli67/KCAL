@@ -158,6 +158,11 @@ function autoSaveFood(food) {
 function showFoodDisplay(food) {
     $('food-display').classList.remove('hidden');
     $('food-display-name').textContent = food.Lebensmittel;
+    const qtyEl = $('food-display-quantity');
+    if (qtyEl) {
+        qtyEl.value = food.Gesamtmenge || '';
+        qtyEl.placeholder = food.Einheit || 'g/ml';
+    }
 
     const rows = [
         ['Kalorien', `${food.Kcal} kcal`],
@@ -202,6 +207,7 @@ async function lookupBarcode(barcode) {
     return {
         Lebensmittel: p.product_name_de || p.product_name || 'Unbekannt',
         Einheit: (p.quantity && /\d+\s*g/.test(p.quantity)) ? 'g' : 'ml',
+        Gesamtmenge: parseFloat(p.product_quantity) || null,
         Kcal: round2(n['energy-kcal_100g']),
         Fett: round2(n.fat_100g),
         Gesaettigt: round2(n['saturated-fat_100g']),
@@ -225,10 +231,11 @@ async function menuBarcodeSearch() {
 
         const result = autoSaveFood(food);
         $('menu-barcode').value = '';
+        const gm = food.Gesamtmenge ? ` | Packung: ${food.Gesamtmenge}${food.Einheit}` : '';
         if (result === 'exists') {
-            $('menu-status').textContent = `'${food.Lebensmittel}' bereits vorhanden - ausgewaehlt. (${food.Kcal} kcal/100${food.Einheit})`;
+            $('menu-status').textContent = `'${food.Lebensmittel}' bereits vorhanden - ausgewaehlt. (${food.Kcal} kcal/100${food.Einheit}${gm})`;
         } else {
-            $('menu-status').textContent = `'${food.Lebensmittel}' neu gespeichert. (${food.Kcal} kcal/100${food.Einheit})`;
+            $('menu-status').textContent = `'${food.Lebensmittel}' neu gespeichert. (${food.Kcal} kcal/100${food.Einheit}${gm})`;
         }
     } catch (e) {
         $('menu-status').textContent = `Fehler: ${e.message}`;
@@ -248,9 +255,10 @@ async function editorBarcodeSearch() {
         fillEditorFields(food);
         $('editor-barcode').value = '';
         const hasValues = food.Kcal > 0 || food.Fett > 0 || food.Eiweiss > 0;
+        const edGm = food.Gesamtmenge ? ` (Packung: ${food.Gesamtmenge}${food.Einheit})` : '';
         $('editor-status').textContent = hasValues
-            ? `'${food.Lebensmittel}' gefunden - pruefen und speichern.`
-            : `'${food.Lebensmittel}' gefunden - KEINE Naehrwerte! Manuell eingeben.`;
+            ? `'${food.Lebensmittel}' gefunden - pruefen und speichern.${edGm}`
+            : `'${food.Lebensmittel}' gefunden - KEINE Naehrwerte! Manuell eingeben.${edGm}`;
     } catch (e) {
         $('editor-status').textContent = `Fehler: ${e.message}`;
     }
