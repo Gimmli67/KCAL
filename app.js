@@ -102,13 +102,23 @@ function populateMenuFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
+    const groups = { Food: [], Drinks: [] };
     filtered.forEach(item => {
-        const origIndex = db.indexOf(item);
-        const opt = document.createElement('option');
-        opt.value = origIndex;
-        opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal`;
-        sel.appendChild(opt);
+        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : 'Food');
+        groups[kat].push(item);
     });
+    for (const [label, items] of Object.entries(groups)) {
+        if (items.length === 0) continue;
+        const grp = document.createElement('optgroup');
+        grp.label = label;
+        items.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = db.indexOf(item);
+            opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal${item.Gesamtmenge ? ' | ' + item.Gesamtmenge + item.Einheit : ''}`;
+            grp.appendChild(opt);
+        });
+        sel.appendChild(grp);
+    }
 }
 
 function populateEditorFoodDropdown(filter) {
@@ -117,13 +127,23 @@ function populateEditorFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
+    const groups = { Food: [], Drinks: [] };
     filtered.forEach(item => {
-        const origIndex = db.indexOf(item);
-        const opt = document.createElement('option');
-        opt.value = origIndex;
-        opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal`;
-        sel.appendChild(opt);
+        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : 'Food');
+        groups[kat].push(item);
     });
+    for (const [label, items] of Object.entries(groups)) {
+        if (items.length === 0) continue;
+        const grp = document.createElement('optgroup');
+        grp.label = label;
+        items.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = db.indexOf(item);
+            opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal${item.Gesamtmenge ? ' | ' + item.Gesamtmenge + item.Einheit : ''}`;
+            grp.appendChild(opt);
+        });
+        sel.appendChild(grp);
+    }
     $('editor-status').textContent = `${filtered.length} Eintraege gefunden`;
 }
 
@@ -211,6 +231,7 @@ async function lookupBarcode(barcode) {
     return {
         Lebensmittel: p.product_name_de || p.product_name || 'Unbekannt',
         Einheit: (p.quantity && /\d+\s*g/.test(p.quantity)) ? 'g' : 'ml',
+        Kategorie: (p.quantity && /\d+\s*g/.test(p.quantity)) ? 'Food' : 'Drinks',
         Gesamtmenge: parseFloat(p.product_quantity) || null,
         Kcal: round2(n['energy-kcal_100g']),
         Fett: round2(n.fat_100g),
@@ -273,6 +294,7 @@ async function editorBarcodeSearch() {
 function fillEditorFields(food) {
     $('ed-name').value = food.Lebensmittel || '';
     if ($('ed-unit')) $('ed-unit').value = food.Einheit || 'g';
+    if ($('ed-kategorie')) $('ed-kategorie').value = food.Kategorie || (food.Einheit === 'ml' ? 'Drinks' : 'Food');
     $('ed-kcal').value = food.Kcal ?? '';
     $('ed-fett').value = food.Fett ?? '';
     $('ed-gesaettigt').value = food.Gesaettigt ?? '';
@@ -304,8 +326,9 @@ function editorSave() {
     }
 
     const unit = $('ed-unit') ? $('ed-unit').value : 'g';
+    const kategorie = $('ed-kategorie') ? $('ed-kategorie').value : (unit === 'ml' ? 'Drinks' : 'Food');
     const entry = {
-        Lebensmittel: name, Einheit: unit,
+        Lebensmittel: name, Einheit: unit, Kategorie: kategorie,
         Kcal: vals.kcal, Fett: vals.fett, Gesaettigt: vals.gesaettigt,
         Kohlenhydrate: vals.kh, Zucker: vals.zucker, Eiweiss: vals.eiweiss,
         Salz: vals.salz, Ballaststoffe: vals.ballaststoffe

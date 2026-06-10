@@ -176,8 +176,8 @@ button:active {
   color: var(--primary);
 }
 .product-quantity-input {
-  width: 3.5ch;
-  max-width: 3.5ch;
+  width: 5.5ch;
+  max-width: 5.5ch;
   height: 18px;
   font-size: 11px;
   color: var(--subtext);
