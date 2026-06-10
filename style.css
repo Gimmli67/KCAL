@@ -560,7 +560,11 @@ button:active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+}
+.menu-card-details {
+  padding-top: 8px;
 }
 .menu-card-name {
   font-weight: 700;

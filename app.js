@@ -231,10 +231,13 @@ async function lookupBarcode(barcode) {
 
     const p = data.product;
     const n = p.nutriments || {};
+    const cats = (p.categories_tags || []).join(' ');
+    const qtyStr = (p.quantity || '').toLowerCase();
+    const isDrink = /\d+\s*ml/.test(qtyStr) || /\d+\s*l\b/.test(qtyStr) || cats.includes('beverages') || cats.includes('drinks');
     return {
         Lebensmittel: p.product_name_de || p.product_name || 'Unbekannt',
-        Einheit: (p.quantity && /\d+\s*g/.test(p.quantity)) ? 'g' : 'ml',
-        Kategorie: (p.quantity && /\d+\s*g/.test(p.quantity)) ? 'Food' : 'Drinks',
+        Einheit: isDrink ? 'ml' : 'g',
+        Kategorie: isDrink ? 'Drinks' : 'Food',
         Gesamtmenge: parseFloat(p.product_quantity) || null,
         Kcal: round2(n['energy-kcal_100g']),
         Fett: round2(n.fat_100g),
@@ -462,6 +465,18 @@ function menuRemove() {
     $('menus-status').textContent = `'${name}' entfernt.`;
 }
 
+// ===== Menue: Bestehendes Menu editieren =====
+function menuEditTemplate(tplIdx) {
+    const tpl = templates[tplIdx];
+    if (!tpl) return;
+    $('menu-name').value = tpl.Name;
+    menuList = tpl.Positionen.map(p => ({ ...p }));
+    selectedMenuIndex = -1;
+    refreshMenuList();
+    $('menus-status').textContent = `Menu '${tpl.Name}' zum Bearbeiten geladen.`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // ===== Menue: Leeren =====
 function menuClear() {
     menuList = [];
@@ -522,6 +537,10 @@ function refreshMenuOverview() {
         header.innerHTML = `<span class="menu-card-name">${tpl.Name}</span><span class="menu-card-kcal">${Math.round(totalKcal)} kcal</span>`;
         card.appendChild(header);
 
+        // Details: erst hidden, per Klick aufklappen
+        const details = document.createElement('div');
+        details.className = 'menu-card-details hidden';
+
         const items = document.createElement('div');
         items.className = 'menu-card-items';
         tpl.Positionen.forEach(p => {
@@ -532,7 +551,7 @@ function refreshMenuOverview() {
             div.textContent = `${p.Lebensmittel} - ${menge}${p.Einheit} (${kcal} kcal)`;
             items.appendChild(div);
         });
-        card.appendChild(items);
+        details.appendChild(items);
 
         const actions = document.createElement('div');
         actions.className = 'button-row';
@@ -542,14 +561,23 @@ function refreshMenuOverview() {
             const btn = document.createElement('button');
             btn.className = 'btn-meal';
             btn.textContent = meal;
-            btn.addEventListener('click', () => useMenuAsMeal(tplIdx, meal));
+            btn.addEventListener('click', e => { e.stopPropagation(); useMenuAsMeal(tplIdx, meal); });
             actions.appendChild(btn);
+        });
+
+        const btnEdit = document.createElement('button');
+        btnEdit.className = 'btn-green';
+        btnEdit.textContent = 'Edit';
+        btnEdit.addEventListener('click', e => {
+            e.stopPropagation();
+            menuEditTemplate(tplIdx);
         });
 
         const btnDelete = document.createElement('button');
         btnDelete.className = 'btn-red';
         btnDelete.textContent = 'Delete';
-        btnDelete.addEventListener('click', () => {
+        btnDelete.addEventListener('click', e => {
+            e.stopPropagation();
             if (!confirm(`Menu '${tpl.Name}' entfernen?`)) return;
             templates.splice(tplIdx, 1);
             saveTemplates();
@@ -557,8 +585,16 @@ function refreshMenuOverview() {
             $('menus-status').textContent = `Menu '${tpl.Name}' entfernt.`;
         });
 
+        actions.appendChild(btnEdit);
         actions.appendChild(btnDelete);
-        card.appendChild(actions);
+        details.appendChild(actions);
+
+        card.appendChild(details);
+
+        // Klick auf Header klappt Details auf/zu
+        header.addEventListener('click', () => {
+            details.classList.toggle('hidden');
+        });
 
         container.appendChild(card);
     });
@@ -1077,6 +1113,16 @@ document.addEventListener('DOMContentLoaded', () => {
     $('menu-search').addEventListener('keydown', e => { if (e.key === 'Enter') populateMenuFoodDropdown($('menu-search').value); });
 
     // --- Menus Tab: Aktionen ---
+    $('menu-food-select').addEventListener('change', () => {
+        const sel = $('menu-food-select');
+        if (sel.selectedIndex < 0) return;
+        const d = db[parseInt(sel.value)];
+        if (d && d.Einheit === 'ml' && d.Gesamtmenge) {
+            $('menu-amount').value = d.Gesamtmenge;
+        } else {
+            $('menu-amount').value = '';
+        }
+    });
     $('menu-add').addEventListener('click', menuAdd);
     $('menu-remove').addEventListener('click', menuRemove);
     $('menu-clear').addEventListener('click', menuClear);
