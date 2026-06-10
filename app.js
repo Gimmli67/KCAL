@@ -294,7 +294,6 @@ async function editorBarcodeSearch() {
 function fillEditorFields(food) {
     $('ed-name').value = food.Lebensmittel || '';
     if ($('ed-unit')) $('ed-unit').value = food.Einheit || 'g';
-    if ($('ed-kategorie')) $('ed-kategorie').value = food.Kategorie || (food.Einheit === 'ml' ? 'Drinks' : 'Food');
     $('ed-kcal').value = food.Kcal ?? '';
     $('ed-fett').value = food.Fett ?? '';
     $('ed-gesaettigt').value = food.Gesaettigt ?? '';
@@ -326,7 +325,7 @@ function editorSave() {
     }
 
     const unit = $('ed-unit') ? $('ed-unit').value : 'g';
-    const kategorie = $('ed-kategorie') ? $('ed-kategorie').value : (unit === 'ml' ? 'Drinks' : 'Food');
+    const kategorie = unit === 'ml' ? 'Drinks' : 'Food';
     const entry = {
         Lebensmittel: name, Einheit: unit, Kategorie: kategorie,
         Kcal: vals.kcal, Fett: vals.fett, Gesaettigt: vals.gesaettigt,
@@ -343,6 +342,13 @@ function editorSave() {
     populateEditorFoodDropdown();
     populateMenuFoodDropdown();
     $('editor-status').textContent = `'${name}' ${action}. (${db.length} Eintraege)`;
+}
+
+function updateEditorHeader() {
+    const h = $('ed-header');
+    if (!h || !editorLoadedFood) return;
+    const isDrink = editorLoadedFood.Einheit === 'ml';
+    h.textContent = isDrink ? 'Drink per 100ml' : 'Food per 100g';
 }
 
 // ===== Editor: Laden =====
@@ -365,6 +371,7 @@ function editorLoad() {
     $('ed-eiweiss').value = food.Eiweiss ?? '';
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
+    updateEditorHeader();
     $('ed-amount').value = food.Gesamtmenge || '';
     if ($('editor-food-calculated')) $('editor-food-calculated').innerHTML = '';
     updateEditorCalc();
