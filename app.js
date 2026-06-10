@@ -791,23 +791,19 @@ function startBarcodeScanner(onSuccess) {
     html5QrCode = new Html5Qrcode('scanner-reader');
 
     // Scan-Region an Bildschirmgroesse anpassen
-    const screenW = Math.min(window.innerWidth - 60, 400);
-    const boxW = Math.round(screenW * 0.85);
-    const boxH = Math.round(boxW * 0.4);
+    const screenW = Math.min(window.innerWidth - 40, 500);
+    const boxW = Math.round(screenW * 0.9);
+    const boxH = Math.round(boxW * 0.45);
 
     html5QrCode.start(
         { facingMode: 'environment' },
         {
-            fps: 15,
+            fps: 30,
             qrbox: { width: boxW, height: boxH },
             aspectRatio: 1.0,
             formatsToSupport: [
                 Html5QrcodeSupportedFormats.EAN_13,
                 Html5QrcodeSupportedFormats.EAN_8,
-                Html5QrcodeSupportedFormats.UPC_A,
-                Html5QrcodeSupportedFormats.UPC_E,
-                Html5QrcodeSupportedFormats.CODE_128,
-                Html5QrcodeSupportedFormats.CODE_39,
                 Html5QrcodeSupportedFormats.QR_CODE
             ]
         },
