@@ -73,12 +73,10 @@ main {
   margin-bottom: 12px;
 }
 .group-header {
-  color: var(--subtext);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
+  color: var(--primary);
+  font-size: 17px;
   margin-bottom: 8px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 /* === Layout === */
