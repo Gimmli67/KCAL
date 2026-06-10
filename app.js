@@ -235,11 +235,12 @@ async function menuBarcodeSearch() {
 
         const result = autoSaveFood(food);
         $('menu-barcode').value = '';
-        const gm = food.Gesamtmenge ? ` | Packung: ${food.Gesamtmenge}${food.Einheit}` : '';
+        const gm = food.Gesamtmenge ? ` | ${food.Gesamtmenge}${food.Einheit}` : '';
+        const info = `${food.Lebensmittel} (${food.Einheit}) - ${food.Kcal} kcal${gm}`;
         if (result === 'exists') {
-            $('menu-status').textContent = `'${food.Lebensmittel}' bereits vorhanden - ausgewaehlt. (${food.Kcal} kcal/100${food.Einheit}${gm})`;
+            $('menu-status').textContent = `${info} - bereits vorhanden`;
         } else {
-            $('menu-status').textContent = `'${food.Lebensmittel}' neu gespeichert. (${food.Kcal} kcal/100${food.Einheit}${gm})`;
+            $('menu-status').textContent = `${info} - gespeichert`;
         }
     } catch (e) {
         $('menu-status').textContent = `Fehler: ${e.message}`;
