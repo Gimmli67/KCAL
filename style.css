@@ -253,16 +253,12 @@ button:active {
 
 /* === Meal Buttons === */
 .btn-meal {
-  background: var(--overlay);
-  color: var(--text);
+  background: var(--primary);
+  color: var(--bg);
   flex: 1;
   font-size: 15px;
   padding: 12px 8px;
   border-radius: 8px;
-}
-.btn-meal:active {
-  background: var(--primary);
-  color: var(--bg);
 }
 
 /* === Meal Tabs (Verlauf) === */
