@@ -177,13 +177,11 @@
           </div>
           <div class="aqua-info" id="aqua-info">0 / 3000 ml</div>
         </div>
-        <div class="aqua-bar-container">
-          <div class="aqua-bar" id="aqua-bar"></div>
-        </div>
         <div class="button-row" style="margin-top:8px">
           <button class="btn-aqua" id="aqua-wasser">Water 750ml</button>
           <button class="btn-aqua" id="aqua-espresso">Espresso 30ml</button>
           <button class="btn-aqua" id="aqua-kaffee">Kaffee 200ml</button>
+          <button class="btn-red" id="aqua-undo" style="flex:0.5">Undo</button>
         </div>
       </div>
 
@@ -257,6 +255,7 @@
           <div class="nutrient-row">
             <label>dav. Zucker (g)</label>
             <span class="calc" id="ed-zucker-calc"></span>
+            <input type="text" id="ed-zucker" inputmode="decimal">
           </div>
           <div class="nutrient-row">
             <label>Eiweiss (g)</label>
@@ -338,6 +337,10 @@
         <button class="meal-tab" data-meal="aqua">Aqua</button>
       </nav>
       <div id="history-content" class="history-view"></div>
+      <div class="button-row" style="margin-top:8px">
+        <button class="btn-red" id="history-clear-day">Clear Day</button>
+        <button class="btn-red" id="history-clear-all">Clear All History</button>
+      </div>
     </section>
 
     <!-- ===== TAB: DATEN ===== -->

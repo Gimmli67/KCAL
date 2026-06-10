@@ -740,10 +740,16 @@ function updateAquaTrack() {
     const info = $('aqua-info');
     const dropFill = $('aqua-drop-fill');
     const dropPct = $('aqua-drop-pct');
+    const reached = totalMl >= GOALS.aqua;
     if (bar) bar.style.width = pct + '%';
     if (info) info.textContent = `${Math.round(totalMl)} / ${GOALS.aqua} ml`;
-    if (dropFill) dropFill.setAttribute('y', 130 - (pct / 100 * 130));
+    if (dropFill) {
+        dropFill.setAttribute('y', 130 - (pct / 100 * 130));
+        dropFill.style.fill = reached ? 'var(--green)' : '#74c7ec';
+    }
     if (dropPct) dropPct.textContent = pct + '%';
+    if (bar) bar.style.background = reached ? 'var(--green)' : 'linear-gradient(90deg, #74c7ec, #89b4fa)';
+    if (info) info.style.color = reached ? 'var(--green)' : '#74c7ec';
 }
 
 // ===== Daily Status Circles =====
@@ -1165,6 +1171,20 @@ document.addEventListener('DOMContentLoaded', () => {
     $('aqua-wasser').addEventListener('click', () => addAquaEntry('Wasser', 750));
     $('aqua-espresso').addEventListener('click', () => addAquaEntry('Espresso', 30));
     $('aqua-kaffee').addEventListener('click', () => addAquaEntry('Kaffee', 200));
+    $('aqua-undo').addEventListener('click', () => {
+        const log = loadAquaLog();
+        const todayStr = today();
+        for (let i = log.length - 1; i >= 0; i--) {
+            if (log[i].Datum === todayStr) {
+                const removed = log.splice(i, 1)[0];
+                saveAquaLog(log);
+                updateAquaTrack();
+                showToast(`✕ ${removed.Name} -${removed.Menge}ml`);
+                return;
+            }
+        }
+        showToast('Nichts zum Entfernen');
+    });
     updateAquaTrack();
 
     // --- Menue: Barcode ---
@@ -1318,6 +1338,25 @@ document.addEventListener('DOMContentLoaded', () => {
         historyDate = d.toISOString().slice(0, 10); refreshHistory();
     });
     $('history-today').addEventListener('click', () => { historyDate = today(); refreshHistory(); });
+
+    // --- Verlauf: Clear Buttons ---
+    $('history-clear-day').addEventListener('click', () => {
+        if (!confirm(`Alle Eintraege fuer ${historyDate} loeschen?`)) return;
+        meals = meals.filter(m => m.Datum !== historyDate);
+        saveMeals();
+        const log = loadAquaLog().filter(e => e.Datum !== historyDate);
+        saveAquaLog(log);
+        updateDailyCircles();
+        refreshHistory();
+    });
+    $('history-clear-all').addEventListener('click', () => {
+        if (!confirm('Gesamte History (Mahlzeiten + AquaTrack) loeschen?')) return;
+        meals = [];
+        saveMeals();
+        saveAquaLog([]);
+        updateDailyCircles();
+        refreshHistory();
+    });
 
     // --- Verlauf: Meal Tabs ---
     document.querySelectorAll('.meal-tab').forEach(btn => {

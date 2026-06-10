@@ -506,12 +506,15 @@ button:active {
 }
 .circle-wrap {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
 }
 .circle-svg {
-  width: 50px;
-  height: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 56px;
   transform: rotate(-90deg);
 }
 .circle-bg {
@@ -549,9 +552,11 @@ button:active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   color: var(--text);
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* === Menu Cards (Speisekarte) === */
