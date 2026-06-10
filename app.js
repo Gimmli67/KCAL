@@ -144,6 +144,10 @@ function autoSaveFood(food) {
     if (!food.Lebensmittel) return 'none';
     const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
     if (exists >= 0) {
+        if (food.Gesamtmenge && !db[exists].Gesamtmenge) {
+            db[exists].Gesamtmenge = food.Gesamtmenge;
+            saveDB();
+        }
         showFoodDisplay(db[exists]);
         return 'exists';
     }
