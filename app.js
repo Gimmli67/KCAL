@@ -345,10 +345,12 @@ function editorSave() {
 }
 
 function updateEditorHeader() {
-    const h = $('ed-header');
-    if (!h || !editorLoadedFood) return;
+    if (!editorLoadedFood) return;
     const isDrink = editorLoadedFood.Einheit === 'ml';
-    h.textContent = isDrink ? 'Drink per 100ml' : 'Food per 100g';
+    const h = $('ed-header');
+    if (h) h.textContent = isDrink ? 'Drink per 100ml' : 'Food per 100g';
+    const lbl = $('ed-name-label');
+    if (lbl) lbl.textContent = isDrink ? 'Drink:' : 'Food:';
 }
 
 // ===== Editor: Laden =====
