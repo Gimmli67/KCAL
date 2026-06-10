@@ -305,8 +305,9 @@ function fillEditorFields(food) {
     $('ed-eiweiss').value = food.Eiweiss ?? '';
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
-    $('ed-amount').value = '';
-    updateCalcFields();
+    $('ed-amount').value = food.Gesamtmenge || '';
+    updateEditorHeader();
+    updateEditorCalc();
 }
 
 // ===== Editor: Effektive Werte berechnen (alt - nicht mehr verwendet) =====
@@ -959,15 +960,15 @@ document.addEventListener('DOMContentLoaded', () => {
     $('food-display-edit').addEventListener('click', () => {
         if (!currentDisplayedFood) return;
         const idx = db.findIndex(d => d.Lebensmittel === currentDisplayedFood.Lebensmittel);
-        switchTab('editor');
-        if (idx >= 0) {
-            const sel = $('editor-food-select');
-            // Find the option with this db index
-            for (const opt of sel.querySelectorAll('option')) {
-                if (parseInt(opt.value) === idx) { opt.selected = true; break; }
-            }
-            editorLoad();
+        if (idx < 0) return;
+        populateEditorFoodDropdown();
+        const sel = $('editor-food-select');
+        for (const opt of sel.querySelectorAll('option')) {
+            if (parseInt(opt.value) === idx) { opt.selected = true; break; }
         }
+        editorLoadedFood = db[idx];
+        fillEditorFields(db[idx]);
+        switchTab('editor');
     });
     $('food-display-clear').addEventListener('click', () => {
         $('food-display').classList.add('hidden');
