@@ -178,14 +178,14 @@ button:active {
   color: var(--primary);
 }
 .product-quantity-input {
-  width: 42px;
-  height: 22px;
-  font-size: 12px;
+  width: 34px;
+  height: 18px;
+  font-size: 11px;
   color: var(--subtext);
   background: var(--surface1);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 0 4px;
+  border-radius: 3px;
+  padding: 0 3px;
   text-align: right;
   flex-shrink: 0;
 }
