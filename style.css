@@ -606,6 +606,99 @@ button:active {
   border-radius: 8px;
 }
 
+/* === AquaTrack === */
+.aqua-drop-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.aqua-drop {
+  position: relative;
+  width: 60px;
+  flex-shrink: 0;
+}
+.aqua-drop-svg {
+  width: 60px;
+  height: 78px;
+}
+.aqua-drop-bg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 2;
+}
+.aqua-drop-fill {
+  fill: #74c7ec;
+  transition: y 0.4s ease;
+}
+.aqua-drop-pct {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.aqua-right {
+  flex: 1;
+}
+.aqua-bar-container {
+  background: var(--surface);
+  border-radius: 10px;
+  height: 16px;
+  overflow: hidden;
+}
+.aqua-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #74c7ec, #89b4fa);
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+.aqua-info {
+  font-size: 14px;
+  font-weight: 700;
+  color: #74c7ec;
+  margin-bottom: 6px;
+}
+.btn-aqua {
+  background: #74c7ec;
+  color: var(--bg);
+  flex: 1;
+  font-size: 12px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-aqua:active {
+  opacity: 0.8;
+  transform: scale(0.97);
+}
+
+/* === Toast === */
+#toast-msg {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--green);
+  color: var(--bg);
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 100;
+}
+#toast-msg.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* === Safe area (notch phones) === */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   #bottom-nav {

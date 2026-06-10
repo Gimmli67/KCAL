@@ -1,7 +1,7 @@
 'use strict';
 
 // ===== Tagesziele =====
-const GOALS = { kcal: 2100, eiweiss: 145, kohlenhydrate: 175, fett: 65, zucker: 50 };
+const GOALS = { kcal: 2100, eiweiss: 145, kohlenhydrate: 175, fett: 65, zucker: 50, aqua: 3000 };
 
 // ===== State =====
 let db = [];
@@ -22,6 +22,18 @@ function parseNum(s) {
 }
 
 function round2(v) { return v != null ? Math.round(v * 100) / 100 : 0; }
+
+function showToast(msg) {
+    let toast = $('toast-msg');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast-msg';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+}
 function today() { return new Date().toISOString().slice(0, 10); }
 function nowTime() { return new Date().toTimeString().slice(0, 5); }
 
@@ -308,7 +320,7 @@ function fillEditorFields(food) {
     $('ed-eiweiss').value = food.Eiweiss ?? '';
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
-    $('ed-amount').value = food.Gesamtmenge || '';
+    $('ed-amount').value = (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
     updateEditorHeader();
     updateEditorCalc();
 }
@@ -381,7 +393,7 @@ function editorLoad() {
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
     updateEditorHeader();
-    $('ed-amount').value = food.Gesamtmenge || '';
+    $('ed-amount').value = (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
     if ($('editor-food-calculated')) $('editor-food-calculated').innerHTML = '';
     updateEditorCalc();
     $('editor-status').textContent = `'${food.Lebensmittel}' geladen.`;
@@ -652,6 +664,7 @@ function useMenuAsMeal(tplIdx, mealType) {
     saveMeals();
     updateDailyCircles();
     $('menus-status').textContent = `'${tpl.Name}' als ${mealType} gespeichert - ${Math.round(s.kcal)} kcal`;
+    showToast(`✓ ${tpl.Name} → ${mealType}`);
 }
 
 // ===== Mahlzeit speichern (z'Morge / z'Mittag / z'Nacht) =====
@@ -690,6 +703,47 @@ function saveMealFromEditor(mealType) {
     saveMeals();
     updateDailyCircles();
     $('editor-status').textContent = `${food.Lebensmittel} (${Math.round(amount)}${food.Einheit}) als ${mealType} gespeichert.`;
+    showToast(`✓ ${mealType} gespeichert`);
+}
+
+// ===== AquaTrack =====
+function loadAquaLog() {
+    try { return JSON.parse(localStorage.getItem('kcal_aqua')) || []; } catch { return []; }
+}
+function saveAquaLog(log) { localStorage.setItem('kcal_aqua', JSON.stringify(log)); }
+
+function addAquaEntry(name, ml) {
+    const log = loadAquaLog();
+    log.push({ Datum: today(), Zeit: nowTime(), Name: name, Menge: ml });
+    saveAquaLog(log);
+    updateAquaTrack();
+    showToast(`✓ ${name} +${ml}ml`);
+}
+
+function updateAquaTrack() {
+    const todayStr = today();
+
+    // Manuelle Einträge (Wasser, Kaffee)
+    const log = loadAquaLog();
+    let totalMl = 0;
+    log.filter(e => e.Datum === todayStr).forEach(e => { totalMl += e.Menge; });
+
+    // Drinks aus Mahlzeiten (alles mit Einheit ml)
+    meals.filter(m => m.Datum === todayStr).forEach(m => {
+        m.Positionen.forEach(p => {
+            if (p.Einheit === 'ml') totalMl += (p.Menge || 0);
+        });
+    });
+
+    const pct = Math.min(Math.round((totalMl / GOALS.aqua) * 100), 100);
+    const bar = $('aqua-bar');
+    const info = $('aqua-info');
+    const dropFill = $('aqua-drop-fill');
+    const dropPct = $('aqua-drop-pct');
+    if (bar) bar.style.width = pct + '%';
+    if (info) info.textContent = `${Math.round(totalMl)} / ${GOALS.aqua} ml`;
+    if (dropFill) dropFill.setAttribute('y', 130 - (pct / 100 * 130));
+    if (dropPct) dropPct.textContent = pct + '%';
 }
 
 // ===== Daily Status Circles =====
@@ -734,6 +788,7 @@ function updateDailyCircles() {
     });
 
     renderDailyMeals(todayMeals);
+    updateAquaTrack();
 }
 
 function renderDailyMeals(todayMeals) {
@@ -775,28 +830,44 @@ function renderDailyMeals(todayMeals) {
             const todayStr = today();
             const todayMealsList = meals.filter(m => m.Datum === todayStr);
             const mi = parseInt(btn.dataset.meal);
+            const pi = parseInt(btn.dataset.pos);
             const meal = todayMealsList[mi];
             if (!meal) return;
-            const globalIdx = meals.indexOf(meal);
-            if (globalIdx >= 0) {
-                meals.splice(globalIdx, 1);
-                saveMeals();
-                updateDailyCircles();
+
+            if (meal.Positionen.length <= 1) {
+                // Letzter Eintrag -> ganzen Meal löschen
+                const globalIdx = meals.indexOf(meal);
+                if (globalIdx >= 0) meals.splice(globalIdx, 1);
+            } else {
+                // Einzelne Position entfernen und Summe neu berechnen
+                const pos = meal.Positionen[pi];
+                if (!pos) return;
+                const f = (pos.Menge || 0) / 100;
+                meal.Summe.Kcal -= Math.round((pos.Kcal || 0) * 10) / 10;
+                meal.Summe.Fett -= Math.round(((pos.Fett || 0) * f) * 10) / 10;
+                meal.Summe.Kohlenhydrate -= Math.round(((pos.Kohlenhydrate || 0) * f) * 10) / 10;
+                meal.Summe.Zucker -= Math.round(((pos.Zucker || 0) * f) * 10) / 10;
+                meal.Summe.Eiweiss -= Math.round(((pos.Eiweiss || 0) * f) * 10) / 10;
+                meal.Positionen.splice(pi, 1);
             }
+            saveMeals();
+            updateDailyCircles();
         });
     });
 }
 
 // ===== Verlauf =====
 let currentMealTab = 'zmorge';
+let historyDate = today();
 const MEAL_NAMES = { zmorge: "z'Morge", zmittag: "z'Mittag", znacht: "z'Nacht" };
 
 function refreshHistory() {
     const content = $('history-content');
     if (!content) return;
-    const todayStr = today();
+    const dateEl = $('history-date');
+    if (dateEl) dateEl.value = historyDate;
     const mealName = MEAL_NAMES[currentMealTab];
-    const mealEntries = meals.filter(m => m.Datum === todayStr && m.Mahlzeit === mealName);
+    const mealEntries = meals.filter(m => m.Datum === historyDate && m.Mahlzeit === mealName);
 
     const lines = [];
     lines.push('==================================================');
@@ -1030,6 +1101,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentDisplayedFood = null;
     });
 
+    // --- AquaTrack Quick-Add ---
+    $('aqua-wasser').addEventListener('click', () => addAquaEntry('Wasser', 750));
+    $('aqua-espresso').addEventListener('click', () => addAquaEntry('Espresso', 30));
+    $('aqua-kaffee').addEventListener('click', () => addAquaEntry('Kaffee', 200));
+    updateAquaTrack();
+
     // --- Menue: Barcode ---
     $('menu-barcode-search').addEventListener('click', menuBarcodeSearch);
     $('menu-barcode').addEventListener('keydown', e => { if (e.key === 'Enter') menuBarcodeSearch(); });
@@ -1170,6 +1247,18 @@ document.addEventListener('DOMContentLoaded', () => {
     $('btn-zmittag').addEventListener('click', () => saveMealFromEditor("z'Mittag"));
     $('btn-znacht').addEventListener('click', () => saveMealFromEditor("z'Nacht"));
 
+    // --- Verlauf: Datum Navigation ---
+    $('history-date').addEventListener('change', () => { historyDate = $('history-date').value; refreshHistory(); });
+    $('history-prev').addEventListener('click', () => {
+        const d = new Date(historyDate); d.setDate(d.getDate() - 1);
+        historyDate = d.toISOString().slice(0, 10); refreshHistory();
+    });
+    $('history-next').addEventListener('click', () => {
+        const d = new Date(historyDate); d.setDate(d.getDate() + 1);
+        historyDate = d.toISOString().slice(0, 10); refreshHistory();
+    });
+    $('history-today').addEventListener('click', () => { historyDate = today(); refreshHistory(); });
+
     // --- Verlauf: Meal Tabs ---
     document.querySelectorAll('.meal-tab').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1233,6 +1322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('kcal_db');
         localStorage.removeItem('kcal_meals');
         localStorage.removeItem('kcal_templates');
+        localStorage.removeItem('kcal_aqua');
         db = []; meals = []; templates = [];
         loadInitialData().then(() => {
             updateDailyCircles();

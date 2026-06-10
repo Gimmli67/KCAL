@@ -149,6 +149,36 @@
         </div>
       </div>
 
+      <!-- AquaTrack -->
+      <div class="group">
+        <div class="group-header">AquaTrack</div>
+        <div class="aqua-drop-row">
+          <div class="aqua-drop">
+            <svg class="aqua-drop-svg" viewBox="0 0 100 130">
+              <defs>
+                <clipPath id="drop-clip">
+                  <path d="M50 5 C50 5, 10 60, 10 85 C10 108, 28 125, 50 125 C72 125, 90 108, 90 85 C90 60, 50 5, 50 5Z"/>
+                </clipPath>
+              </defs>
+              <path class="aqua-drop-bg" d="M50 5 C50 5, 10 60, 10 85 C10 108, 28 125, 50 125 C72 125, 90 108, 90 85 C90 60, 50 5, 50 5Z"/>
+              <rect id="aqua-drop-fill" class="aqua-drop-fill" x="0" y="130" width="100" height="130" clip-path="url(#drop-clip)"/>
+            </svg>
+            <div class="aqua-drop-pct" id="aqua-drop-pct">0%</div>
+          </div>
+          <div class="aqua-right">
+            <div class="aqua-info" id="aqua-info">0 / 3000 ml</div>
+            <div class="aqua-bar-container">
+              <div class="aqua-bar" id="aqua-bar"></div>
+            </div>
+          </div>
+        </div>
+        <div class="button-row" style="margin-top:8px">
+          <button class="btn-aqua" id="aqua-wasser">Water 750ml</button>
+          <button class="btn-aqua" id="aqua-espresso">Espresso 30ml</button>
+          <button class="btn-aqua" id="aqua-kaffee">Kaffee 200ml</button>
+        </div>
+      </div>
+
       <!-- Tages-Mahlzeiten Uebersicht -->
       <div class="group" id="daily-meals-overview">
         <div class="group-header">Today</div>
@@ -194,47 +224,46 @@
 
         <div class="nutrient-grid">
           <div class="nutrient-header">
-            <span></span><span>pro 100</span><span id="ed-calc-header"></span>
+            <span></span><span id="ed-calc-header"></span><span>pro 100</span>
           </div>
           <div class="nutrient-row">
             <label>Kalorien (kcal)</label>
-            <input type="text" id="ed-kcal" inputmode="decimal">
             <span class="calc" id="ed-kcal-calc"></span>
+            <input type="text" id="ed-kcal" inputmode="decimal">
           </div>
           <div class="nutrient-row">
             <label>Fett (g)</label>
-            <input type="text" id="ed-fett" inputmode="decimal">
             <span class="calc" id="ed-fett-calc"></span>
+            <input type="text" id="ed-fett" inputmode="decimal">
           </div>
           <div class="nutrient-row">
             <label>dav. gesaettigt</label>
-            <input type="text" id="ed-gesaettigt" inputmode="decimal">
             <span class="calc" id="ed-gesaettigt-calc"></span>
+            <input type="text" id="ed-gesaettigt" inputmode="decimal">
           </div>
           <div class="nutrient-row">
             <label>Kohlenhydrate (g)</label>
-            <input type="text" id="ed-kh" inputmode="decimal">
             <span class="calc" id="ed-kh-calc"></span>
+            <input type="text" id="ed-kh" inputmode="decimal">
           </div>
           <div class="nutrient-row">
             <label>dav. Zucker (g)</label>
-            <input type="text" id="ed-zucker" inputmode="decimal">
             <span class="calc" id="ed-zucker-calc"></span>
           </div>
           <div class="nutrient-row">
             <label>Eiweiss (g)</label>
-            <input type="text" id="ed-eiweiss" inputmode="decimal">
             <span class="calc" id="ed-eiweiss-calc"></span>
+            <input type="text" id="ed-eiweiss" inputmode="decimal">
           </div>
           <div class="nutrient-row">
             <label>Salz (g)</label>
-            <input type="text" id="ed-salz" inputmode="decimal">
             <span class="calc" id="ed-salz-calc"></span>
+            <input type="text" id="ed-salz" inputmode="decimal">
           </div>
           <div class="nutrient-row">
             <label>Ballaststoffe (g)</label>
-            <input type="text" id="ed-ballaststoffe" inputmode="decimal">
             <span class="calc" id="ed-ballaststoffe-calc"></span>
+            <input type="text" id="ed-ballaststoffe" inputmode="decimal">
           </div>
         </div>
       </div>
@@ -288,6 +317,12 @@
 
     <!-- ===== TAB: History ===== -->
     <section id="tab-history" class="tab-content">
+      <div class="row" style="margin-bottom:8px">
+        <button id="history-prev">◀</button>
+        <input type="date" id="history-date" style="flex:1;text-align:center">
+        <button id="history-next">▶</button>
+        <button id="history-today">Today</button>
+      </div>
       <nav class="meal-tabs">
         <button class="meal-tab active" data-meal="zmorge">z'Morge</button>
         <button class="meal-tab" data-meal="zmittag">z'Mittag</button>
@@ -347,8 +382,8 @@
     <button class="nav-btn active" data-tab="menu">Food Scan</button>
     <button class="nav-btn" data-tab="editor">Editor</button>
     <button class="nav-btn" data-tab="menus">Menus</button>
-    <button class="nav-btn" data-tab="history">Verlauf</button>
-    <button class="nav-btn" data-tab="data">Daten</button>
+    <button class="nav-btn" data-tab="history">History</button>
+    <button class="nav-btn" data-tab="data">Data</button>
   </nav>
 
   <!-- Scanner Modal -->
