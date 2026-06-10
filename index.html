@@ -272,7 +272,8 @@
         <div class="list-box" id="menu-list"></div>
         <div class="button-row" style="margin-top:8px">
           <button class="btn-green" id="menu-save-recipe">Save Menu</button>
-          <button class="btn-red" id="menu-clear">Clear</button>
+          <button id="menu-cancel" class="btn-red hidden">Cancel</button>
+          <button id="menu-clear">Clear</button>
         </div>
       </div>
 
@@ -285,7 +286,7 @@
       <div id="menus-status" class="status"></div>
     </section>
 
-    <!-- ===== TAB: VERLAUF ===== -->
+    <!-- ===== TAB: History ===== -->
     <section id="tab-history" class="tab-content">
       <nav class="meal-tabs">
         <button class="meal-tab active" data-meal="zmorge">z'Morge</button>
@@ -298,42 +299,42 @@
     <!-- ===== TAB: DATEN ===== -->
     <section id="tab-data" class="tab-content">
       <div class="group">
-        <div class="group-header">Daten Import / Export</div>
+        <div class="group-header">Data Import / Export</div>
         <p class="info-text">
           Importiere deine bestehenden JSON-Dateien vom Desktop-Script
           oder exportiere die aktuellen Daten als Backup.
         </p>
 
         <div class="field">
-          <label>Lebensmittel-Datenbank:</label>
+          <label>Food database:</label>
           <div class="row">
-            <button id="import-db">Importieren</button>
-            <button id="export-db">Exportieren</button>
+            <button id="import-db">Import</button>
+            <button id="export-db">Export</button>
           </div>
           <input type="file" id="import-db-file" accept=".json" style="display:none">
         </div>
 
         <div class="field">
-          <label>Mahlzeiten-Verlauf:</label>
+          <label>Meal history:</label>
           <div class="row">
-            <button id="import-meals">Importieren</button>
-            <button id="export-meals">Exportieren</button>
+            <button id="import-meals">Import</button>
+            <button id="export-meals">Export</button>
           </div>
           <input type="file" id="import-meals-file" accept=".json" style="display:none">
         </div>
 
         <div class="field">
-          <label>Speisekarte:</label>
+          <label>Menus:</label>
           <div class="row">
-            <button id="import-templates">Importieren</button>
-            <button id="export-templates">Exportieren</button>
+            <button id="import-templates">Import</button>
+            <button id="export-templates">Export</button>
           </div>
           <input type="file" id="import-templates-file" accept=".json" style="display:none">
         </div>
       </div>
 
       <div class="group">
-        <div class="group-header">Zuruecksetzen</div>
+        <div class="group-header">Reset</div>
         <button class="btn-red full-width" id="reset-reload">Daten neu von Server laden</button>
       </div>
 

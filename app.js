@@ -466,22 +466,39 @@ function menuRemove() {
 }
 
 // ===== Menue: Bestehendes Menu editieren =====
+let editingTemplateIdx = -1;
+
 function menuEditTemplate(tplIdx) {
     const tpl = templates[tplIdx];
     if (!tpl) return;
+    editingTemplateIdx = tplIdx;
     $('menu-name').value = tpl.Name;
     menuList = tpl.Positionen.map(p => ({ ...p }));
     selectedMenuIndex = -1;
     refreshMenuList();
-    $('menus-status').textContent = `Menu '${tpl.Name}' zum Bearbeiten geladen.`;
+    $('menu-cancel').classList.remove('hidden');
+    $('menus-status').textContent = `Menu '${tpl.Name}' wird bearbeitet.`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function menuCancelEdit() {
+    editingTemplateIdx = -1;
+    menuList = [];
+    selectedMenuIndex = -1;
+    $('menu-name').value = '';
+    refreshMenuList();
+    $('menu-cancel').classList.add('hidden');
+    $('menus-status').textContent = 'Bearbeitung abgebrochen.';
 }
 
 // ===== Menue: Leeren =====
 function menuClear() {
+    editingTemplateIdx = -1;
     menuList = [];
     selectedMenuIndex = -1;
+    $('menu-name').value = '';
     refreshMenuList();
+    $('menu-cancel').classList.add('hidden');
     $('menus-status').textContent = 'Menue geleert.';
 }
 
@@ -499,16 +516,22 @@ function menuSaveRecipe() {
         Salz: m.Salz, Ballaststoffe: m.Ballaststoffe
     }));
 
-    const idx = templates.findIndex(t => t.Name === name);
-    if (idx >= 0) { templates[idx] = { Name: name, Positionen: positions }; }
-    else { templates.push({ Name: name, Positionen: positions }); }
+    if (editingTemplateIdx >= 0) {
+        templates[editingTemplateIdx] = { Name: name, Positionen: positions };
+    } else {
+        const idx = templates.findIndex(t => t.Name === name);
+        if (idx >= 0) { templates[idx] = { Name: name, Positionen: positions }; }
+        else { templates.push({ Name: name, Positionen: positions }); }
+    }
 
     saveTemplates();
+    editingTemplateIdx = -1;
     menuList = [];
     selectedMenuIndex = -1;
     $('menu-name').value = '';
     refreshMenuList();
     refreshMenuOverview();
+    $('menu-cancel').classList.add('hidden');
     statusEl.textContent = `Menu '${name}' gespeichert.`;
 }
 
@@ -1126,6 +1149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('menu-add').addEventListener('click', menuAdd);
     $('menu-remove').addEventListener('click', menuRemove);
     $('menu-clear').addEventListener('click', menuClear);
+    $('menu-cancel').addEventListener('click', menuCancelEdit);
     $('menu-save-recipe').addEventListener('click', menuSaveRecipe);
 
     // --- Editor: Aktionen ---
