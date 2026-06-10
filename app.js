@@ -178,8 +178,11 @@ function autoSaveFood(food) {
     return 'new';
 }
 
+let currentDisplayedFood = null;
+
 // ===== Naehrwerte anzeigen =====
 function showFoodDisplay(food) {
+    currentDisplayedFood = food;
     $('food-display').classList.remove('hidden');
     $('food-display-name').textContent = food.Lebensmittel;
     const qtyEl = $('food-display-quantity');
@@ -950,6 +953,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Tab Navigation ---
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // --- Food Display: Edit & Clear ---
+    $('food-display-edit').addEventListener('click', () => {
+        if (!currentDisplayedFood) return;
+        const idx = db.findIndex(d => d.Lebensmittel === currentDisplayedFood.Lebensmittel);
+        switchTab('editor');
+        if (idx >= 0) {
+            const sel = $('editor-food-select');
+            // Find the option with this db index
+            for (const opt of sel.querySelectorAll('option')) {
+                if (parseInt(opt.value) === idx) { opt.selected = true; break; }
+            }
+            editorLoad();
+        }
+    });
+    $('food-display-clear').addEventListener('click', () => {
+        $('food-display').classList.add('hidden');
+        currentDisplayedFood = null;
     });
 
     // --- Menue: Barcode ---
