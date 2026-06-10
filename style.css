@@ -176,16 +176,19 @@ button:active {
   color: var(--primary);
 }
 .product-quantity-input {
-  width: 34px;
+  width: 3.5ch;
+  max-width: 3.5ch;
   height: 18px;
   font-size: 11px;
   color: var(--subtext);
   background: var(--surface1);
-  border: 1px solid var(--border);
+  border: none;
   border-radius: 3px;
-  padding: 0 3px;
+  padding: 0 2px;
   text-align: right;
   flex-shrink: 0;
+  margin-left: auto;
+  box-sizing: content-box;
 }
 .pn-row {
   display: flex;
