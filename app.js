@@ -750,22 +750,21 @@ function updateAquaTrack() {
     if (dropPct) dropPct.textContent = pct + '%';
     if (info) info.style.color = reached ? 'var(--green)' : '#74c7ec';
 
-    // Log-Liste rendern
+    // Log-Buttons rendern
     const logList = $('aqua-log-list');
     if (logList) {
         const todayEntries = log.filter(e => e.Datum === todayStr);
         if (todayEntries.length === 0) {
             logList.innerHTML = '';
         } else {
-            logList.innerHTML = todayEntries.map((e, i) =>
-                `<div class="aqua-log-item" data-idx="${log.indexOf(e)}">${e.Zeit} ${e.Name} ${e.Menge}ml</div>`
+            logList.innerHTML = todayEntries.map(e =>
+                `<button class="aqua-log-btn" data-idx="${log.indexOf(e)}">${e.Name} ${e.Menge}ml ✕</button>`
             ).join('');
-            logList.querySelectorAll('.aqua-log-item').forEach(el => {
-                el.addEventListener('click', () => {
-                    const idx = parseInt(el.dataset.idx);
+            logList.querySelectorAll('.aqua-log-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.dataset.idx);
                     const entry = log[idx];
                     if (!entry) return;
-                    if (!confirm(`${entry.Name} ${entry.Menge}ml entfernen?`)) return;
                     log.splice(idx, 1);
                     saveAquaLog(log);
                     updateAquaTrack();
