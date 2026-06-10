@@ -1166,6 +1166,17 @@ document.addEventListener('DOMContentLoaded', () => {
     loadInitialData();
     updateDailyCircles();
 
+    // --- Backup Reminder ---
+    const lastExport = localStorage.getItem('kcal_last_export');
+    if (lastExport) {
+        const days = Math.floor((Date.now() - new Date(lastExport).getTime()) / 86400000);
+        if (days >= 7) {
+            showToast(`Backup ist ${days} Tage alt!`);
+        }
+    } else if (db.length > 0 || meals.length > 0) {
+        showToast('Noch kein Backup gemacht!');
+    }
+
     // --- Tab Navigation ---
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
@@ -1422,6 +1433,42 @@ document.addEventListener('DOMContentLoaded', () => {
     $('export-templates').addEventListener('click', () => {
         exportData(templates, 'kcal_vorlagen.json');
         $('data-status').textContent = 'Speisekarte exportiert.';
+    });
+
+    // --- Quick Backup: Export All / Import All ---
+    $('export-all').addEventListener('click', () => {
+        const allData = {
+            datenbank: db,
+            mahlzeiten: meals,
+            vorlagen: templates,
+            aqua: loadAquaLog()
+        };
+        exportData(allData, 'kcal_backup.json');
+        localStorage.setItem('kcal_last_export', today());
+        $('data-status').textContent = 'Backup exportiert (kcal_backup.json).';
+    });
+    $('import-all').addEventListener('click', () => $('import-all-file').click());
+    $('import-all-file').addEventListener('change', e => {
+        if (!e.target.files[0]) return;
+        const reader = new FileReader();
+        reader.onload = evt => {
+            try {
+                const all = JSON.parse(evt.target.result);
+                if (all.datenbank) { db = all.datenbank; saveDB(); }
+                if (all.mahlzeiten) { meals = all.mahlzeiten; saveMeals(); }
+                if (all.vorlagen) { templates = all.vorlagen; saveTemplates(); }
+                if (all.aqua) { saveAquaLog(all.aqua); }
+                populateMenuFoodDropdown();
+                populateEditorFoodDropdown();
+                populateTemplateDropdown();
+                updateDailyCircles();
+                $('data-status').textContent = `Backup importiert: ${db.length} LM, ${meals.length} Mahlzeiten, ${templates.length} Menus.`;
+            } catch {
+                alert('Ungueltige Backup-Datei.');
+            }
+        };
+        reader.readAsText(e.target.files[0]);
+        e.target.value = '';
     });
 
     // --- Reset: Daten neu laden ---
