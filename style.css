@@ -689,6 +689,17 @@ button:active {
   transform: scale(0.97);
 }
 
+.aqua-log-item {
+  font-size: 12px;
+  color: var(--subtext);
+  padding: 3px 0;
+  cursor: pointer;
+  text-align: center;
+}
+.aqua-log-item:active {
+  color: var(--red);
+}
+
 /* === Toast === */
 #toast-msg {
   position: fixed;

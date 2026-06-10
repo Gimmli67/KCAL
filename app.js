@@ -748,8 +748,32 @@ function updateAquaTrack() {
         dropFill.style.fill = reached ? 'var(--green)' : '#74c7ec';
     }
     if (dropPct) dropPct.textContent = pct + '%';
-    if (bar) bar.style.background = reached ? 'var(--green)' : 'linear-gradient(90deg, #74c7ec, #89b4fa)';
     if (info) info.style.color = reached ? 'var(--green)' : '#74c7ec';
+
+    // Log-Liste rendern
+    const logList = $('aqua-log-list');
+    if (logList) {
+        const todayEntries = log.filter(e => e.Datum === todayStr);
+        if (todayEntries.length === 0) {
+            logList.innerHTML = '';
+        } else {
+            logList.innerHTML = todayEntries.map((e, i) =>
+                `<div class="aqua-log-item" data-idx="${log.indexOf(e)}">${e.Zeit} ${e.Name} ${e.Menge}ml</div>`
+            ).join('');
+            logList.querySelectorAll('.aqua-log-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const idx = parseInt(el.dataset.idx);
+                    const entry = log[idx];
+                    if (!entry) return;
+                    if (!confirm(`${entry.Name} ${entry.Menge}ml entfernen?`)) return;
+                    log.splice(idx, 1);
+                    saveAquaLog(log);
+                    updateAquaTrack();
+                    showToast(`✕ ${entry.Name} -${entry.Menge}ml`);
+                });
+            });
+        }
+    }
 }
 
 // ===== Daily Status Circles =====
@@ -1171,20 +1195,6 @@ document.addEventListener('DOMContentLoaded', () => {
     $('aqua-wasser').addEventListener('click', () => addAquaEntry('Wasser', 750));
     $('aqua-espresso').addEventListener('click', () => addAquaEntry('Espresso', 30));
     $('aqua-kaffee').addEventListener('click', () => addAquaEntry('Kaffee', 200));
-    $('aqua-undo').addEventListener('click', () => {
-        const log = loadAquaLog();
-        const todayStr = today();
-        for (let i = log.length - 1; i >= 0; i--) {
-            if (log[i].Datum === todayStr) {
-                const removed = log.splice(i, 1)[0];
-                saveAquaLog(log);
-                updateAquaTrack();
-                showToast(`✕ ${removed.Name} -${removed.Menge}ml`);
-                return;
-            }
-        }
-        showToast('Nichts zum Entfernen');
-    });
     updateAquaTrack();
 
     // --- Menue: Barcode ---
