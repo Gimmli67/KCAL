@@ -1353,6 +1353,14 @@ document.addEventListener('DOMContentLoaded', () => {
     $('editor-show-all').addEventListener('click', () => { $('editor-search').value = ''; populateEditorFoodDropdown(); });
     $('editor-food-select').addEventListener('change', editorLoad);
     $('editor-food-select').addEventListener('click', editorLoad);
+    $('editor-edit-food').addEventListener('click', () => {
+        const sel = $('editor-food-select');
+        const idx = parseInt(sel.value);
+        const food = db[idx];
+        if (!food) { $('editor-status').textContent = 'Bitte zuerst ein Lebensmittel auswaehlen.'; return; }
+        showScanPreview(food);
+        switchTab('menu');
+    });
     $('editor-delete').addEventListener('click', editorDelete);
     $('editor-save').addEventListener('click', editorSave);
     $('editor-clear').addEventListener('click', editorClear);
