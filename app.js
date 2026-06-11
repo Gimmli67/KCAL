@@ -896,24 +896,25 @@ function refreshHistory() {
     const mealName = MEAL_NAMES[currentMealTab];
     const mealEntries = meals.filter(m => m.Datum === historyDate && m.Mahlzeit === mealName);
 
-    const lines = [];
-    lines.push('==================================================');
-    lines.push(`  ${mealName} - ${historyDate}`);
-    lines.push('==================================================');
+    let html = '';
+    html += '<div class="hist-header">' + mealName + ' - ' + historyDate + '</div>';
 
     if (mealEntries.length === 0) {
-        lines.push('');
-        lines.push(`  Noch nichts fuer ${mealName} gespeichert.`);
+        html += '<div class="hist-empty">Noch nichts fuer ' + mealName + ' gespeichert.</div>';
     } else {
         const tag = { kcal: 0, fett: 0, kh: 0, zucker: 0, eiweiss: 0 };
 
-        mealEntries.forEach(m => {
-            lines.push('');
-            lines.push(`  ${m.Zeit}`);
-            lines.push('  ' + '-'.repeat(44));
-            m.Positionen.forEach(p => {
+        mealEntries.forEach((m, mi) => {
+            const mealIdx = meals.indexOf(m);
+            html += '<div class="hist-time">' + m.Zeit + '</div>';
+            html += '<div class="hist-sep"></div>';
+            m.Positionen.forEach((p, pi) => {
                 const mg = Math.round(p.Menge);
-                lines.push(`    ${(p.Lebensmittel || '').padEnd(24)} ${String(mg).padStart(4)}${p.Einheit} ${String(p.Kcal).padStart(6)} kcal`);
+                html += '<div class="hist-entry">';
+                html += '<span class="hist-item">' + (p.Lebensmittel || '') + '</span>';
+                html += '<span class="hist-detail">' + mg + p.Einheit + ' / ' + p.Kcal + ' kcal</span>';
+                html += '<button class="hist-del" data-meal="' + mealIdx + '" data-pos="' + pi + '">✕</button>';
+                html += '</div>';
             });
             tag.kcal += m.Summe.Kcal;
             tag.fett += m.Summe.Fett;
@@ -922,19 +923,40 @@ function refreshHistory() {
             tag.eiweiss += m.Summe.Eiweiss;
         });
 
-        lines.push('');
-        lines.push('==================================================');
-        lines.push(`  ${'TOTAL'.padEnd(22)} ${'Ist'.padStart(8)} ${'Ziel'.padStart(6)}`);
-        lines.push('==================================================');
-        lines.push(`  ${'Kalorien (kcal)'.padEnd(22)} ${tag.kcal.toFixed(1).padStart(8)} ${String(GOALS.kcal).padStart(6)}`);
-        lines.push(`  ${'Fett (g)'.padEnd(22)} ${tag.fett.toFixed(1).padStart(8)} ${String(GOALS.fett).padStart(6)}`);
-        lines.push(`  ${'Kohlenhydrate (g)'.padEnd(22)} ${tag.kh.toFixed(1).padStart(8)} ${String(GOALS.kohlenhydrate).padStart(6)}`);
-        lines.push(`  ${'Zucker (g)'.padEnd(22)} ${tag.zucker.toFixed(1).padStart(8)} ${String(GOALS.zucker).padStart(6)}`);
-        lines.push(`  ${'Eiweiss (g)'.padEnd(22)} ${tag.eiweiss.toFixed(1).padStart(8)} ${String(GOALS.eiweiss).padStart(6)}`);
-        lines.push('==================================================');
+        html += '<div class="hist-header" style="margin-top:10px">TOTAL</div>';
+        html += '<div class="hist-total">Kalorien: ' + tag.kcal.toFixed(1) + ' / ' + GOALS.kcal + ' kcal</div>';
+        html += '<div class="hist-total">Fett: ' + tag.fett.toFixed(1) + ' / ' + GOALS.fett + ' g</div>';
+        html += '<div class="hist-total">KH: ' + tag.kh.toFixed(1) + ' / ' + GOALS.kohlenhydrate + ' g</div>';
+        html += '<div class="hist-total">Zucker: ' + tag.zucker.toFixed(1) + ' / ' + GOALS.zucker + ' g</div>';
+        html += '<div class="hist-total">Eiweiss: ' + tag.eiweiss.toFixed(1) + ' / ' + GOALS.eiweiss + ' g</div>';
     }
 
-    content.textContent = lines.join('\n');
+    content.innerHTML = html;
+
+    content.querySelectorAll('.hist-del').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const mi = parseInt(btn.dataset.meal);
+            const pi = parseInt(btn.dataset.pos);
+            const meal = meals[mi];
+            if (!meal) return;
+            const pos = meal.Positionen[pi];
+            if (!pos) return;
+            const f = (pos.Menge || 0) / 100;
+            meal.Summe.Kcal -= Math.round(((pos.Kcal || 0)) * 10) / 10;
+            meal.Summe.Fett -= Math.round(((pos.Fett || 0) * f) * 10) / 10;
+            meal.Summe.Kohlenhydrate -= Math.round(((pos.Kohlenhydrate || 0) * f) * 10) / 10;
+            meal.Summe.Zucker -= Math.round(((pos.Zucker || 0) * f) * 10) / 10;
+            meal.Summe.Eiweiss -= Math.round(((pos.Eiweiss || 0) * f) * 10) / 10;
+            meal.Positionen.splice(pi, 1);
+            if (meal.Positionen.length === 0) {
+                meals.splice(mi, 1);
+            }
+            saveMeals();
+            updateDailyCircles();
+            refreshHistory();
+            showToast('✓ Eintrag geloescht');
+        });
+    });
 }
 
 function refreshAquaHistory(content) {
@@ -951,44 +973,59 @@ function refreshAquaHistory(content) {
         });
     });
 
-    const lines = [];
-    lines.push('==================================================');
-    lines.push(`  AquaTrack - ${historyDate}`);
-    lines.push('==================================================');
+    let html = '';
+    html += '<div class="hist-header">AquaTrack - ' + historyDate + '</div>';
 
     let totalMl = 0;
 
     if (dayEntries.length === 0 && mealDrinks.length === 0) {
-        lines.push('');
-        lines.push('  Keine Eintraege.');
+        html += '<div class="hist-empty">Keine Eintraege.</div>';
     } else {
         if (dayEntries.length > 0) {
-            lines.push('');
-            lines.push('  Quick-Add:');
-            lines.push('  ' + '-'.repeat(44));
-            dayEntries.forEach(e => {
+            html += '<div class="hist-time">Quick-Add:</div>';
+            html += '<div class="hist-sep"></div>';
+            dayEntries.forEach((e, ei) => {
                 totalMl += e.Menge;
-                lines.push(`    ${e.Zeit}  ${(e.Name || '').padEnd(20)} ${String(e.Menge).padStart(5)} ml`);
+                html += '<div class="hist-entry">';
+                html += '<span class="hist-item">' + e.Zeit + '  ' + (e.Name || '') + '</span>';
+                html += '<span class="hist-detail">' + e.Menge + ' ml</span>';
+                html += '<button class="hist-del" data-aqua="' + ei + '">✕</button>';
+                html += '</div>';
             });
         }
         if (mealDrinks.length > 0) {
-            lines.push('');
-            lines.push('  Drinks aus Mahlzeiten:');
-            lines.push('  ' + '-'.repeat(44));
+            html += '<div class="hist-time" style="margin-top:8px">Drinks aus Mahlzeiten:</div>';
+            html += '<div class="hist-sep"></div>';
             mealDrinks.forEach(d => {
                 totalMl += d.Menge;
-                lines.push(`    ${d.Zeit}  ${(d.Name || '').padEnd(20)} ${String(Math.round(d.Menge)).padStart(5)} ml`);
+                html += '<div class="hist-entry">';
+                html += '<span class="hist-item">' + d.Zeit + '  ' + (d.Name || '') + '</span>';
+                html += '<span class="hist-detail">' + Math.round(d.Menge) + ' ml</span>';
+                html += '</div>';
             });
         }
 
         const pct = Math.round((totalMl / GOALS.aqua) * 100);
-        lines.push('');
-        lines.push('==================================================');
-        lines.push(`  TOTAL: ${Math.round(totalMl)} / ${GOALS.aqua} ml (${pct}%)`);
-        lines.push('==================================================');
+        html += '<div class="hist-header" style="margin-top:10px">TOTAL: ' + Math.round(totalMl) + ' / ' + GOALS.aqua + ' ml (' + pct + '%)</div>';
     }
 
-    content.textContent = lines.join('\n');
+    content.innerHTML = html;
+
+    content.querySelectorAll('.hist-del[data-aqua]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const ei = parseInt(btn.dataset.aqua);
+            const fullLog = loadAquaLog();
+            const dayIndices = [];
+            fullLog.forEach((e, i) => { if (e.Datum === historyDate) dayIndices.push(i); });
+            if (ei < dayIndices.length) {
+                fullLog.splice(dayIndices[ei], 1);
+                saveAquaLog(fullLog);
+                refreshAquaDisplay();
+                refreshHistory();
+                showToast('✓ Aqua-Eintrag geloescht');
+            }
+        });
+    });
 }
 
 // ===== Barcode Kamera-Scanner =====
