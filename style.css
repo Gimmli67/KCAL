@@ -755,4 +755,10 @@ button:active {
     font-size: 12px;
     min-width: 80px;
   }
+  .button-row .btn-aqua-remove {
+    padding: 6px 10px;
+    font-size: 11px;
+    min-height: 34px;
+    min-width: auto;
+  }
 }
