@@ -1425,49 +1425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('result-close').addEventListener('click', () => $('result-modal').classList.add('hidden'));
 
     // --- Import / Export ---
-    $('import-db').addEventListener('click', () => $('import-db-file').click());
-    $('import-db-file').addEventListener('change', e => {
-        if (!e.target.files[0]) return;
-        importData(e.target.files[0], data => {
-            db = data; saveDB(); populateMenuFoodDropdown(); populateEditorFoodDropdown();
-            $('data-status').textContent = `${data.length} Lebensmittel importiert.`;
-        });
-        e.target.value = '';
-    });
-    $('export-db').addEventListener('click', () => {
-        exportData(db, 'kcal_datenbank.json');
-        $('data-status').textContent = 'Datenbank exportiert.';
-    });
-
-    $('import-meals').addEventListener('click', () => $('import-meals-file').click());
-    $('import-meals-file').addEventListener('change', e => {
-        if (!e.target.files[0]) return;
-        importData(e.target.files[0], data => {
-            meals = data; saveMeals();
-            $('data-status').textContent = `${data.length} Mahlzeiten importiert.`;
-        });
-        e.target.value = '';
-    });
-    $('export-meals').addEventListener('click', () => {
-        exportData(meals, 'kcal_mahlzeiten.json');
-        $('data-status').textContent = 'Mahlzeiten exportiert.';
-    });
-
-    $('import-templates').addEventListener('click', () => $('import-templates-file').click());
-    $('import-templates-file').addEventListener('change', e => {
-        if (!e.target.files[0]) return;
-        importData(e.target.files[0], data => {
-            templates = data; saveTemplates(); populateTemplateDropdown();
-            $('data-status').textContent = `${data.length} Menus importiert.`;
-        });
-        e.target.value = '';
-    });
-    $('export-templates').addEventListener('click', () => {
-        exportData(templates, 'kcal_vorlagen.json');
-        $('data-status').textContent = 'Speisekarte exportiert.';
-    });
-
-    // --- Quick Backup: Export All / Import All ---
+    // --- Full Data Import / Export ---
     $('export-all').addEventListener('click', () => {
         const allData = {
             datenbank: db,
