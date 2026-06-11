@@ -692,13 +692,14 @@ button:active {
   background: var(--red);
   color: var(--bg);
   flex: 1;
-  font-size: 12px;
-  padding: 4px 16px;
-  border-radius: 8px;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 6px;
   border: none;
   font-weight: 600;
   cursor: pointer;
-  min-height: 32px;
+  min-height: 28px;
+  max-height: 28px;
 }
 .btn-aqua-remove:active {
   opacity: 0.8;
