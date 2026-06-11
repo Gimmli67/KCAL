@@ -30,13 +30,42 @@
         </div>
       </div>
 
-      <!-- Naehrwerte Anzeige (nach Scan) -->
+      <!-- Scan Preview (editierbar) -->
       <div id="food-display" class="group hidden">
-        <div class="product-name-row"><span id="food-display-name" class="product-name"></span><input type="text" inputmode="numeric" id="food-display-quantity" class="product-quantity-input" placeholder="g/ml" title="Gesamtmenge Packung"></div>
-        <div id="food-display-nutrients"></div>
+        <div class="group-header">Scan Preview</div>
+        <div class="field">
+          <label>Produktname:</label>
+          <input type="text" id="fd-name" placeholder="Produktname...">
+        </div>
+        <div class="row">
+          <div class="field" style="flex:1">
+            <label>Einheit:</label>
+            <select id="fd-unit">
+              <option value="g">Food (g)</option>
+              <option value="ml">Drinks (ml)</option>
+            </select>
+          </div>
+          <div class="field" style="flex:1">
+            <label>Gesamtmenge:</label>
+            <input type="text" id="fd-quantity" inputmode="decimal" placeholder="z.B. 330">
+          </div>
+        </div>
+        <div class="nutrient-grid scan-preview-grid">
+          <div class="nutrient-header">
+            <span></span><span>pro 100</span>
+          </div>
+          <div class="nutrient-row"><label>Kalorien (kcal)</label><input type="text" id="fd-kcal" inputmode="decimal"></div>
+          <div class="nutrient-row"><label>Fett (g)</label><input type="text" id="fd-fett" inputmode="decimal"></div>
+          <div class="nutrient-row"><label>dav. gesaettigt</label><input type="text" id="fd-gesaettigt" inputmode="decimal"></div>
+          <div class="nutrient-row"><label>Kohlenhydrate (g)</label><input type="text" id="fd-kh" inputmode="decimal"></div>
+          <div class="nutrient-row"><label>dav. Zucker (g)</label><input type="text" id="fd-zucker" inputmode="decimal"></div>
+          <div class="nutrient-row"><label>Eiweiss (g)</label><input type="text" id="fd-eiweiss" inputmode="decimal"></div>
+          <div class="nutrient-row"><label>Salz (g)</label><input type="text" id="fd-salz" inputmode="decimal"></div>
+          <div class="nutrient-row"><label>Ballaststoffe (g)</label><input type="text" id="fd-ballaststoffe" inputmode="decimal"></div>
+        </div>
         <div class="button-row" style="margin-top:8px">
-          <button id="food-display-edit">Edit</button>
-          <button id="food-display-clear">Clear</button>
+          <button class="btn-green" id="fd-save">Save</button>
+          <button id="fd-clear">Clear</button>
         </div>
       </div>
 

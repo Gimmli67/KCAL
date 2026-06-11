@@ -171,51 +171,59 @@ function populateTemplateDropdown() {
     });
 }
 
-// ===== Auto-Save nach Scan =====
-function autoSaveFood(food) {
-    if (!food.Lebensmittel) return 'none';
-    const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
-    if (exists >= 0) {
-        if (food.Gesamtmenge && !db[exists].Gesamtmenge) {
-            db[exists].Gesamtmenge = food.Gesamtmenge;
-            saveDB();
-        }
-        showFoodDisplay(db[exists]);
-        return 'exists';
-    }
-    db.push(food);
-    saveDB();
-    populateEditorFoodDropdown();
-    showFoodDisplay(food);
-    return 'new';
+
+// ===== Scan Preview anzeigen (editierbar, kein Auto-Save) =====
+function showScanPreview(food) {
+    $('food-display').classList.remove('hidden');
+    $('fd-name').value = food.Lebensmittel || '';
+    $('fd-unit').value = food.Einheit || 'g';
+    $('fd-quantity').value = food.Gesamtmenge || '';
+    $('fd-kcal').value = food.Kcal ?? '';
+    $('fd-fett').value = food.Fett ?? '';
+    $('fd-gesaettigt').value = food.Gesaettigt ?? '';
+    $('fd-kh').value = food.Kohlenhydrate ?? '';
+    $('fd-zucker').value = food.Zucker ?? '';
+    $('fd-eiweiss').value = food.Eiweiss ?? '';
+    $('fd-salz').value = food.Salz ?? '';
+    $('fd-ballaststoffe').value = food.Ballaststoffe ?? '';
 }
 
-let currentDisplayedFood = null;
+function saveScanPreview() {
+    const name = $('fd-name').value.trim();
+    if (!name) { $('menu-status').textContent = 'Bitte Produktname eingeben.'; return; }
+    const unit = $('fd-unit').value;
+    const gm = parseFloat($('fd-quantity').value) || null;
+    const kcal = parseFloat($('fd-kcal').value) || 0;
 
-// ===== Naehrwerte anzeigen =====
-function showFoodDisplay(food) {
-    currentDisplayedFood = food;
-    $('food-display').classList.remove('hidden');
-    $('food-display-name').textContent = food.Lebensmittel;
-    const qtyEl = $('food-display-quantity');
-    if (qtyEl) {
-        qtyEl.value = food.Gesamtmenge || '';
-        qtyEl.placeholder = food.Einheit || 'g/ml';
+    const food = {
+        Lebensmittel: name,
+        Einheit: unit,
+        Kategorie: unit === 'ml' ? 'Drinks' : 'Food',
+        Gesamtmenge: gm,
+        Kcal: round2(kcal),
+        Fett: round2(parseFloat($('fd-fett').value) || 0),
+        Gesaettigt: round2(parseFloat($('fd-gesaettigt').value) || 0),
+        Kohlenhydrate: round2(parseFloat($('fd-kh').value) || 0),
+        Zucker: round2(parseFloat($('fd-zucker').value) || 0),
+        Eiweiss: round2(parseFloat($('fd-eiweiss').value) || 0),
+        Salz: round2(parseFloat($('fd-salz').value) || 0),
+        Ballaststoffe: round2(parseFloat($('fd-ballaststoffe').value) || 0)
+    };
+
+    const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
+    if (exists >= 0) {
+        db[exists] = food;
+    } else {
+        db.push(food);
     }
+    saveDB();
+    populateEditorFoodDropdown();
+    populateMenuFoodDropdown();
 
-    const rows = [
-        ['Kalorien', `${food.Kcal} kcal`],
-        ['Fett', `${food.Fett} g`],
-        ['dav. gesaettigt', `${food.Gesaettigt} g`],
-        ['Kohlenhydrate', `${food.Kohlenhydrate} g`],
-        ['dav. Zucker', `${food.Zucker} g`],
-        ['Eiweiss', `${food.Eiweiss} g`],
-        ['Salz', `${food.Salz} g`],
-        ['Ballaststoffe', `${food.Ballaststoffe} g`]
-    ];
-    $('food-display-nutrients').innerHTML = rows.map(([label, val]) =>
-        `<div class="pn-row"><span class="pn-label">${label}</span><span class="pn-value">${val}</span></div>`
-    ).join('');
+    const gmStr = gm ? ' | ' + gm + unit : '';
+    $('menu-status').textContent = `${name} (${unit}) - ${food.Kcal} kcal${gmStr} - gespeichert`;
+    $('food-display').classList.add('hidden');
+    showToast('✓ ' + name + ' gespeichert');
 }
 
 // ===== Menu List =====
@@ -272,15 +280,9 @@ async function menuBarcodeSearch() {
         const food = await lookupBarcode(barcode);
         if (!food) { $('menu-status').textContent = `Produkt nicht gefunden: ${barcode}`; return; }
 
-        const result = autoSaveFood(food);
+        showScanPreview(food);
         $('menu-barcode').value = '';
-        const gm = food.Gesamtmenge ? ` | ${food.Gesamtmenge}${food.Einheit}` : '';
-        const info = `${food.Lebensmittel} (${food.Einheit}) - ${food.Kcal} kcal${gm}`;
-        if (result === 'exists') {
-            $('menu-status').textContent = `${info} - bereits vorhanden`;
-        } else {
-            $('menu-status').textContent = `${info} - gespeichert`;
-        }
+        $('menu-status').textContent = `${food.Lebensmittel} - pruefen und speichern.`;
     } catch (e) {
         $('menu-status').textContent = `Fehler: ${e.message}`;
     }
@@ -1212,22 +1214,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Food Display: Edit & Clear ---
-    $('food-display-edit').addEventListener('click', () => {
-        if (!currentDisplayedFood) return;
-        const idx = db.findIndex(d => d.Lebensmittel === currentDisplayedFood.Lebensmittel);
-        if (idx < 0) return;
-        populateEditorFoodDropdown();
-        const sel = $('editor-food-select');
-        for (const opt of sel.querySelectorAll('option')) {
-            if (parseInt(opt.value) === idx) { opt.selected = true; break; }
-        }
-        editorLoadedFood = db[idx];
-        fillEditorFields(db[idx]);
-        switchTab('editor');
-    });
-    $('food-display-clear').addEventListener('click', () => {
+    $('fd-save').addEventListener('click', saveScanPreview);
+    $('fd-clear').addEventListener('click', () => {
         $('food-display').classList.add('hidden');
-        currentDisplayedFood = null;
     });
 
     // --- AquaTrack Quick-Add ---
@@ -1264,22 +1253,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const count = Object.keys(v).length;
         $('menu-status').textContent = `Etikett gescannt: ${count} von 8 Werten erkannt.`;
 
-        const name = prompt('Produktname eingeben:');
-        if (!name || !name.trim()) { $('menu-status').textContent = 'Abgebrochen - kein Name eingegeben.'; return; }
-
         const food = {
-            Lebensmittel: name.trim(), Einheit: 'g',
+            Lebensmittel: '', Einheit: 'g', Kategorie: 'Food', Gesamtmenge: null,
             Kcal: v.Kcal ?? 0, Fett: v.Fett ?? 0, Gesaettigt: v.Gesaettigt ?? 0,
             Kohlenhydrate: v.Kohlenhydrate ?? 0, Zucker: v.Zucker ?? 0,
             Eiweiss: v.Eiweiss ?? 0, Salz: v.Salz ?? 0, Ballaststoffe: v.Ballaststoffe ?? 0
         };
-
-        const saveResult = autoSaveFood(food);
-        if (saveResult === 'exists') {
-            $('menu-status').textContent = `'${name.trim()}' bereits vorhanden - ausgewaehlt. (${food.Kcal} kcal/100g)`;
-        } else {
-            $('menu-status').textContent = `'${name.trim()}' neu gespeichert. (${food.Kcal} kcal/100g)`;
-        }
+        showScanPreview(food);
+        $('menu-status').textContent = `${count} Werte erkannt - Name eingeben und speichern.`;
     });
 
     // --- Manual Entry: Formular ein-/ausblenden ---
@@ -1307,13 +1288,18 @@ document.addEventListener('DOMContentLoaded', () => {
             Ballaststoffe: parseNum($('me-ballaststoffe').value) || 0
         };
 
-        const saveResult = autoSaveFood(food);
-        $('manual-entry-form').classList.add('hidden');
-        if (saveResult === 'exists') {
-            $('menu-status').textContent = `'${name}' bereits vorhanden - ausgewaehlt.`;
+        const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
+        if (exists >= 0) {
+            db[exists] = food;
         } else {
-            $('menu-status').textContent = `'${name}' neu gespeichert. (${food.Kcal} kcal/100g)`;
+            db.push(food);
         }
+        saveDB();
+        populateEditorFoodDropdown();
+        populateMenuFoodDropdown();
+        $('manual-entry-form').classList.add('hidden');
+        $('menu-status').textContent = `'${name}' gespeichert. (${food.Kcal} kcal/100g)`;
+        showToast('✓ ' + name + ' gespeichert');
     });
     $('me-cancel').addEventListener('click', () => {
         $('manual-entry-form').classList.add('hidden');

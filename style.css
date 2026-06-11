@@ -163,33 +163,6 @@ button:active {
   min-width: 100px;
 }
 
-/* === Product Card === */
-.product-name-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 10px;
-}
-.product-name {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--primary);
-}
-.product-quantity-input {
-  width: 5.5ch;
-  max-width: 5.5ch;
-  height: 18px;
-  font-size: 11px;
-  color: var(--subtext);
-  background: var(--surface1);
-  border: none;
-  border-radius: 3px;
-  padding: 0 2px;
-  text-align: right;
-  flex-shrink: 0;
-  margin-left: auto;
-  box-sizing: content-box;
-}
 .daily-meal-group {
   margin-bottom: 10px;
 }
@@ -229,23 +202,6 @@ button:active {
   font-size: 15px;
   font-weight: 700;
   color: var(--primary);
-}
-.pn-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-}
-.pn-row:last-child {
-  border-bottom: none;
-}
-.pn-row .pn-label {
-  color: var(--subtext);
-}
-.pn-row .pn-value {
-  font-weight: 600;
-  color: var(--text);
 }
 .hidden {
   display: none !important;
@@ -353,6 +309,14 @@ button:active {
   font-weight: 600;
   text-align: right;
   padding-right: 2px;
+}
+
+/* === Scan Preview Grid (2 Spalten) === */
+.scan-preview-grid .nutrient-header {
+  grid-template-columns: 1fr 55px;
+}
+.scan-preview-grid .nutrient-row {
+  grid-template-columns: 1fr 55px;
 }
 
 /* === Status Line === */
