@@ -114,9 +114,10 @@ function populateMenuFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
-    const groups = { Food: [], Drinks: [] };
+    const groups = { Food: [], Drinks: [], Portion: [] };
     filtered.forEach(item => {
-        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : 'Food');
+        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : 'Food');
+        if (!groups[kat]) groups[kat] = [];
         groups[kat].push(item);
     });
     for (const [label, items] of Object.entries(groups)) {
@@ -139,9 +140,10 @@ function populateEditorFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
-    const groups = { Food: [], Drinks: [] };
+    const groups = { Food: [], Drinks: [], Portion: [] };
     filtered.forEach(item => {
-        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : 'Food');
+        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : 'Food');
+        if (!groups[kat]) groups[kat] = [];
         groups[kat].push(item);
     });
     for (const [label, items] of Object.entries(groups)) {
@@ -198,7 +200,7 @@ function saveScanPreview() {
     const food = {
         Lebensmittel: name,
         Einheit: unit,
-        Kategorie: unit === 'ml' ? 'Drinks' : 'Food',
+        Kategorie: unit === 'ml' ? 'Drinks' : unit === 'p' ? 'Portion' : 'Food',
         Gesamtmenge: gm,
         Kcal: round2(kcal),
         Fett: round2(parseFloat($('fd-fett').value) || 0),
@@ -346,7 +348,7 @@ function editorSave() {
     }
 
     const unit = $('ed-unit') ? $('ed-unit').value : 'g';
-    const kategorie = unit === 'ml' ? 'Drinks' : 'Food';
+    const kategorie = unit === 'ml' ? 'Drinks' : unit === 'p' ? 'Portion' : 'Food';
     const entry = {
         Lebensmittel: name, Einheit: unit, Kategorie: kategorie,
         Kcal: vals.kcal, Fett: vals.fett, Gesaettigt: vals.gesaettigt,
