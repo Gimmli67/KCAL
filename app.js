@@ -1068,14 +1068,13 @@ function startBarcodeScanner(onSuccess) {
     html5QrCode.start(
         { facingMode: 'environment' },
         {
-            fps: 30,
+            fps: 15,
             qrbox: { width: boxW, height: boxH },
-            aspectRatio: 1.0,
             formatsToSupport: [
                 Html5QrcodeSupportedFormats.EAN_13,
-                Html5QrcodeSupportedFormats.EAN_8,
-                Html5QrcodeSupportedFormats.QR_CODE
-            ]
+                Html5QrcodeSupportedFormats.EAN_8
+            ],
+            experimentalFeatures: { useBarCodeDetectorIfSupported: true }
         },
         text => { stopBarcodeScanner(); onSuccess(text); },
         () => {}
