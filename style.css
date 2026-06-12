@@ -110,8 +110,9 @@ select {
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 10px 12px;
-  font-size: 14px;
+  padding: 8px 12px;
+  font-size: 12px;
+  height: 38px;
   flex: 1;
   min-width: 0;
   outline: none;
@@ -133,14 +134,15 @@ button {
   color: var(--bg);
   border: none;
   border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 8px 16px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
   touch-action: manipulation;
   transition: opacity 0.15s, transform 0.1s;
-  min-height: 42px;
+  min-height: 38px;
+  max-height: 38px;
 }
 button:active {
   opacity: 0.8;
