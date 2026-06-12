@@ -96,6 +96,14 @@ function saveDB() { localStorage.setItem('kcal_db', JSON.stringify(db)); autoBac
 function saveMeals() { localStorage.setItem('kcal_meals', JSON.stringify(meals)); autoBackup(); }
 function saveTemplates() { localStorage.setItem('kcal_templates', JSON.stringify(templates)); autoBackup(); }
 
+function recalcMealSumme(meal) {
+    const s = { Kcal: 0, Fett: 0, Kohlenhydrate: 0, Zucker: 0, Eiweiss: 0 };
+    meal.Positionen.forEach(p => {
+        s.Kcal += p.Kcal || 0;
+    });
+    meal.Summe = s;
+}
+
 // ===== Auto-Backup (1x taeglich als Download) =====
 function autoBackup() {
     const key = 'kcal_auto_backup_date';
@@ -212,7 +220,8 @@ function saveScanPreview() {
     const name = $('fd-name').value.trim();
     if (!name) { $('menu-status').textContent = 'Bitte Produktname eingeben.'; return; }
     const unit = $('fd-unit').value;
-    const gm = parseFloat($('fd-quantity').value) || null;
+    const gmVal = parseFloat($('fd-quantity').value);
+    const gm = isNaN(gmVal) ? null : gmVal;
     const kcal = parseFloat($('fd-kcal').value) || 0;
 
     const food = {
@@ -348,10 +357,6 @@ function fillEditorFields(food) {
 }
 
 // ===== Editor: Effektive Werte berechnen (alt - nicht mehr verwendet) =====
-function updateCalcFields() {
-    // Wird nicht mehr benoetigt - updateEditorCalc ersetzt diese Funktion
-}
-
 // ===== Editor: Speichern =====
 function editorSave() {
     const name = $('ed-name').value.trim();
@@ -416,7 +421,6 @@ function editorLoad() {
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
     updateEditorHeader();
     $('ed-amount').value = (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
-    if ($('editor-food-calculated')) $('editor-food-calculated').innerHTML = '';
     updateEditorCalc();
     $('editor-status').textContent = `'${food.Lebensmittel}' geladen.`;
 }
@@ -773,12 +777,10 @@ function updateAquaTrack() {
     });
 
     const pct = Math.min(Math.round((totalMl / GOALS.aqua) * 100), 100);
-    const bar = $('aqua-bar');
     const info = $('aqua-info');
     const dropFill = $('aqua-drop-fill');
     const dropPct = $('aqua-drop-pct');
     const reached = totalMl >= GOALS.aqua;
-    if (bar) bar.style.width = pct + '%';
     if (info) info.textContent = `${Math.round(totalMl)} / ${GOALS.aqua} ml`;
     if (dropFill) {
         dropFill.setAttribute('y', 130 - (pct / 100 * 130));
@@ -883,15 +885,8 @@ function renderDailyMeals(todayMeals) {
                 if (globalIdx >= 0) meals.splice(globalIdx, 1);
             } else {
                 // Einzelne Position entfernen und Summe neu berechnen
-                const pos = meal.Positionen[pi];
-                if (!pos) return;
-                const f = (pos.Menge || 0) / 100;
-                meal.Summe.Kcal -= Math.round((pos.Kcal || 0) * 10) / 10;
-                meal.Summe.Fett -= Math.round(((pos.Fett || 0) * f) * 10) / 10;
-                meal.Summe.Kohlenhydrate -= Math.round(((pos.Kohlenhydrate || 0) * f) * 10) / 10;
-                meal.Summe.Zucker -= Math.round(((pos.Zucker || 0) * f) * 10) / 10;
-                meal.Summe.Eiweiss -= Math.round(((pos.Eiweiss || 0) * f) * 10) / 10;
                 meal.Positionen.splice(pi, 1);
+                recalcMealSumme(meal);
             }
             saveMeals();
             updateDailyCircles();
@@ -961,17 +956,11 @@ function refreshHistory() {
             const pi = parseInt(btn.dataset.pos);
             const meal = meals[mi];
             if (!meal) return;
-            const pos = meal.Positionen[pi];
-            if (!pos) return;
-            const f = (pos.Menge || 0) / 100;
-            meal.Summe.Kcal -= Math.round(((pos.Kcal || 0)) * 10) / 10;
-            meal.Summe.Fett -= Math.round(((pos.Fett || 0) * f) * 10) / 10;
-            meal.Summe.Kohlenhydrate -= Math.round(((pos.Kohlenhydrate || 0) * f) * 10) / 10;
-            meal.Summe.Zucker -= Math.round(((pos.Zucker || 0) * f) * 10) / 10;
-            meal.Summe.Eiweiss -= Math.round(((pos.Eiweiss || 0) * f) * 10) / 10;
             meal.Positionen.splice(pi, 1);
             if (meal.Positionen.length === 0) {
                 meals.splice(mi, 1);
+            } else {
+                recalcMealSumme(meal);
             }
             saveMeals();
             updateDailyCircles();
@@ -1042,7 +1031,7 @@ function refreshAquaHistory(content) {
             if (ei < dayIndices.length) {
                 fullLog.splice(dayIndices[ei], 1);
                 saveAquaLog(fullLog);
-                refreshAquaDisplay();
+                updateAquaTrack();
                 refreshHistory();
                 showToast('✓ Aqua-Eintrag geloescht');
             }

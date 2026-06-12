@@ -95,6 +95,9 @@ main {
 .field:last-child {
   margin-bottom: 0;
 }
+.row .field {
+  margin-bottom: 0;
+}
 .field label {
   display: block;
   color: var(--subtext);
@@ -276,7 +279,7 @@ button:active {
 .nutrient-header {
   display: grid;
   grid-template-columns: 1fr 45px 45px;
-  gap: 6px;
+  gap: 12px;
   font-size: 11px;
   color: var(--text);
   margin-bottom: 4px;
@@ -291,7 +294,7 @@ button:active {
 .nutrient-row {
   display: grid;
   grid-template-columns: 1fr 45px 45px;
-  gap: 6px;
+  gap: 12px;
   margin-bottom: 6px;
   align-items: center;
 }
@@ -502,25 +505,20 @@ button:active {
   white-space: nowrap;
 }
 .hist-del {
-  background: var(--red);
-  color: var(--bg);
+  background: none;
+  color: var(--red, #f38ba8);
   border: none;
-  border-radius: 4px;
-  width: 24px;
-  height: 24px;
-  min-height: 24px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
-  padding: 0;
+  padding: 0 4px;
+  opacity: 0.6;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: auto;
+  max-height: none;
 }
 .hist-del:active {
-  opacity: 0.8;
-  transform: scale(0.95);
+  opacity: 1;
 }
 .hist-total {
   color: var(--text);
@@ -698,19 +696,6 @@ button:active {
   font-size: 13px;
   font-weight: 700;
   color: var(--text);
-}
-.aqua-bar-container {
-  background: var(--surface);
-  border-radius: 10px;
-  height: 16px;
-  overflow: hidden;
-}
-.aqua-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #74c7ec, #89b4fa);
-  border-radius: 10px;
-  transition: width 0.4s ease;
 }
 .aqua-info {
   font-size: 14px;
