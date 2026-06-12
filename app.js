@@ -92,9 +92,27 @@ async function loadInitialData() {
     }
 }
 
-function saveDB() { localStorage.setItem('kcal_db', JSON.stringify(db)); }
-function saveMeals() { localStorage.setItem('kcal_meals', JSON.stringify(meals)); }
-function saveTemplates() { localStorage.setItem('kcal_templates', JSON.stringify(templates)); }
+function saveDB() { localStorage.setItem('kcal_db', JSON.stringify(db)); autoBackup(); }
+function saveMeals() { localStorage.setItem('kcal_meals', JSON.stringify(meals)); autoBackup(); }
+function saveTemplates() { localStorage.setItem('kcal_templates', JSON.stringify(templates)); autoBackup(); }
+
+// ===== Auto-Backup (1x taeglich als Download) =====
+function autoBackup() {
+    const key = 'kcal_auto_backup_date';
+    const lastBackup = localStorage.getItem(key);
+    if (lastBackup === today()) return;
+    if (db.length === 0 && meals.length === 0 && templates.length === 0) return;
+    localStorage.setItem(key, today());
+    const allData = {
+        datenbank: db,
+        mahlzeiten: meals,
+        vorlagen: templates,
+        aqua: loadAquaLog()
+    };
+    exportData(allData, 'kcal_backup.json');
+    localStorage.setItem('kcal_last_export', today());
+    showToast('Auto-Backup gespeichert');
+}
 
 // ===== Tab Navigation =====
 function switchTab(name) {
