@@ -1376,7 +1376,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $('editor-food-select').addEventListener('change', editorLoad);
     $('editor-food-select').addEventListener('click', editorLoad);
-    $('editor-clear-search').addEventListener('click', () => { $('editor-search').value = ''; editorClear(); populateEditorFoodDropdown(); $('editor-status').textContent = ''; });
+    $('editor-clear-search').addEventListener('click', () => { $('editor-search').value = ''; editorClear(); $('editor-food-select').innerHTML = ''; $('editor-status').textContent = ''; });
     $('editor-edit-food').addEventListener('click', () => {
         const sel = $('editor-food-select');
         const idx = parseInt(sel.value);
