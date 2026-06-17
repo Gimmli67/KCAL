@@ -392,11 +392,11 @@ function editorSave() {
 
 function updateEditorHeader() {
     if (!editorLoadedFood) return;
-    const isDrink = editorLoadedFood.Einheit === 'ml';
+    const unit = editorLoadedFood.Einheit;
     const h = $('ed-header');
-    if (h) h.textContent = isDrink ? 'Drink per 100ml' : 'Food per 100g';
+    if (h) h.textContent = unit === 'ml' ? 'Drink per 100ml' : unit === 'p' ? 'Portion per 100p' : 'Food per 100g';
     const lbl = $('ed-name-label');
-    if (lbl) lbl.textContent = isDrink ? 'Drink:' : 'Food:';
+    if (lbl) lbl.textContent = unit === 'ml' ? 'Drink:' : unit === 'p' ? 'Portion:' : 'Food:';
 }
 
 // ===== Editor: Laden =====
