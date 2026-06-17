@@ -215,6 +215,13 @@ function showScanPreview(food) {
     $('fd-eiweiss').value = food.Eiweiss ?? '';
     $('fd-salz').value = food.Salz ?? '';
     $('fd-ballaststoffe').value = food.Ballaststoffe ?? '';
+    updateScanPreviewHeader();
+}
+
+function updateScanPreviewHeader() {
+    const unit = $('fd-unit').value;
+    const h = $('fd-pro100-header');
+    if (h) h.textContent = unit === 'ml' ? 'pro 100ml' : unit === 'p' ? '1 Port.' : 'pro 100g';
 }
 
 function saveScanPreview() {
@@ -352,7 +359,7 @@ function fillEditorFields(food) {
     $('ed-eiweiss').value = food.Eiweiss ?? '';
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
-    $('ed-amount').value = (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
+    $('ed-amount').value = food.Einheit === 'p' ? '1' : (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
     updateEditorHeader();
     updateEditorCalc();
 }
@@ -395,9 +402,11 @@ function updateEditorHeader() {
     if (!editorLoadedFood) return;
     const unit = editorLoadedFood.Einheit;
     const h = $('ed-header');
-    if (h) h.textContent = unit === 'ml' ? 'Drink per 100ml' : unit === 'p' ? 'Portion per 100p' : 'Food per 100g';
+    if (h) h.textContent = unit === 'ml' ? 'Drink per 100ml' : unit === 'p' ? 'Portion per 1p' : 'Food per 100g';
     const lbl = $('ed-name-label');
     if (lbl) lbl.textContent = unit === 'ml' ? 'Drink:' : unit === 'p' ? 'Portion:' : 'Food:';
+    const pro = $('ed-pro100-header');
+    if (pro) pro.textContent = unit === 'ml' ? 'pro 100ml' : unit === 'p' ? '1 Port.' : 'pro 100g';
 }
 
 // ===== Editor: Laden =====
@@ -421,7 +430,7 @@ function editorLoad() {
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
     updateEditorHeader();
-    $('ed-amount').value = (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
+    $('ed-amount').value = food.Einheit === 'p' ? '1' : (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
     updateEditorCalc();
     $('editor-status').textContent = `'${food.Lebensmittel}' geladen.`;
 }
@@ -442,7 +451,7 @@ function updateEditorCalc() {
     }
     const unit = editorLoadedFood ? editorLoadedFood.Einheit : 'g';
     if (header) header.innerHTML = `<span style="color:#a6e3a1;font-weight:700">Effectiv</span>`;
-    const f = amount / 100;
+    const f = unit === 'p' ? amount : amount / 100;
     fields.forEach(([inputId, calcId]) => {
         const v = parseNum($(inputId).value);
         if ($(calcId)) $(calcId).textContent = v !== null ? (v * f).toFixed(1) : '';
@@ -471,6 +480,10 @@ function editorClear() {
     });
     if ($('editor-food-display')) $('editor-food-display').classList.add('hidden');
     editorLoadedFood = null;
+    if ($('ed-pro100-header')) $('ed-pro100-header').textContent = 'pro 100';
+    if ($('ed-header')) $('ed-header').textContent = 'Food per 100g';
+    if ($('ed-name-label')) $('ed-name-label').textContent = 'Food:';
+    if ($('ed-calc-header')) $('ed-calc-header').textContent = '';
     $('editor-status').textContent = 'Felder geleert.';
 }
 
@@ -707,7 +720,7 @@ function saveMealFromEditor(mealType) {
     }
 
     const food = editorLoadedFood;
-    const f = amount / 100;
+    const f = food.Einheit === 'p' ? amount : amount / 100;
 
     meals.push({
         Datum: today(),
@@ -1224,6 +1237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Food Display: Edit & Clear ---
     $('fd-save').addEventListener('click', saveScanPreview);
+    $('fd-unit').addEventListener('change', updateScanPreviewHeader);
     $('fd-clear').addEventListener('click', () => {
         $('food-display').classList.add('hidden');
     });
