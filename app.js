@@ -128,6 +128,7 @@ function switchTab(name) {
     document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
     $('tab-' + name).classList.add('active');
     document.querySelector(`.nav-btn[data-tab="${name}"]`).classList.add('active');
+    if (name === 'editor') { editorClear(); $('editor-search').value = ''; populateEditorFoodDropdown(); $('editor-status').textContent = ''; }
     if (name === 'history') refreshHistory();
     if (name === 'menus') { populateMenuFoodDropdown(); refreshMenuList(); refreshMenuOverview(); }
 }
@@ -1361,6 +1362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('editor-show-all').addEventListener('click', () => { $('editor-search').value = ''; populateEditorFoodDropdown(); });
     $('editor-food-select').addEventListener('change', editorLoad);
     $('editor-food-select').addEventListener('click', editorLoad);
+    $('editor-clear-search').addEventListener('click', () => { $('editor-search').value = ''; editorClear(); populateEditorFoodDropdown(); $('editor-status').textContent = ''; });
     $('editor-edit-food').addEventListener('click', () => {
         const sel = $('editor-food-select');
         const idx = parseInt(sel.value);
