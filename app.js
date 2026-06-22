@@ -1208,6 +1208,98 @@ function importData(file, callback) {
     reader.readAsText(file);
 }
 
+// ===== Drink Alarm =====
+let drinkAlarmTimer = null;
+let drinkAlarmCountdown = null;
+
+function startDrinkAlarm() {
+    const btn = $('aqua-alarm-toggle');
+    const statusEl = $('aqua-alarm-status');
+    if (!btn) return;
+
+    if (drinkAlarmTimer) {
+        stopDrinkAlarm();
+        return;
+    }
+
+    // Request notification permission
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+
+    const minutes = parseInt($('aqua-alarm-interval').value) || 60;
+    const ms = minutes * 60 * 1000;
+    let nextAlarm = Date.now() + ms;
+
+    btn.textContent = 'Stop Alarm';
+    btn.classList.add('alarm-active');
+
+    // Countdown display
+    drinkAlarmCountdown = setInterval(() => {
+        const remaining = Math.max(0, nextAlarm - Date.now());
+        const m = Math.floor(remaining / 60000);
+        const s = Math.floor((remaining % 60000) / 1000);
+        if (statusEl) statusEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+    }, 1000);
+
+    drinkAlarmTimer = setInterval(() => {
+        // Check if aqua goal reached
+        const todayStr = today();
+        const log = loadAquaLog();
+        let totalMl = 0;
+        log.filter(e => e.Datum === todayStr).forEach(e => { totalMl += e.Menge; });
+        meals.filter(m => m.Datum === todayStr).forEach(m => {
+            m.Positionen.forEach(p => {
+                if (p.Einheit === 'ml') totalMl += (p.Menge || 0);
+            });
+        });
+
+        if (totalMl >= GOALS.aqua) {
+            stopDrinkAlarm();
+            showToast('Tagesziel erreicht - Alarm gestoppt');
+            return;
+        }
+
+        // Fire notification
+        const remaining = GOALS.aqua - Math.round(totalMl);
+        if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('Trink-Erinnerung', {
+                body: `Noch ${remaining}ml bis zum Tagesziel!`,
+                icon: '💧',
+                tag: 'drink-alarm'
+            });
+        }
+        showToast(`💧 Trinken! Noch ${remaining}ml`);
+
+        // Play a short beep
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = 800;
+            gain.gain.value = 0.3;
+            osc.start();
+            osc.stop(ctx.currentTime + 0.2);
+        } catch (e) { /* audio not available */ }
+
+        nextAlarm = Date.now() + ms;
+    }, ms);
+
+    if (statusEl) statusEl.textContent = `${minutes}:00`;
+    showToast(`Drink Alarm alle ${minutes} min`);
+}
+
+function stopDrinkAlarm() {
+    const btn = $('aqua-alarm-toggle');
+    const statusEl = $('aqua-alarm-status');
+    if (drinkAlarmTimer) { clearInterval(drinkAlarmTimer); drinkAlarmTimer = null; }
+    if (drinkAlarmCountdown) { clearInterval(drinkAlarmCountdown); drinkAlarmCountdown = null; }
+    if (btn) { btn.textContent = 'Drink Alarm'; btn.classList.remove('alarm-active'); }
+    if (statusEl) statusEl.textContent = '';
+}
+
 // ===== Initialisierung =====
 document.addEventListener('DOMContentLoaded', () => {
   try {
@@ -1249,6 +1341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('aqua-wasser-rm').addEventListener('click', () => removeAquaEntry('Wasser', 750));
     $('aqua-espresso-rm').addEventListener('click', () => removeAquaEntry('Espresso', 30));
     $('aqua-kaffee-rm').addEventListener('click', () => removeAquaEntry('Kaffee', 200));
+    $('aqua-alarm-toggle').addEventListener('click', startDrinkAlarm);
     updateAquaTrack();
 
     // --- Menue: Barcode ---

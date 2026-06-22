@@ -217,6 +217,16 @@
           <button class="btn-aqua-remove" id="aqua-espresso-rm">-30ml ✕</button>
           <button class="btn-aqua-remove" id="aqua-kaffee-rm">-200ml ✕</button>
         </div>
+        <div class="aqua-alarm-row">
+          <select id="aqua-alarm-interval">
+            <option value="30">30 min</option>
+            <option value="60" selected>60 min</option>
+            <option value="90">90 min</option>
+            <option value="120">2 h</option>
+          </select>
+          <button id="aqua-alarm-toggle" class="btn-aqua">Drink Alarm</button>
+          <span id="aqua-alarm-status" class="aqua-alarm-status"></span>
+        </div>
       </div>
 
       <!-- Tages-Mahlzeiten Uebersicht -->

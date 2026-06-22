@@ -736,6 +736,41 @@ button:active {
   transform: scale(0.97);
 }
 
+/* === Drink Alarm === */
+.aqua-alarm-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.aqua-alarm-row select {
+  width: 90px;
+  flex: none;
+  height: 34px;
+  font-size: 12px;
+}
+.aqua-alarm-row button {
+  min-height: 34px;
+  max-height: 34px;
+  font-size: 12px;
+  padding: 6px 12px;
+}
+.aqua-alarm-row button.alarm-active {
+  background: var(--red);
+  animation: alarm-pulse 2s ease-in-out infinite;
+}
+@keyframes alarm-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+.aqua-alarm-status {
+  font-size: 11px;
+  color: var(--subtext);
+  white-space: nowrap;
+}
+
 
 /* === Toast === */
 #toast-msg {
