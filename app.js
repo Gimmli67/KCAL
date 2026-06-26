@@ -37,6 +37,9 @@ const FRUCHT_DB = [
 // ===== Gemüse-Datenbank (pro 100g) =====
 const GEMUESE_DB = [
     { name: 'Blumenkohl',     kcal: 25,  fett: 0.3, ges: 0.1, kh: 5.0, zucker: 1.9, eiweiss: 1.9, salz: 0.1, ball: 2.0 },
+    { name: 'Eisbergsalat',   kcal: 13,  fett: 0.2, ges: 0.0, kh: 2.2, zucker: 1.6, eiweiss: 0.9, salz: 0.0, ball: 1.2 },
+    { name: 'Kopfsalat',      kcal: 14,  fett: 0.2, ges: 0.0, kh: 2.0, zucker: 0.9, eiweiss: 1.3, salz: 0.0, ball: 1.5 },
+    { name: 'Weißkohl',       kcal: 25,  fett: 0.1, ges: 0.0, kh: 5.8, zucker: 3.2, eiweiss: 1.3, salz: 0.0, ball: 2.5 },
     { name: 'Erbsen',         kcal: 81,  fett: 0.4, ges: 0.1, kh: 14,  zucker: 5.7, eiweiss: 5.4, salz: 0.0, ball: 5.1 },
     { name: 'Fenchel',        kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.3, salz: 0.1, ball: 3.1 },
     { name: 'Gurke',          kcal: 15,  fett: 0.1, ges: 0.0, kh: 3.6, zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 0.5 },
@@ -55,6 +58,10 @@ const GEMUESE_DB = [
     { name: 'Spinat',         kcal: 23,  fett: 0.4, ges: 0.1, kh: 3.6, zucker: 0.4, eiweiss: 2.9, salz: 0.2, ball: 2.2 },
     { name: 'Tomate',         kcal: 18,  fett: 0.2, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2 },
     { name: 'Zwiebel',        kcal: 40,  fett: 0.1, ges: 0.0, kh: 9.3, zucker: 4.2, eiweiss: 1.1, salz: 0.0, ball: 1.7 },
+    { name: 'Bohnen (grün)', kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.3, eiweiss: 1.8, salz: 0.0, ball: 3.4 },
+    { name: 'Zuckerhut',     kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1 },
+    { name: 'Rettich',       kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8 },
+    { name: 'Radieschen',    kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
 ];
 
 function searchLokal(query) {
