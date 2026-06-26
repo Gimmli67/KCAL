@@ -44,6 +44,7 @@
               <option value="g">Food (g)</option>
               <option value="ml">Drinks (ml)</option>
               <option value="p">Portion (p)</option>
+              <option value="f">Fruit (f)</option>
             </select>
           </div>
           <div class="field" style="flex:1">
@@ -75,7 +76,20 @@
         <div class="group-header">Manual Entry</div>
         <div class="field">
           <label>Produktname:</label>
-          <input type="text" id="me-name" placeholder="Name eingeben...">
+          <div style="display:flex;gap:6px">
+            <input type="text" id="me-name" placeholder="Name eingeben..." style="flex:1">
+            <button id="me-search">Search</button>
+          </div>
+        </div>
+        <div id="me-search-results" class="search-results hidden"></div>
+        <div class="field">
+          <label>Einheit:</label>
+          <select id="me-unit">
+            <option value="g">Food (g)</option>
+            <option value="ml">Drinks (ml)</option>
+            <option value="p">Portion (p)</option>
+            <option value="f">Fruit (f)</option>
+          </select>
         </div>
         <div class="field">
           <label>Effective Volume:</label>
