@@ -66,10 +66,8 @@ const DE_EN_FRUCHT = {
     'traube': 'grape', 'weintraube': 'grape', 'ananas': 'pineapple',
     'mango': 'mango', 'kiwi': 'kiwi', 'wassermelone': 'watermelon',
     'honigmelone': 'cantaloupe', 'grapefruit': 'grapefruit', 'zitrone': 'lemon',
-    'limette': 'lime', 'feige': 'fig', 'dattel': 'date fruit',
-    'tomate': 'tomato', 'gurke': 'cucumber', 'paprika': 'bell pepper',
-    'karotte': 'carrot', 'broccoli': 'broccoli', 'brokkoli': 'broccoli',
-    'spinat': 'spinach', 'zucchini': 'zucchini', 'avocado': 'avocado',
+    'limette': 'lime', 'tomate': 'tomato', 'gurke': 'cucumber', 'paprika': 'bell pepper',
+    'karotte': 'carrot', 'broccoli': 'broccoli','spinat': 'spinach', 'avocado': 'avocado',
     'brombeere': 'blackberry', 'johannisbeere': 'currant', 'granatapfel': 'pomegranate',
     'maracuja': 'passion fruit', 'papaya': 'papaya', 'blumenkohl': 'cauliflower',
 };
