@@ -9,14 +9,11 @@ const FRUCHT_DB = [
     { name: 'Ananas',              gewicht: 200, kcal: 50,  fett: 0.1, ges: 0.0, kh: 13,  zucker: 10,  eiweiss: 0.5, salz: 0.0, ball: 1.4 },
     { name: 'Apfel',               gewicht: 160, kcal: 52,  fett: 0.2, ges: 0.0, kh: 14,  zucker: 10,  eiweiss: 0.3, salz: 0.0, ball: 2.4 },
     { name: 'Aprikose',            gewicht: 150, kcal: 48,  fett: 0.4, ges: 0.0, kh: 11,  zucker: 9,   eiweiss: 1.4, salz: 0.0, ball: 2.0 },
-    { name: 'Avocado',             gewicht: 150, kcal: 160, fett: 15,  ges: 2.1, kh: 9,   zucker: 0.7, eiweiss: 2.0, salz: 0.0, ball: 7.0 },
     { name: 'Banane',              gewicht: 110, kcal: 89,  fett: 0.3, ges: 0.1, kh: 23,  zucker: 12,  eiweiss: 1.1, salz: 0.0, ball: 2.6 },
     { name: 'Birne',               gewicht: 160, kcal: 57,  fett: 0.1, ges: 0.0, kh: 15,  zucker: 10,  eiweiss: 0.4, salz: 0.0, ball: 3.1 },
     { name: 'Brombeere',           gewicht: 100, kcal: 43,  fett: 0.5, ges: 0.0, kh: 10,  zucker: 4.9, eiweiss: 1.4, salz: 0.0, ball: 5.3 },
-    { name: 'Dattel',              gewicht: 50,  kcal: 282, fett: 0.4, ges: 0.0, kh: 75,  zucker: 63,  eiweiss: 2.5, salz: 0.0, ball: 8.0 },
     { name: 'Erdbeere',            gewicht: 150, kcal: 32,  fett: 0.3, ges: 0.0, kh: 7.7, zucker: 4.9, eiweiss: 0.7, salz: 0.0, ball: 2.0 },
     { name: 'Feige',               gewicht: 120, kcal: 74,  fett: 0.3, ges: 0.1, kh: 19,  zucker: 16,  eiweiss: 0.8, salz: 0.0, ball: 2.9 },
-    { name: 'Granatapfel',         gewicht: 200, kcal: 83,  fett: 1.2, ges: 0.1, kh: 19,  zucker: 14,  eiweiss: 1.7, salz: 0.0, ball: 4.0 },
     { name: 'Grapefruit',          gewicht: 230, kcal: 42,  fett: 0.1, ges: 0.0, kh: 11,  zucker: 7,   eiweiss: 0.8, salz: 0.0, ball: 1.6 },
     { name: 'Heidelbeere',         gewicht: 100, kcal: 57,  fett: 0.3, ges: 0.0, kh: 14,  zucker: 10,  eiweiss: 0.7, salz: 0.0, ball: 2.4 },
     { name: 'Himbeere',            gewicht: 100, kcal: 52,  fett: 0.7, ges: 0.0, kh: 12,  zucker: 4.4, eiweiss: 1.2, salz: 0.0, ball: 6.5 },
@@ -27,7 +24,6 @@ const FRUCHT_DB = [
     { name: 'Limette',             gewicht: 50,  kcal: 30,  fett: 0.2, ges: 0.0, kh: 11,  zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 2.8 },
     { name: 'Mandarine',           gewicht: 180, kcal: 53,  fett: 0.3, ges: 0.0, kh: 13,  zucker: 11,  eiweiss: 0.8, salz: 0.0, ball: 1.8 },
     { name: 'Mango',               gewicht: 250, kcal: 60,  fett: 0.4, ges: 0.1, kh: 15,  zucker: 14,  eiweiss: 0.8, salz: 0.0, ball: 1.6 },
-    { name: 'Maracuja',            gewicht: 50,  kcal: 97,  fett: 0.7, ges: 0.1, kh: 23,  zucker: 11,  eiweiss: 2.2, salz: 0.0, ball: 10  },
     { name: 'Nektarine',           gewicht: 130, kcal: 44,  fett: 0.3, ges: 0.0, kh: 11,  zucker: 7.7, eiweiss: 1.1, salz: 0.0, ball: 1.7 },
     { name: 'Orange',              gewicht: 160, kcal: 47,  fett: 0.1, ges: 0.0, kh: 12,  zucker: 9,   eiweiss: 0.9, salz: 0.0, ball: 2.4 },
     { name: 'Papaya',              gewicht: 300, kcal: 43,  fett: 0.3, ges: 0.1, kh: 11,  zucker: 7.8, eiweiss: 0.5, salz: 0.0, ball: 1.7 },
@@ -36,6 +32,29 @@ const FRUCHT_DB = [
     { name: 'Traube',              gewicht: 150, kcal: 69,  fett: 0.2, ges: 0.1, kh: 18,  zucker: 16,  eiweiss: 0.6, salz: 0.0, ball: 0.9 },
     { name: 'Wassermelone',        gewicht: 250, kcal: 30,  fett: 0.2, ges: 0.0, kh: 8,   zucker: 6,   eiweiss: 0.6, salz: 0.0, ball: 0.4 },
     { name: 'Zitrone',             gewicht: 60,  kcal: 29,  fett: 0.3, ges: 0.0, kh: 9,   zucker: 2.5, eiweiss: 1.1, salz: 0.0, ball: 2.8 },
+];
+
+// ===== Gemüse-Datenbank (pro 100g) =====
+const GEMUESE_DB = [
+    { name: 'Blumenkohl',     kcal: 25,  fett: 0.3, ges: 0.1, kh: 5.0, zucker: 1.9, eiweiss: 1.9, salz: 0.1, ball: 2.0 },
+    { name: 'Erbsen',         kcal: 81,  fett: 0.4, ges: 0.1, kh: 14,  zucker: 5.7, eiweiss: 5.4, salz: 0.0, ball: 5.1 },
+    { name: 'Fenchel',        kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.3, salz: 0.1, ball: 3.1 },
+    { name: 'Gurke',          kcal: 15,  fett: 0.1, ges: 0.0, kh: 3.6, zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 0.5 },
+    { name: 'Karotte',        kcal: 41,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 4.7, eiweiss: 0.9, salz: 0.1, ball: 2.8 },
+    { name: 'Knoblauch',      kcal: 149, fett: 0.5, ges: 0.1, kh: 33,  zucker: 1.0, eiweiss: 6.4, salz: 0.0, ball: 2.1 },
+    { name: 'Kohlrabi',       kcal: 27,  fett: 0.1, ges: 0.0, kh: 6.2, zucker: 3.9, eiweiss: 1.7, salz: 0.0, ball: 3.6 },
+    { name: 'Lauch',          kcal: 31,  fett: 0.3, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.5, salz: 0.0, ball: 1.8 },
+    { name: 'Mais',           kcal: 86,  fett: 1.2, ges: 0.2, kh: 19,  zucker: 3.2, eiweiss: 3.2, salz: 0.0, ball: 2.7 },
+    { name: 'Paprika gelb',   kcal: 27,  fett: 0.2, ges: 0.0, kh: 6.3, zucker: 4.6, eiweiss: 1.0, salz: 0.0, ball: 1.7 },
+    { name: 'Paprika grün',   kcal: 20,  fett: 0.2, ges: 0.0, kh: 4.6, zucker: 2.4, eiweiss: 0.9, salz: 0.0, ball: 1.7 },
+    { name: 'Paprika rot',    kcal: 31,  fett: 0.3, ges: 0.0, kh: 6.0, zucker: 4.2, eiweiss: 1.0, salz: 0.0, ball: 2.1 },
+    { name: 'Peperoni',       kcal: 40,  fett: 0.4, ges: 0.1, kh: 9.0, zucker: 5.1, eiweiss: 2.0, salz: 0.0, ball: 1.5 },
+    { name: 'Randen',         kcal: 43,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 6.8, eiweiss: 1.6, salz: 0.1, ball: 2.8 },
+    { name: 'Salat gemischt', kcal: 16,  fett: 0.2, ges: 0.0, kh: 2.4, zucker: 1.4, eiweiss: 1.2, salz: 0.0, ball: 1.3 },
+    { name: 'Sellerie',       kcal: 16,  fett: 0.2, ges: 0.0, kh: 3.0, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
+    { name: 'Spinat',         kcal: 23,  fett: 0.4, ges: 0.1, kh: 3.6, zucker: 0.4, eiweiss: 2.9, salz: 0.2, ball: 2.2 },
+    { name: 'Tomate',         kcal: 18,  fett: 0.2, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2 },
+    { name: 'Zwiebel',        kcal: 40,  fett: 0.1, ges: 0.0, kh: 9.3, zucker: 4.2, eiweiss: 1.1, salz: 0.0, ball: 1.7 },
 ];
 
 // German → English for USDA API fallback
@@ -91,17 +110,18 @@ async function searchFruitUSDA(query) {
 }
 
 function fillManualEntryFromFruit(frucht) {
+    const fak = frucht.gewicht ? frucht.gewicht / 100 : 1;
     if ($('me-name')) $('me-name').value = frucht.name;
-    if ($('me-unit')) $('me-unit').value = 'f';
-    if ($('me-amount') && frucht.gewicht) $('me-amount').value = frucht.gewicht;
-    if ($('me-kcal')) $('me-kcal').value = frucht.kcal;
-    if ($('me-fett')) $('me-fett').value = frucht.fett;
-    if ($('me-gesaettigt')) $('me-gesaettigt').value = frucht.ges;
-    if ($('me-kh')) $('me-kh').value = frucht.kh;
-    if ($('me-zucker')) $('me-zucker').value = frucht.zucker;
-    if ($('me-eiweiss')) $('me-eiweiss').value = frucht.eiweiss;
-    if ($('me-salz')) $('me-salz').value = frucht.salz;
-    if ($('me-ballaststoffe')) $('me-ballaststoffe').value = frucht.ball;
+    if ($('me-unit')) $('me-unit').value = 'stk';
+    if ($('me-amount')) $('me-amount').value = '1';
+    if ($('me-kcal')) $('me-kcal').value = round2(frucht.kcal * fak);
+    if ($('me-fett')) $('me-fett').value = round2(frucht.fett * fak);
+    if ($('me-gesaettigt')) $('me-gesaettigt').value = round2(frucht.ges * fak);
+    if ($('me-kh')) $('me-kh').value = round2(frucht.kh * fak);
+    if ($('me-zucker')) $('me-zucker').value = round2(frucht.zucker * fak);
+    if ($('me-eiweiss')) $('me-eiweiss').value = round2(frucht.eiweiss * fak);
+    if ($('me-salz')) $('me-salz').value = round2(frucht.salz * fak);
+    if ($('me-ballaststoffe')) $('me-ballaststoffe').value = round2(frucht.ball * fak);
     const res = $('me-search-results');
     if (res) res.classList.add('hidden');
 }
@@ -213,16 +233,34 @@ async function loadInitialData() {
         } catch (e) { console.log('Templates fetch error:', e); }
     }
 
-    // Früchte einmalig in db laden falls noch keine vorhanden
-    if (!db.some(d => d.Einheit === 'f')) {
+    // Gemüse einmalig in db laden falls noch keine vorhanden (Werte pro 100g)
+    if (!db.some(d => d.Kategorie === 'Gemüse')) {
+        GEMUESE_DB.forEach(g => {
+            if (!db.find(d => d.Lebensmittel === g.name)) {
+                db.push({
+                    Lebensmittel: g.name, Einheit: 'g', Kategorie: 'Gemüse', Gesamtmenge: null,
+                    Kcal: g.kcal, Fett: g.fett, Gesaettigt: g.ges,
+                    Kohlenhydrate: g.kh, Zucker: g.zucker, Eiweiss: g.eiweiss,
+                    Salz: g.salz, Ballaststoffe: g.ball
+                });
+            }
+        });
+        saveDB();
+        changed = true;
+    }
+
+    // Früchte einmalig in db laden falls noch keine vorhanden (Werte pro 1 Stück)
+    if (!db.some(d => d.Einheit === 'stk')) {
         FRUCHT_DB.forEach(f => {
             if (!db.find(d => d.Lebensmittel === f.name)) {
+                const fak = f.gewicht / 100;
                 db.push({
-                    Lebensmittel: f.name, Einheit: 'f', Kategorie: 'Fruit',
-                    Gesamtmenge: f.gewicht,
-                    Kcal: f.kcal, Fett: f.fett, Gesaettigt: f.ges,
-                    Kohlenhydrate: f.kh, Zucker: f.zucker, Eiweiss: f.eiweiss,
-                    Salz: f.salz, Ballaststoffe: f.ball
+                    Lebensmittel: f.name, Einheit: 'stk', Kategorie: 'Fruit',
+                    Gesamtmenge: null,
+                    Kcal: round2(f.kcal * fak), Fett: round2(f.fett * fak),
+                    Gesaettigt: round2(f.ges * fak), Kohlenhydrate: round2(f.kh * fak),
+                    Zucker: round2(f.zucker * fak), Eiweiss: round2(f.eiweiss * fak),
+                    Salz: round2(f.salz * fak), Ballaststoffe: round2(f.ball * fak)
                 });
             }
         });
@@ -288,9 +326,9 @@ function populateMenuFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
-    const groups = { Food: [], Drinks: [], Portion: [], Fruit: [] };
+    const groups = { Food: [], Gemüse: [], Fruit: [], Drinks: [], Portion: [] };
     filtered.forEach(item => {
-        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : item.Einheit === 'f' ? 'Fruit' : 'Food');
+        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : item.Einheit === 'stk' ? 'Fruit' : 'Food');
         if (!groups[kat]) groups[kat] = [];
         groups[kat].push(item);
     });
@@ -314,9 +352,9 @@ function populateEditorFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
-    const groups = { Food: [], Drinks: [], Portion: [], Fruit: [] };
+    const groups = { Food: [], Gemüse: [], Fruit: [], Drinks: [], Portion: [] };
     filtered.forEach(item => {
-        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : item.Einheit === 'f' ? 'Fruit' : 'Food');
+        const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : item.Einheit === 'stk' ? 'Fruit' : 'Food');
         if (!groups[kat]) groups[kat] = [];
         groups[kat].push(item);
     });
@@ -368,7 +406,7 @@ function showScanPreview(food) {
 function updateScanPreviewHeader() {
     const unit = $('fd-unit').value;
     const h = $('fd-pro100-header');
-    if (h) h.textContent = unit === 'ml' ? 'pro 100ml' : unit === 'p' ? '1 Port.' : 'pro 100g'; // 'g' and 'f' both show pro 100g
+    if (h) h.textContent = unit === 'ml' ? 'pro 100ml' : unit === 'p' ? '1 Port.' : unit === 'stk' ? '1 Stk.' : 'pro 100g';
 }
 
 function saveScanPreview() {
@@ -382,7 +420,7 @@ function saveScanPreview() {
     const food = {
         Lebensmittel: name,
         Einheit: unit,
-        Kategorie: unit === 'ml' ? 'Drinks' : unit === 'p' ? 'Portion' : unit === 'f' ? 'Fruit' : 'Food',
+        Kategorie: unit === 'ml' ? 'Drinks' : unit === 'p' ? 'Portion' : unit === 'stk' ? 'Fruit' : 'Food',
         Gesamtmenge: gm,
         Kcal: round2(kcal),
         Fett: round2(parseFloat($('fd-fett').value) || 0),
@@ -506,7 +544,7 @@ function fillEditorFields(food) {
     $('ed-eiweiss').value = food.Eiweiss ?? '';
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
-    $('ed-amount').value = food.Einheit === 'p' ? '1' : (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
+    $('ed-amount').value = (food.Einheit === 'p' || food.Einheit === 'stk') ? '1' : (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
     updateEditorHeader();
     updateEditorCalc();
 }
@@ -526,7 +564,7 @@ function editorSave() {
     }
 
     const unit = $('ed-unit') ? $('ed-unit').value : 'g';
-    const kategorie = unit === 'ml' ? 'Drinks' : unit === 'p' ? 'Portion' : unit === 'f' ? 'Fruit' : 'Food';
+    const kategorie = unit === 'ml' ? 'Drinks' : unit === 'p' ? 'Portion' : unit === 'stk' ? 'Fruit' : 'Food';
     const entry = {
         Lebensmittel: name, Einheit: unit, Kategorie: kategorie,
         Kcal: vals.kcal, Fett: vals.fett, Gesaettigt: vals.gesaettigt,
@@ -549,11 +587,11 @@ function updateEditorHeader() {
     if (!editorLoadedFood) return;
     const unit = editorLoadedFood.Einheit;
     const h = $('ed-header');
-    if (h) h.textContent = unit === 'ml' ? 'Drink per 100ml' : unit === 'p' ? 'Portion per 1p' : unit === 'f' ? 'Fruit per 100g' : 'Food per 100g';
+    if (h) h.textContent = unit === 'ml' ? 'Drink per 100ml' : unit === 'p' ? 'Portion per 1p' : unit === 'stk' ? 'Fruit per 1 Stk.' : 'Food per 100g';
     const lbl = $('ed-name-label');
-    if (lbl) lbl.textContent = unit === 'ml' ? 'Drink:' : unit === 'p' ? 'Portion:' : unit === 'f' ? 'Fruit:' : 'Food:';
+    if (lbl) lbl.textContent = unit === 'ml' ? 'Drink:' : unit === 'p' ? 'Portion:' : unit === 'stk' ? 'Fruit:' : 'Food:';
     const pro = $('ed-pro100-header');
-    if (pro) pro.textContent = unit === 'ml' ? 'pro 100ml' : unit === 'p' ? '1 Port.' : 'pro 100g';
+    if (pro) pro.textContent = unit === 'ml' ? 'pro 100ml' : unit === 'p' ? '1 Port.' : unit === 'stk' ? '1 Stk.' : 'pro 100g';
 }
 
 // ===== Editor: Laden =====
@@ -577,7 +615,7 @@ function editorLoad() {
     $('ed-salz').value = food.Salz ?? '';
     $('ed-ballaststoffe').value = food.Ballaststoffe ?? '';
     updateEditorHeader();
-    $('ed-amount').value = food.Einheit === 'p' ? '1' : (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
+    $('ed-amount').value = (food.Einheit === 'p' || food.Einheit === 'stk') ? '1' : (food.Einheit === 'ml' && food.Gesamtmenge) ? food.Gesamtmenge : '';
     updateEditorCalc();
     $('editor-status').textContent = `'${food.Lebensmittel}' geladen.`;
 }
@@ -598,7 +636,7 @@ function updateEditorCalc() {
     }
     const unit = editorLoadedFood ? editorLoadedFood.Einheit : 'g';
     if (header) header.innerHTML = `<span style="color:#a6e3a1;font-weight:700">Effectiv</span>`;
-    const f = unit === 'p' ? amount : amount / 100;
+    const f = (unit === 'p' || unit === 'stk') ? amount : amount / 100;
     fields.forEach(([inputId, calcId]) => {
         const v = parseNum($(inputId).value);
         if ($(calcId)) $(calcId).textContent = v !== null ? (v * f).toFixed(1) : '';
@@ -867,7 +905,7 @@ function saveMealFromEditor(mealType) {
     }
 
     const food = editorLoadedFood;
-    const f = food.Einheit === 'p' ? amount : amount / 100;
+    const f = (food.Einheit === 'p' || food.Einheit === 'stk') ? amount : amount / 100;
 
     meals.push({
         Datum: today(),
@@ -1555,7 +1593,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!name) { $('menu-status').textContent = 'Bitte Produktname eingeben.'; return; }
 
         const meUnit = $('me-unit') ? $('me-unit').value : 'g';
-        const meKat = meUnit === 'ml' ? 'Drinks' : meUnit === 'p' ? 'Portion' : meUnit === 'f' ? 'Fruit' : 'Food';
+        const meKat = meUnit === 'ml' ? 'Drinks' : meUnit === 'p' ? 'Portion' : meUnit === 'stk' ? 'Fruit' : 'Food';
         const food = {
             Lebensmittel: name, Einheit: meUnit, Kategorie: meKat,
             Kcal: parseNum($('me-kcal').value) || 0,
