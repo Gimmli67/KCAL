@@ -4,37 +4,38 @@
 const GOALS = { kcal: 2100, eiweiss: 145, kohlenhydrate: 175, fett: 65, zucker: 50, aqua: 3000 };
 
 // ===== Fruit-Datenbank (pro 100g, typische Durchschnittswerte) =====
+// gewicht = typisches Portionsgewicht (1 Stück oder übliche Portion bei Kleinfrüchten)
 const FRUCHT_DB = [
-    { name: 'Ananas',              kcal: 50,  fett: 0.1, ges: 0.0, kh: 13,  zucker: 10,  eiweiss: 0.5, salz: 0.0, ball: 1.4 },
-    { name: 'Apfel',               kcal: 52,  fett: 0.2, ges: 0.0, kh: 14,  zucker: 10,  eiweiss: 0.3, salz: 0.0, ball: 2.4 },
-    { name: 'Aprikose',            kcal: 48,  fett: 0.4, ges: 0.0, kh: 11,  zucker: 9,   eiweiss: 1.4, salz: 0.0, ball: 2.0 },
-    { name: 'Avocado',             kcal: 160, fett: 15,  ges: 2.1, kh: 9,   zucker: 0.7, eiweiss: 2.0, salz: 0.0, ball: 7.0 },
-    { name: 'Banane',              kcal: 89,  fett: 0.3, ges: 0.1, kh: 23,  zucker: 12,  eiweiss: 1.1, salz: 0.0, ball: 2.6 },
-    { name: 'Birne',               kcal: 57,  fett: 0.1, ges: 0.0, kh: 15,  zucker: 10,  eiweiss: 0.4, salz: 0.0, ball: 3.1 },
-    { name: 'Brombeere',           kcal: 43,  fett: 0.5, ges: 0.0, kh: 10,  zucker: 4.9, eiweiss: 1.4, salz: 0.0, ball: 5.3 },
-    { name: 'Dattel',              kcal: 282, fett: 0.4, ges: 0.0, kh: 75,  zucker: 63,  eiweiss: 2.5, salz: 0.0, ball: 8.0 },
-    { name: 'Erdbeere',            kcal: 32,  fett: 0.3, ges: 0.0, kh: 7.7, zucker: 4.9, eiweiss: 0.7, salz: 0.0, ball: 2.0 },
-    { name: 'Feige',               kcal: 74,  fett: 0.3, ges: 0.1, kh: 19,  zucker: 16,  eiweiss: 0.8, salz: 0.0, ball: 2.9 },
-    { name: 'Granatapfel',         kcal: 83,  fett: 1.2, ges: 0.1, kh: 19,  zucker: 14,  eiweiss: 1.7, salz: 0.0, ball: 4.0 },
-    { name: 'Grapefruit',          kcal: 42,  fett: 0.1, ges: 0.0, kh: 11,  zucker: 7,   eiweiss: 0.8, salz: 0.0, ball: 1.6 },
-    { name: 'Heidelbeere',         kcal: 57,  fett: 0.3, ges: 0.0, kh: 14,  zucker: 10,  eiweiss: 0.7, salz: 0.0, ball: 2.4 },
-    { name: 'Himbeere',            kcal: 52,  fett: 0.7, ges: 0.0, kh: 12,  zucker: 4.4, eiweiss: 1.2, salz: 0.0, ball: 6.5 },
-    { name: 'Honigmelone',         kcal: 36,  fett: 0.1, ges: 0.0, kh: 9,   zucker: 8,   eiweiss: 0.5, salz: 0.0, ball: 0.9 },
-    { name: 'Johannisbeere (rot)', kcal: 56,  fett: 0.2, ges: 0.0, kh: 14,  zucker: 7,   eiweiss: 1.4, salz: 0.0, ball: 4.3 },
-    { name: 'Kirsche',             kcal: 63,  fett: 0.2, ges: 0.0, kh: 16,  zucker: 13,  eiweiss: 1.1, salz: 0.0, ball: 2.1 },
-    { name: 'Kiwi',                kcal: 61,  fett: 0.5, ges: 0.0, kh: 15,  zucker: 9,   eiweiss: 1.1, salz: 0.0, ball: 3.0 },
-    { name: 'Limette',             kcal: 30,  fett: 0.2, ges: 0.0, kh: 11,  zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 2.8 },
-    { name: 'Mandarine',           kcal: 53,  fett: 0.3, ges: 0.0, kh: 13,  zucker: 11,  eiweiss: 0.8, salz: 0.0, ball: 1.8 },
-    { name: 'Mango',               kcal: 60,  fett: 0.4, ges: 0.1, kh: 15,  zucker: 14,  eiweiss: 0.8, salz: 0.0, ball: 1.6 },
-    { name: 'Maracuja',            kcal: 97,  fett: 0.7, ges: 0.1, kh: 23,  zucker: 11,  eiweiss: 2.2, salz: 0.0, ball: 10  },
-    { name: 'Nektarine',           kcal: 44,  fett: 0.3, ges: 0.0, kh: 11,  zucker: 7.7, eiweiss: 1.1, salz: 0.0, ball: 1.7 },
-    { name: 'Orange',              kcal: 47,  fett: 0.1, ges: 0.0, kh: 12,  zucker: 9,   eiweiss: 0.9, salz: 0.0, ball: 2.4 },
-    { name: 'Papaya',              kcal: 43,  fett: 0.3, ges: 0.1, kh: 11,  zucker: 7.8, eiweiss: 0.5, salz: 0.0, ball: 1.7 },
-    { name: 'Pfirsich',            kcal: 39,  fett: 0.3, ges: 0.0, kh: 10,  zucker: 8.4, eiweiss: 0.9, salz: 0.0, ball: 1.5 },
-    { name: 'Pflaume',             kcal: 46,  fett: 0.3, ges: 0.0, kh: 11,  zucker: 10,  eiweiss: 0.7, salz: 0.0, ball: 1.4 },
-    { name: 'Traube',              kcal: 69,  fett: 0.2, ges: 0.1, kh: 18,  zucker: 16,  eiweiss: 0.6, salz: 0.0, ball: 0.9 },
-    { name: 'Wassermelone',        kcal: 30,  fett: 0.2, ges: 0.0, kh: 8,   zucker: 6,   eiweiss: 0.6, salz: 0.0, ball: 0.4 },
-    { name: 'Zitrone',             kcal: 29,  fett: 0.3, ges: 0.0, kh: 9,   zucker: 2.5, eiweiss: 1.1, salz: 0.0, ball: 2.8 },
+    { name: 'Ananas',              gewicht: 200, kcal: 50,  fett: 0.1, ges: 0.0, kh: 13,  zucker: 10,  eiweiss: 0.5, salz: 0.0, ball: 1.4 },
+    { name: 'Apfel',               gewicht: 160, kcal: 52,  fett: 0.2, ges: 0.0, kh: 14,  zucker: 10,  eiweiss: 0.3, salz: 0.0, ball: 2.4 },
+    { name: 'Aprikose',            gewicht: 150, kcal: 48,  fett: 0.4, ges: 0.0, kh: 11,  zucker: 9,   eiweiss: 1.4, salz: 0.0, ball: 2.0 },
+    { name: 'Avocado',             gewicht: 150, kcal: 160, fett: 15,  ges: 2.1, kh: 9,   zucker: 0.7, eiweiss: 2.0, salz: 0.0, ball: 7.0 },
+    { name: 'Banane',              gewicht: 110, kcal: 89,  fett: 0.3, ges: 0.1, kh: 23,  zucker: 12,  eiweiss: 1.1, salz: 0.0, ball: 2.6 },
+    { name: 'Birne',               gewicht: 160, kcal: 57,  fett: 0.1, ges: 0.0, kh: 15,  zucker: 10,  eiweiss: 0.4, salz: 0.0, ball: 3.1 },
+    { name: 'Brombeere',           gewicht: 100, kcal: 43,  fett: 0.5, ges: 0.0, kh: 10,  zucker: 4.9, eiweiss: 1.4, salz: 0.0, ball: 5.3 },
+    { name: 'Dattel',              gewicht: 50,  kcal: 282, fett: 0.4, ges: 0.0, kh: 75,  zucker: 63,  eiweiss: 2.5, salz: 0.0, ball: 8.0 },
+    { name: 'Erdbeere',            gewicht: 150, kcal: 32,  fett: 0.3, ges: 0.0, kh: 7.7, zucker: 4.9, eiweiss: 0.7, salz: 0.0, ball: 2.0 },
+    { name: 'Feige',               gewicht: 120, kcal: 74,  fett: 0.3, ges: 0.1, kh: 19,  zucker: 16,  eiweiss: 0.8, salz: 0.0, ball: 2.9 },
+    { name: 'Granatapfel',         gewicht: 200, kcal: 83,  fett: 1.2, ges: 0.1, kh: 19,  zucker: 14,  eiweiss: 1.7, salz: 0.0, ball: 4.0 },
+    { name: 'Grapefruit',          gewicht: 230, kcal: 42,  fett: 0.1, ges: 0.0, kh: 11,  zucker: 7,   eiweiss: 0.8, salz: 0.0, ball: 1.6 },
+    { name: 'Heidelbeere',         gewicht: 100, kcal: 57,  fett: 0.3, ges: 0.0, kh: 14,  zucker: 10,  eiweiss: 0.7, salz: 0.0, ball: 2.4 },
+    { name: 'Himbeere',            gewicht: 100, kcal: 52,  fett: 0.7, ges: 0.0, kh: 12,  zucker: 4.4, eiweiss: 1.2, salz: 0.0, ball: 6.5 },
+    { name: 'Honigmelone',         gewicht: 200, kcal: 36,  fett: 0.1, ges: 0.0, kh: 9,   zucker: 8,   eiweiss: 0.5, salz: 0.0, ball: 0.9 },
+    { name: 'Johannisbeere (rot)', gewicht: 80,  kcal: 56,  fett: 0.2, ges: 0.0, kh: 14,  zucker: 7,   eiweiss: 1.4, salz: 0.0, ball: 4.3 },
+    { name: 'Kirsche',             gewicht: 150, kcal: 63,  fett: 0.2, ges: 0.0, kh: 16,  zucker: 13,  eiweiss: 1.1, salz: 0.0, ball: 2.1 },
+    { name: 'Kiwi',                gewicht: 70,  kcal: 61,  fett: 0.5, ges: 0.0, kh: 15,  zucker: 9,   eiweiss: 1.1, salz: 0.0, ball: 3.0 },
+    { name: 'Limette',             gewicht: 50,  kcal: 30,  fett: 0.2, ges: 0.0, kh: 11,  zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 2.8 },
+    { name: 'Mandarine',           gewicht: 180, kcal: 53,  fett: 0.3, ges: 0.0, kh: 13,  zucker: 11,  eiweiss: 0.8, salz: 0.0, ball: 1.8 },
+    { name: 'Mango',               gewicht: 250, kcal: 60,  fett: 0.4, ges: 0.1, kh: 15,  zucker: 14,  eiweiss: 0.8, salz: 0.0, ball: 1.6 },
+    { name: 'Maracuja',            gewicht: 50,  kcal: 97,  fett: 0.7, ges: 0.1, kh: 23,  zucker: 11,  eiweiss: 2.2, salz: 0.0, ball: 10  },
+    { name: 'Nektarine',           gewicht: 130, kcal: 44,  fett: 0.3, ges: 0.0, kh: 11,  zucker: 7.7, eiweiss: 1.1, salz: 0.0, ball: 1.7 },
+    { name: 'Orange',              gewicht: 160, kcal: 47,  fett: 0.1, ges: 0.0, kh: 12,  zucker: 9,   eiweiss: 0.9, salz: 0.0, ball: 2.4 },
+    { name: 'Papaya',              gewicht: 300, kcal: 43,  fett: 0.3, ges: 0.1, kh: 11,  zucker: 7.8, eiweiss: 0.5, salz: 0.0, ball: 1.7 },
+    { name: 'Pfirsich',            gewicht: 140, kcal: 39,  fett: 0.3, ges: 0.0, kh: 10,  zucker: 8.4, eiweiss: 0.9, salz: 0.0, ball: 1.5 },
+    { name: 'Pflaume',             gewicht: 150, kcal: 46,  fett: 0.3, ges: 0.0, kh: 11,  zucker: 10,  eiweiss: 0.7, salz: 0.0, ball: 1.4 },
+    { name: 'Traube',              gewicht: 150, kcal: 69,  fett: 0.2, ges: 0.1, kh: 18,  zucker: 16,  eiweiss: 0.6, salz: 0.0, ball: 0.9 },
+    { name: 'Wassermelone',        gewicht: 250, kcal: 30,  fett: 0.2, ges: 0.0, kh: 8,   zucker: 6,   eiweiss: 0.6, salz: 0.0, ball: 0.4 },
+    { name: 'Zitrone',             gewicht: 60,  kcal: 29,  fett: 0.3, ges: 0.0, kh: 9,   zucker: 2.5, eiweiss: 1.1, salz: 0.0, ball: 2.8 },
 ];
 
 // German → English for USDA API fallback
@@ -92,6 +93,7 @@ async function searchFruitUSDA(query) {
 function fillManualEntryFromFruit(frucht) {
     if ($('me-name')) $('me-name').value = frucht.name;
     if ($('me-unit')) $('me-unit').value = 'f';
+    if ($('me-amount') && frucht.gewicht) $('me-amount').value = frucht.gewicht;
     if ($('me-kcal')) $('me-kcal').value = frucht.kcal;
     if ($('me-fett')) $('me-fett').value = frucht.fett;
     if ($('me-gesaettigt')) $('me-gesaettigt').value = frucht.ges;
@@ -209,6 +211,23 @@ async function loadInitialData() {
                 changed = true;
             }
         } catch (e) { console.log('Templates fetch error:', e); }
+    }
+
+    // Früchte einmalig in db laden falls noch keine vorhanden
+    if (!db.some(d => d.Einheit === 'f')) {
+        FRUCHT_DB.forEach(f => {
+            if (!db.find(d => d.Lebensmittel === f.name)) {
+                db.push({
+                    Lebensmittel: f.name, Einheit: 'f', Kategorie: 'Fruit',
+                    Gesamtmenge: f.gewicht,
+                    Kcal: f.kcal, Fett: f.fett, Gesaettigt: f.ges,
+                    Kohlenhydrate: f.kh, Zucker: f.zucker, Eiweiss: f.eiweiss,
+                    Salz: f.salz, Ballaststoffe: f.ball
+                });
+            }
+        });
+        saveDB();
+        changed = true;
     }
 
     if (changed) {
