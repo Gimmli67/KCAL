@@ -57,97 +57,89 @@ const GEMUESE_DB = [
     { name: 'Zwiebel',        kcal: 40,  fett: 0.1, ges: 0.0, kh: 9.3, zucker: 4.2, eiweiss: 1.1, salz: 0.0, ball: 1.7 },
 ];
 
-// German → English for USDA API fallback
-const DE_EN_FRUCHT = {
-    'apfel': 'apple', 'birne': 'pear', 'banane': 'banana', 'orange': 'orange',
-    'mandarine': 'mandarin', 'nektarine': 'nectarine', 'pfirsich': 'peach',
-    'aprikose': 'apricot', 'pflaume': 'plum', 'kirsche': 'cherry',
-    'erdbeere': 'strawberry', 'himbeere': 'raspberry', 'heidelbeere': 'blueberry',
-    'traube': 'grape', 'weintraube': 'grape', 'ananas': 'pineapple',
-    'mango': 'mango', 'kiwi': 'kiwi', 'wassermelone': 'watermelon',
-    'honigmelone': 'cantaloupe', 'grapefruit': 'grapefruit', 'zitrone': 'lemon',
-    'limette': 'lime', 'tomate': 'tomato', 'gurke': 'cucumber', 'paprika': 'bell pepper',
-    'karotte': 'carrot', 'broccoli': 'broccoli','spinat': 'spinach', 'avocado': 'avocado',
-    'brombeere': 'blackberry', 'johannisbeere': 'currant', 'granatapfel': 'pomegranate',
-    'maracuja': 'passion fruit', 'papaya': 'papaya', 'blumenkohl': 'cauliflower',
-};
-
-function searchFruitLokal(query) {
+function searchLokal(query) {
     const q = query.toLowerCase().trim();
     if (!q) return [];
-    return FRUCHT_DB.filter(f => f.name.toLowerCase().includes(q));
+    const fruits = FRUCHT_DB.filter(f => f.name.toLowerCase().includes(q)).map(f => ({ ...f, type: 'fruit' }));
+    const vegs = GEMUESE_DB.filter(g => g.name.toLowerCase().includes(q)).map(g => ({ ...g, type: 'gemuese' }));
+    return [...fruits, ...vegs];
 }
 
-async function searchFruitUSDA(query) {
-    const key = DE_EN_FRUCHT[query.toLowerCase().trim()] || query.trim();
-    const url = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(key + ' raw')}&dataType=SR%20Legacy,Foundation&pageSize=8&api_key=DEMO_KEY`;
+async function searchOpenFoodFacts(query) {
+    const url = `https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&page_size=8&fields=product_name,nutriments,product_quantity`;
     try {
         const res = await fetch(url);
         if (!res.ok) return [];
         const data = await res.json();
-        return (data.foods || []).map(food => {
-            const n = id => { const x = (food.foodNutrients || []).find(n => n.nutrientId === id); return x ? x.value : 0; };
-            const sodium_mg = n(1093);
-            return {
-                name: food.description,
-                kcal: Math.round(n(1008)),
-                fett: round2(n(1004)),
-                ges: round2(n(1258)),
-                kh: round2(n(1005)),
-                zucker: round2(n(2000) || n(1063)),
-                eiweiss: round2(n(1003)),
-                salz: round2(sodium_mg * 2.54 / 1000),
-                ball: round2(n(1079)),
-                source: 'USDA'
-            };
-        });
+        return (data.products || [])
+            .filter(p => p.product_name && p.nutriments && p.nutriments['energy-kcal_100g'] > 0)
+            .map(p => ({
+                name: p.product_name,
+                kcal: Math.round(p.nutriments['energy-kcal_100g'] || 0),
+                fett: round2(p.nutriments['fat_100g'] || 0),
+                ges: round2(p.nutriments['saturated-fat_100g'] || 0),
+                kh: round2(p.nutriments['carbohydrates_100g'] || 0),
+                zucker: round2(p.nutriments['sugars_100g'] || 0),
+                eiweiss: round2(p.nutriments['proteins_100g'] || 0),
+                salz: round2(p.nutriments['salt_100g'] || 0),
+                ball: round2(p.nutriments['fiber_100g'] || 0),
+                gesamtmenge: parseFloat(p.product_quantity) || null,
+                type: 'ofacts'
+            }));
     } catch (e) {
-        console.log('USDA search error:', e);
+        console.log('OFacts search error:', e);
         return [];
     }
 }
 
-function fillManualEntryFromFruit(frucht) {
-    const fak = frucht.gewicht ? frucht.gewicht / 100 : 1;
-    if ($('me-name')) $('me-name').value = frucht.name;
-    if ($('me-unit')) $('me-unit').value = 'stk';
-    if ($('me-amount')) $('me-amount').value = '1';
-    if ($('me-kcal')) $('me-kcal').value = round2(frucht.kcal * fak);
-    if ($('me-fett')) $('me-fett').value = round2(frucht.fett * fak);
-    if ($('me-gesaettigt')) $('me-gesaettigt').value = round2(frucht.ges * fak);
-    if ($('me-kh')) $('me-kh').value = round2(frucht.kh * fak);
-    if ($('me-zucker')) $('me-zucker').value = round2(frucht.zucker * fak);
-    if ($('me-eiweiss')) $('me-eiweiss').value = round2(frucht.eiweiss * fak);
-    if ($('me-salz')) $('me-salz').value = round2(frucht.salz * fak);
-    if ($('me-ballaststoffe')) $('me-ballaststoffe').value = round2(frucht.ball * fak);
+function fillFromSearchResult(item) {
+    if (item.type === 'fruit') {
+        const fak = item.gewicht ? item.gewicht / 100 : 1;
+        if ($('me-name')) $('me-name').value = item.name;
+        if ($('me-unit')) $('me-unit').value = 'stk';
+        if ($('me-amount')) $('me-amount').value = '1';
+        if ($('me-kcal')) $('me-kcal').value = round2(item.kcal * fak);
+        if ($('me-fett')) $('me-fett').value = round2(item.fett * fak);
+        if ($('me-gesaettigt')) $('me-gesaettigt').value = round2(item.ges * fak);
+        if ($('me-kh')) $('me-kh').value = round2(item.kh * fak);
+        if ($('me-zucker')) $('me-zucker').value = round2(item.zucker * fak);
+        if ($('me-eiweiss')) $('me-eiweiss').value = round2(item.eiweiss * fak);
+        if ($('me-salz')) $('me-salz').value = round2(item.salz * fak);
+        if ($('me-ballaststoffe')) $('me-ballaststoffe').value = round2(item.ball * fak);
+    } else {
+        if ($('me-name')) $('me-name').value = item.name;
+        if ($('me-unit')) $('me-unit').value = 'g';
+        if ($('me-amount')) $('me-amount').value = '';
+        if ($('me-kcal')) $('me-kcal').value = item.kcal;
+        if ($('me-fett')) $('me-fett').value = item.fett;
+        if ($('me-gesaettigt')) $('me-gesaettigt').value = item.ges;
+        if ($('me-kh')) $('me-kh').value = item.kh;
+        if ($('me-zucker')) $('me-zucker').value = item.zucker;
+        if ($('me-eiweiss')) $('me-eiweiss').value = item.eiweiss;
+        if ($('me-salz')) $('me-salz').value = item.salz;
+        if ($('me-ballaststoffe')) $('me-ballaststoffe').value = item.ball;
+    }
     const res = $('me-search-results');
     if (res) res.classList.add('hidden');
 }
 
-function showMeSearchResults(items, isOnline) {
+function showMeSearchResults(items) {
     const res = $('me-search-results');
     if (!res) return;
     if (items.length === 0) {
-        res.innerHTML = '<div class="sr-empty">Nicht gefunden. <button id="me-usda-search" class="btn-online">Online suchen (USDA)</button></div>';
+        res.innerHTML = '<div class="sr-empty">Keine Treffer gefunden.</div>';
         res.classList.remove('hidden');
-        const btn = $('me-usda-search');
-        if (btn) btn.addEventListener('click', async () => {
-            btn.textContent = 'Suche...';
-            btn.disabled = true;
-            const query = $('me-name') ? $('me-name').value : '';
-            const usdaItems = await searchFruitUSDA(query);
-            showMeSearchResults(usdaItems, true);
-        });
         return;
     }
-    res.innerHTML = items.map((f, i) =>
-        `<div class="sr-item" data-idx="${i}">${f.name}${f.source ? ' <span class="sr-source">USDA</span>' : ''} <span class="sr-kcal">${f.kcal} kcal/100g</span></div>`
-    ).join('');
+    res.innerHTML = items.map((f, i) => {
+        const tag = f.type === 'ofacts' ? ' <span class="sr-source">OFacts</span>' : '';
+        const unit = f.type === 'fruit' ? 'stk' : '100g';
+        const kcalVal = f.type === 'fruit' && f.gewicht ? round2(f.kcal * f.gewicht / 100) : f.kcal;
+        return `<div class="sr-item" data-idx="${i}">${f.name}${tag} <span class="sr-kcal">${kcalVal} kcal/${unit}</span></div>`;
+    }).join('');
     res.classList.remove('hidden');
     res.querySelectorAll('.sr-item').forEach(el => {
-        el.addEventListener('click', () => {
-            fillManualEntryFromFruit(items[parseInt(el.dataset.idx)]);
-        });
+        el.addEventListener('click', () => fillFromSearchResult(items[parseInt(el.dataset.idx)]));
     });
 }
 
@@ -1582,17 +1574,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    $('me-search').addEventListener('click', () => {
+    $('me-search').addEventListener('click', async () => {
         const query = $('me-name') ? $('me-name').value.trim() : '';
         if (!query) return;
-        const results = searchFruitLokal(query);
-        showMeSearchResults(results, false);
+        const lokalResults = searchLokal(query);
+        if (lokalResults.length > 0) { showMeSearchResults(lokalResults); return; }
+        const resEl = $('me-search-results');
+        if (resEl) { resEl.innerHTML = '<div class="sr-empty">Suche online...</div>'; resEl.classList.remove('hidden'); }
+        const onlineResults = await searchOpenFoodFacts(query);
+        showMeSearchResults(onlineResults);
     });
-    $('me-name').addEventListener('keydown', e => {
-        if (e.key === 'Enter') {
-            const results = searchFruitLokal($('me-name').value.trim());
-            showMeSearchResults(results, false);
-        }
+    $('me-name').addEventListener('keydown', async e => {
+        if (e.key !== 'Enter') return;
+        const query = $('me-name') ? $('me-name').value.trim() : '';
+        if (!query) return;
+        const lokalResults = searchLokal(query);
+        if (lokalResults.length > 0) { showMeSearchResults(lokalResults); return; }
+        const resEl = $('me-search-results');
+        if (resEl) { resEl.innerHTML = '<div class="sr-empty">Suche online...</div>'; resEl.classList.remove('hidden'); }
+        const onlineResults = await searchOpenFoodFacts(query);
+        showMeSearchResults(onlineResults);
     });
     $('me-save').addEventListener('click', () => {
         const name = $('me-name').value.trim();
