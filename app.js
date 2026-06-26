@@ -64,6 +64,13 @@ const GEMUESE_DB = [
     { name: 'Radieschen',    kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
 ];
 
+// ===== Basis-Lebensmittel (pro 100g, Schweizer Durchschnittswerte) =====
+const BASIS_DB = [
+    { name: 'Rindgehacktes',  kcal: 195, fett: 14.0, ges: 5.8, kh: 0.0,  zucker: 0.0,  eiweiss: 17.0, salz: 0.1, ball: 0.0 },
+    { name: 'Hörnli (roh)',   kcal: 370, fett: 1.5,  ges: 0.3, kh: 74.0, zucker: 3.0,  eiweiss: 13.0, salz: 0.1, ball: 3.0 },
+    { name: 'Apfelmus',       kcal: 68,  fett: 0.1,  ges: 0.0, kh: 16.0, zucker: 13.0, eiweiss: 0.3,  salz: 0.0, ball: 1.5 },
+];
+
 function searchLokal(query) {
     const q = query.toLowerCase().trim();
     if (!q) return [];
@@ -79,10 +86,14 @@ async function searchOpenFoodFacts(query) {
         if (!res.ok) return [];
         const data = await res.json();
         return (data.products || [])
-            .filter(p => p.product_name && p.nutriments && p.nutriments['energy-kcal_100g'] > 0)
-            .map(p => ({
+            .filter(p => p.product_name && p.nutriments &&
+                (p.nutriments['energy-kcal_100g'] > 0 || p.nutriments['energy-kj_100g'] > 0 || p.nutriments['energy_100g'] > 0))
+            .map(p => {
+                const n = p.nutriments;
+                const kcal = n['energy-kcal_100g'] || Math.round((n['energy-kj_100g'] || n['energy_100g'] || 0) / 4.184);
+                return ({
                 name: p.product_name,
-                kcal: Math.round(p.nutriments['energy-kcal_100g'] || 0),
+                kcal: Math.round(kcal),
                 fett: round2(p.nutriments['fat_100g'] || 0),
                 ges: round2(p.nutriments['saturated-fat_100g'] || 0),
                 kh: round2(p.nutriments['carbohydrates_100g'] || 0),
@@ -92,7 +103,7 @@ async function searchOpenFoodFacts(query) {
                 ball: round2(p.nutriments['fiber_100g'] || 0),
                 gesamtmenge: parseFloat(p.product_quantity) || null,
                 type: 'ofacts'
-            }));
+            });});
     } catch (e) {
         console.log('OFacts search error:', e);
         return [];
@@ -269,6 +280,23 @@ async function loadInitialData() {
                 });
             }
         });
+        saveDB();
+        changed = true;
+    }
+
+    // Basis-Lebensmittel einmalig seeden (Rindgehacktes, Hörnli, Apfelmus)
+    if (!localStorage.getItem('kcal_basis_seeded')) {
+        BASIS_DB.forEach(item => {
+            if (!db.find(d => d.Lebensmittel === item.name)) {
+                db.push({
+                    Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Food', Gesamtmenge: null,
+                    Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                    Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                    Salz: item.salz, Ballaststoffe: item.ball
+                });
+            }
+        });
+        localStorage.setItem('kcal_basis_seeded', '1');
         saveDB();
         changed = true;
     }
@@ -1795,6 +1823,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('kcal_meals');
         localStorage.removeItem('kcal_templates');
         localStorage.removeItem('kcal_aqua');
+        localStorage.removeItem('kcal_basis_seeded');
         db = []; meals = []; templates = [];
         loadInitialData().then(() => {
             updateDailyCircles();
