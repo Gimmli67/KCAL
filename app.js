@@ -62,13 +62,21 @@ const GEMUESE_DB = [
     { name: 'Zuckerhut',     kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1 },
     { name: 'Rettich',       kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8 },
     { name: 'Radieschen',    kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
+    { name: 'Kartoffel',     kcal: 77,  fett: 0.1, ges: 0.0, kh: 17,  zucker: 0.8, eiweiss: 2.0, salz: 0.0, ball: 2.2 },
 ];
 
 // ===== Basis-Lebensmittel (pro 100g, Schweizer Durchschnittswerte) =====
 const BASIS_DB = [
-    { name: 'Rindgehacktes',  kcal: 195, fett: 14.0, ges: 5.8, kh: 0.0,  zucker: 0.0,  eiweiss: 17.0, salz: 0.1, ball: 0.0 },
-    { name: 'Hörnli (roh)',   kcal: 370, fett: 1.5,  ges: 0.3, kh: 74.0, zucker: 3.0,  eiweiss: 13.0, salz: 0.1, ball: 3.0 },
-    { name: 'Apfelmus',       kcal: 68,  fett: 0.1,  ges: 0.0, kh: 16.0, zucker: 13.0, eiweiss: 0.3,  salz: 0.0, ball: 1.5 },
+    { name: 'Rindgehacktes',      kcal: 195, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 0.1, ball: 0.0 },
+    { name: 'Hörnli (roh)',        kcal: 370, fett: 1.5,  ges: 0.3, kh: 74.0, zucker: 3.0, eiweiss: 13.0, salz: 0.1, ball: 3.0 },
+    { name: 'Apfelmus',            kcal: 68,  fett: 0.1,  ges: 0.0, kh: 16.0, zucker: 13.0, eiweiss: 0.3, salz: 0.0, ball: 1.5 },
+    { name: 'Pouletbrust (roh)',   kcal: 105, fett: 1.2,  ges: 0.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    { name: 'Schweineschnitzel',   kcal: 120, fett: 3.5,  ges: 1.2, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    { name: 'Cervelat',            kcal: 285, fett: 24.0, ges: 9.0, kh: 1.0, zucker: 0.5, eiweiss: 14.0, salz: 2.2, ball: 0.0 },
+    { name: 'Bratwurst (roh)',     kcal: 265, fett: 22.0, ges: 8.0, kh: 2.0, zucker: 0.5, eiweiss: 13.0, salz: 1.5, ball: 0.0 },
+    { name: 'Speckwürfel',         kcal: 330, fett: 28.0, ges: 10.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 2.0, ball: 0.0 },
+    { name: 'Lachs (frisch)',      kcal: 208, fett: 13.0, ges: 3.0,  kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.1, ball: 0.0 },
+    { name: 'Bratspeck',           kcal: 370, fett: 33.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3, ball: 0.0 },
 ];
 
 function searchLokal(query) {
@@ -249,53 +257,53 @@ async function loadInitialData() {
         changed = true;
     }
 
-    // Gemüse einmalig in db laden falls noch keine vorhanden (Werte pro 100g)
-    if (!db.some(d => d.Kategorie === 'Gemüse')) {
-        GEMUESE_DB.forEach(g => {
-            if (!db.find(d => d.Lebensmittel === g.name)) {
-                db.push({
-                    Lebensmittel: g.name, Einheit: 'g', Kategorie: 'Gemüse', Gesamtmenge: null,
-                    Kcal: g.kcal, Fett: g.fett, Gesaettigt: g.ges,
-                    Kohlenhydrate: g.kh, Zucker: g.zucker, Eiweiss: g.eiweiss,
-                    Salz: g.salz, Ballaststoffe: g.ball
-                });
-            }
-        });
-        saveDB();
-        changed = true;
-    }
+    // Gemüse: fehlende Einträge nachfügen (Werte pro 100g)
+    let gemuseAdded = false;
+    GEMUESE_DB.forEach(g => {
+        if (!db.find(d => d.Lebensmittel === g.name)) {
+            db.push({
+                Lebensmittel: g.name, Einheit: 'g', Kategorie: 'Gemüse', Gesamtmenge: null,
+                Kcal: g.kcal, Fett: g.fett, Gesaettigt: g.ges,
+                Kohlenhydrate: g.kh, Zucker: g.zucker, Eiweiss: g.eiweiss,
+                Salz: g.salz, Ballaststoffe: g.ball
+            });
+            gemuseAdded = true;
+        }
+    });
+    if (gemuseAdded) { saveDB(); changed = true; }
 
-    // Früchte einmalig in db laden falls noch keine vorhanden (Werte pro 1 Stück)
-    if (!db.some(d => d.Einheit === 'stk')) {
-        FRUCHT_DB.forEach(f => {
-            if (!db.find(d => d.Lebensmittel === f.name)) {
-                const fak = f.gewicht / 100;
-                db.push({
-                    Lebensmittel: f.name, Einheit: 'stk', Kategorie: 'Fruit',
-                    Gesamtmenge: null,
-                    Kcal: round2(f.kcal * fak), Fett: round2(f.fett * fak),
-                    Gesaettigt: round2(f.ges * fak), Kohlenhydrate: round2(f.kh * fak),
-                    Zucker: round2(f.zucker * fak), Eiweiss: round2(f.eiweiss * fak),
-                    Salz: round2(f.salz * fak), Ballaststoffe: round2(f.ball * fak)
-                });
-            }
-        });
-        saveDB();
-        changed = true;
-    }
+    // Früchte: fehlende Einträge nachfügen (Werte pro 1 Stück)
+    let fruchtAdded = false;
+    FRUCHT_DB.forEach(f => {
+        if (!db.find(d => d.Lebensmittel === f.name)) {
+            const fak = f.gewicht / 100;
+            db.push({
+                Lebensmittel: f.name, Einheit: 'stk', Kategorie: 'Fruit',
+                Gesamtmenge: null,
+                Kcal: round2(f.kcal * fak), Fett: round2(f.fett * fak),
+                Gesaettigt: round2(f.ges * fak), Kohlenhydrate: round2(f.kh * fak),
+                Zucker: round2(f.zucker * fak), Eiweiss: round2(f.eiweiss * fak),
+                Salz: round2(f.salz * fak), Ballaststoffe: round2(f.ball * fak)
+            });
+            fruchtAdded = true;
+        }
+    });
+    if (fruchtAdded) { saveDB(); changed = true; }
 
-    // Basis-Lebensmittel einmalig seeden (Rindgehacktes, Hörnli, Apfelmus)
-    if (!localStorage.getItem('kcal_basis_seeded')) {
-        BASIS_DB.forEach(item => {
-            if (!db.find(d => d.Lebensmittel === item.name)) {
-                db.push({
-                    Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Food', Gesamtmenge: null,
-                    Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
-                    Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
-                    Salz: item.salz, Ballaststoffe: item.ball
-                });
-            }
-        });
+    // Basis-Lebensmittel: fehlende Einträge nachfügen
+    let basisAdded = false;
+    BASIS_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Food', Gesamtmenge: null,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            basisAdded = true;
+        }
+    });
+    if (basisAdded) {
         localStorage.setItem('kcal_basis_seeded', '1');
         saveDB();
         changed = true;
@@ -348,7 +356,7 @@ function switchTab(name) {
     document.querySelector(`.nav-btn[data-tab="${name}"]`).classList.add('active');
     if (name === 'editor') { editorClear(); $('editor-search').value = ''; $('editor-food-select').innerHTML = ''; $('editor-status').textContent = ''; }
     if (name === 'history') refreshHistory();
-    if (name === 'menus') { populateMenuFoodDropdown(); refreshMenuList(); refreshMenuOverview(); }
+    if (name === 'menus') { populateMenuFoodDropdown(); refreshMenuList(); refreshMenuOverview(); if ($('menu-amount')) $('menu-amount').value = ''; }
 }
 
 // ===== Dropdown Population =====
@@ -1468,82 +1476,73 @@ function importData(file, callback) {
 let drinkAlarmTimer = null;
 let drinkAlarmCountdown = null;
 
-function startDrinkAlarm() {
+function drinkAlarmSaveState(minutes, nextTs) {
+    localStorage.setItem('kcal_alarm', JSON.stringify({ active: true, interval: minutes, nextAlarm: nextTs }));
+}
+
+function drinkAlarmFire() {
+    const todayStr = today();
+    const log = loadAquaLog();
+    let totalMl = 0;
+    log.filter(e => e.Datum === todayStr).forEach(e => { totalMl += e.Menge; });
+    meals.filter(m => m.Datum === todayStr).forEach(m => {
+        m.Positionen.forEach(p => { if (p.Einheit === 'ml') totalMl += (p.Menge || 0); });
+    });
+    if (totalMl >= GOALS.aqua) {
+        stopDrinkAlarm();
+        showToast('Tagesziel erreicht - Alarm gestoppt');
+        return false;
+    }
+    const rem = GOALS.aqua - Math.round(totalMl);
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('Trink-Erinnerung', { body: `Noch ${rem}ml bis zum Tagesziel!`, icon: '💧', tag: 'drink-alarm' });
+    }
+    if ('vibrate' in navigator) navigator.vibrate([300, 100, 300]);
+    showToast(`💧 Trinken! Noch ${rem}ml`);
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.frequency.value = 800; gain.gain.value = 0.3;
+        osc.start(); osc.stop(ctx.currentTime + 0.2);
+    } catch(e) {}
+    return true;
+}
+
+function drinkAlarmActivate(minutes, resumeNextTs) {
     const btn = $('aqua-alarm-toggle');
     const statusEl = $('aqua-alarm-status');
-    if (!btn) return;
-
-    if (drinkAlarmTimer) {
-        stopDrinkAlarm();
-        return;
-    }
-
-    // Request notification permission
-    if ('Notification' in window && Notification.permission === 'default') {
-        Notification.requestPermission();
-    }
-
-    const minutes = parseInt($('aqua-alarm-interval').value) || 60;
     const ms = minutes * 60 * 1000;
-    let nextAlarm = Date.now() + ms;
+    let nextTs = resumeNextTs || (Date.now() + ms);
 
-    btn.textContent = 'Stop Alarm';
-    btn.classList.add('alarm-active');
+    drinkAlarmSaveState(minutes, nextTs);
+    if (btn) { btn.textContent = 'Stop Alarm'; btn.classList.add('alarm-active'); }
 
-    // Countdown display
     drinkAlarmCountdown = setInterval(() => {
-        const remaining = Math.max(0, nextAlarm - Date.now());
+        const now = Date.now();
+        if (now >= nextTs) {
+            if (drinkAlarmFire() !== false) {
+                nextTs = now + ms;
+                drinkAlarmSaveState(minutes, nextTs);
+            }
+        }
+        const remaining = Math.max(0, nextTs - Date.now());
         const m = Math.floor(remaining / 60000);
         const s = Math.floor((remaining % 60000) / 1000);
         if (statusEl) statusEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
     }, 1000);
+}
 
-    drinkAlarmTimer = setInterval(() => {
-        // Check if aqua goal reached
-        const todayStr = today();
-        const log = loadAquaLog();
-        let totalMl = 0;
-        log.filter(e => e.Datum === todayStr).forEach(e => { totalMl += e.Menge; });
-        meals.filter(m => m.Datum === todayStr).forEach(m => {
-            m.Positionen.forEach(p => {
-                if (p.Einheit === 'ml') totalMl += (p.Menge || 0);
-            });
-        });
-
-        if (totalMl >= GOALS.aqua) {
-            stopDrinkAlarm();
-            showToast('Tagesziel erreicht - Alarm gestoppt');
-            return;
-        }
-
-        // Fire notification
-        const remaining = GOALS.aqua - Math.round(totalMl);
-        if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('Trink-Erinnerung', {
-                body: `Noch ${remaining}ml bis zum Tagesziel!`,
-                icon: '💧',
-                tag: 'drink-alarm'
-            });
-        }
-        showToast(`💧 Trinken! Noch ${remaining}ml`);
-
-        // Play a short beep
-        try {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.frequency.value = 800;
-            gain.gain.value = 0.3;
-            osc.start();
-            osc.stop(ctx.currentTime + 0.2);
-        } catch (e) { /* audio not available */ }
-
-        nextAlarm = Date.now() + ms;
-    }, ms);
-
-    if (statusEl) statusEl.textContent = `${minutes}:00`;
+function startDrinkAlarm() {
+    const btn = $('aqua-alarm-toggle');
+    if (!btn) return;
+    if (drinkAlarmCountdown) { stopDrinkAlarm(); return; }
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+    const minutes = parseInt($('aqua-alarm-interval').value) || 60;
+    drinkAlarmActivate(minutes);
     showToast(`Drink Alarm alle ${minutes} min`);
 }
 
@@ -1552,8 +1551,28 @@ function stopDrinkAlarm() {
     const statusEl = $('aqua-alarm-status');
     if (drinkAlarmTimer) { clearInterval(drinkAlarmTimer); drinkAlarmTimer = null; }
     if (drinkAlarmCountdown) { clearInterval(drinkAlarmCountdown); drinkAlarmCountdown = null; }
+    localStorage.removeItem('kcal_alarm');
     if (btn) { btn.textContent = 'Drink Alarm'; btn.classList.remove('alarm-active'); }
     if (statusEl) statusEl.textContent = '';
+}
+
+function resumeDrinkAlarm() {
+    try {
+        const saved = JSON.parse(localStorage.getItem('kcal_alarm'));
+        if (!saved || !saved.active) return;
+        const minutes = saved.interval || 60;
+        const nextAlarm = saved.nextAlarm || 0;
+        if ($('aqua-alarm-interval')) $('aqua-alarm-interval').value = minutes;
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+        // Fire immediately if alarm was missed while browser was closed
+        if (nextAlarm && Date.now() > nextAlarm) {
+            drinkAlarmActivate(minutes, Date.now());
+        } else {
+            drinkAlarmActivate(minutes, nextAlarm || (Date.now() + minutes * 60 * 1000));
+        }
+    } catch(e) {}
 }
 
 // ===== Initialisierung =====
@@ -1599,6 +1618,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('aqua-kaffee-rm').addEventListener('click', () => removeAquaEntry('Kaffee', 200));
     $('aqua-alarm-toggle').addEventListener('click', startDrinkAlarm);
     updateAquaTrack();
+    resumeDrinkAlarm();
 
     // --- Menue: Barcode ---
     $('menu-barcode-search').addEventListener('click', menuBarcodeSearch);
@@ -1862,6 +1882,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('kcal_templates');
         localStorage.removeItem('kcal_aqua');
         localStorage.removeItem('kcal_basis_seeded');
+        localStorage.removeItem('kcal_alarm');
         db = []; meals = []; templates = [];
         loadInitialData().then(() => {
             updateDailyCircles();
