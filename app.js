@@ -488,11 +488,49 @@ function refreshMenuList() {
     box.innerHTML = '';
     menuList.forEach((item, i) => {
         const div = document.createElement('div');
-        div.className = 'list-item' + (i === selectedMenuIndex ? ' selected' : '');
-        const menge = Math.round(item.Menge);
-        const kcal = Math.round(item.Kcal * item.Menge / 100);
-        div.textContent = `${item.Lebensmittel} - ${menge}${item.Einheit} (${kcal} kcal)`;
-        div.addEventListener('click', () => { selectedMenuIndex = i; refreshMenuList(); });
+        div.className = 'mli';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'mli-name';
+        nameSpan.textContent = item.Lebensmittel;
+
+        const inp = document.createElement('input');
+        inp.type = 'number';
+        inp.className = 'mli-qty';
+        inp.value = item.Menge;
+        inp.min = '0.1';
+        inp.step = (item.Einheit === 'stk') ? '0.5' : '1';
+
+        const unitSpan = document.createElement('span');
+        unitSpan.className = 'mli-unit';
+        unitSpan.textContent = item.Einheit;
+
+        const kcalSpan = document.createElement('span');
+        kcalSpan.className = 'mli-kcal';
+        kcalSpan.textContent = Math.round(item.Kcal * item.Menge / 100) + ' kcal';
+
+        inp.addEventListener('input', () => {
+            const v = parseFloat(inp.value);
+            if (v > 0) {
+                menuList[i].Menge = v;
+                kcalSpan.textContent = Math.round(item.Kcal * v / 100) + ' kcal';
+            }
+        });
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'mli-del';
+        delBtn.textContent = '×';
+        delBtn.addEventListener('click', () => {
+            menuList.splice(i, 1);
+            selectedMenuIndex = -1;
+            refreshMenuList();
+        });
+
+        div.appendChild(nameSpan);
+        div.appendChild(inp);
+        div.appendChild(unitSpan);
+        div.appendChild(kcalSpan);
+        div.appendChild(delBtn);
         box.appendChild(div);
     });
 }
@@ -1702,7 +1740,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     $('menu-add').addEventListener('click', menuAdd);
-    $('menu-remove').addEventListener('click', menuRemove);
+    if ($('menu-remove')) $('menu-remove').addEventListener('click', menuRemove);
     $('menu-clear').addEventListener('click', menuClear);
     $('menu-cancel').addEventListener('click', menuCancelEdit);
     $('menu-save-recipe').addEventListener('click', menuSaveRecipe);
