@@ -233,6 +233,14 @@ async function loadInitialData() {
         } catch (e) { console.log('Templates fetch error:', e); }
     }
 
+    // Migration: alte 'f'-Einträge entfernen (wurden durch 'stk' ersetzt)
+    const oldF = db.filter(d => d.Einheit === 'f');
+    if (oldF.length > 0) {
+        db = db.filter(d => d.Einheit !== 'f');
+        saveDB();
+        changed = true;
+    }
+
     // Gemüse einmalig in db laden falls noch keine vorhanden (Werte pro 100g)
     if (!db.some(d => d.Kategorie === 'Gemüse')) {
         GEMUESE_DB.forEach(g => {
@@ -339,7 +347,7 @@ function populateMenuFoodDropdown(filter) {
         items.forEach(item => {
             const opt = document.createElement('option');
             opt.value = db.indexOf(item);
-            opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal${item.Gesamtmenge ? ' | ' + item.Gesamtmenge + item.Einheit : ''}`;
+            opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal${item.Gesamtmenge ? ' | ' + item.Gesamtmenge + (item.Einheit === 'ml' ? 'ml' : 'g') : ''}`;
             grp.appendChild(opt);
         });
         sel.appendChild(grp);
@@ -365,7 +373,7 @@ function populateEditorFoodDropdown(filter) {
         items.forEach(item => {
             const opt = document.createElement('option');
             opt.value = db.indexOf(item);
-            opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal${item.Gesamtmenge ? ' | ' + item.Gesamtmenge + item.Einheit : ''}`;
+            opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal${item.Gesamtmenge ? ' | ' + item.Gesamtmenge + (item.Einheit === 'ml' ? 'ml' : 'g') : ''}`;
             grp.appendChild(opt);
         });
         sel.appendChild(grp);
