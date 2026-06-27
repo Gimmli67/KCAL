@@ -77,6 +77,13 @@ const BASIS_DB = [
     { name: 'Speckwürfel',         kcal: 330, fett: 28.0, ges: 10.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 2.0, ball: 0.0 },
     { name: 'Lachs (frisch)',      kcal: 208, fett: 13.0, ges: 3.0,  kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.1, ball: 0.0 },
     { name: 'Bratspeck',           kcal: 370, fett: 33.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3, ball: 0.0 },
+    // Fleisch-Kategorien (Ø Schweizer Nährwerte, pro 100g roh)
+    { name: 'Rind mager (Filet/Huft/Nierstück)',      kcal: 118, fett: 3.5,  ges: 1.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    { name: 'Rind fettdurchzogen (Entrecôte/Ribeye)', kcal: 212, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.1, ball: 0.0 },
+    { name: 'Schwein mager (Filet/Nierstück)',         kcal: 112, fett: 3.0,  ges: 1.1, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    { name: 'Schwein fettdurchzogen (Hals/Nacken)',   kcal: 225, fett: 16.0, ges: 6.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.1, ball: 0.0 },
+    { name: 'Poulet Brust (ohne Haut)',               kcal: 105, fett: 1.2,  ges: 0.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    { name: 'Poulet Schenkel (mit Haut)',             kcal: 165, fett: 8.8,  ges: 2.6, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.1, ball: 0.0 },
 ];
 
 function searchLokal(query) {
