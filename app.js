@@ -1796,108 +1796,6 @@ function importData(file, callback) {
     reader.readAsText(file);
 }
 
-// ===== Drink Alarm =====
-let drinkAlarmTimer = null;
-let drinkAlarmCountdown = null;
-
-function drinkAlarmSaveState(minutes, nextTs) {
-    localStorage.setItem('kcal_alarm', JSON.stringify({ active: true, interval: minutes, nextAlarm: nextTs }));
-}
-
-function drinkAlarmFire() {
-    const todayStr = today();
-    const log = loadAquaLog();
-    let totalMl = 0;
-    log.filter(e => e.Datum === todayStr).forEach(e => { totalMl += e.Menge; });
-    meals.filter(m => m.Datum === todayStr).forEach(m => {
-        m.Positionen.forEach(p => { if (p.Einheit === 'ml') totalMl += (p.Menge || 0); });
-    });
-    if (totalMl >= GOALS.aqua) {
-        stopDrinkAlarm();
-        showToast('Tagesziel erreicht - Alarm gestoppt');
-        return false;
-    }
-    const rem = GOALS.aqua - Math.round(totalMl);
-    if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification('Trink-Erinnerung', { body: `Noch ${rem}ml bis zum Tagesziel!`, icon: '💧', tag: 'drink-alarm' });
-    }
-    if ('vibrate' in navigator) navigator.vibrate([300, 100, 300]);
-    showToast(`💧 Trinken! Noch ${rem}ml`);
-    try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.frequency.value = 800; gain.gain.value = 0.3;
-        osc.start(); osc.stop(ctx.currentTime + 0.2);
-    } catch(e) {}
-    return true;
-}
-
-function drinkAlarmActivate(minutes, resumeNextTs) {
-    const btn = $('aqua-alarm-toggle');
-    const statusEl = $('aqua-alarm-status');
-    const ms = minutes * 60 * 1000;
-    let nextTs = resumeNextTs || (Date.now() + ms);
-
-    drinkAlarmSaveState(minutes, nextTs);
-    if (btn) { btn.textContent = 'Stop Alarm'; btn.classList.add('alarm-active'); }
-
-    drinkAlarmCountdown = setInterval(() => {
-        const now = Date.now();
-        if (now >= nextTs) {
-            if (drinkAlarmFire() !== false) {
-                nextTs = now + ms;
-                drinkAlarmSaveState(minutes, nextTs);
-            }
-        }
-        const remaining = Math.max(0, nextTs - Date.now());
-        const m = Math.floor(remaining / 60000);
-        const s = Math.floor((remaining % 60000) / 1000);
-        if (statusEl) statusEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
-    }, 1000);
-}
-
-function startDrinkAlarm() {
-    const btn = $('aqua-alarm-toggle');
-    if (!btn) return;
-    if (drinkAlarmCountdown) { stopDrinkAlarm(); return; }
-    if ('Notification' in window && Notification.permission === 'default') {
-        Notification.requestPermission();
-    }
-    const minutes = parseInt($('aqua-alarm-interval').value) || 60;
-    drinkAlarmActivate(minutes);
-    showToast(`Drink Alarm alle ${minutes} min`);
-}
-
-function stopDrinkAlarm() {
-    const btn = $('aqua-alarm-toggle');
-    const statusEl = $('aqua-alarm-status');
-    if (drinkAlarmTimer) { clearInterval(drinkAlarmTimer); drinkAlarmTimer = null; }
-    if (drinkAlarmCountdown) { clearInterval(drinkAlarmCountdown); drinkAlarmCountdown = null; }
-    localStorage.removeItem('kcal_alarm');
-    if (btn) { btn.textContent = 'Drink Alarm'; btn.classList.remove('alarm-active'); }
-    if (statusEl) statusEl.textContent = '';
-}
-
-function resumeDrinkAlarm() {
-    try {
-        const saved = JSON.parse(localStorage.getItem('kcal_alarm'));
-        if (!saved || !saved.active) return;
-        const minutes = saved.interval || 60;
-        const nextAlarm = saved.nextAlarm || 0;
-        if ($('aqua-alarm-interval')) $('aqua-alarm-interval').value = minutes;
-        if ('Notification' in window && Notification.permission === 'default') {
-            Notification.requestPermission();
-        }
-        // Fire immediately if alarm was missed while browser was closed
-        if (nextAlarm && Date.now() > nextAlarm) {
-            drinkAlarmActivate(minutes, Date.now());
-        } else {
-            drinkAlarmActivate(minutes, nextAlarm || (Date.now() + minutes * 60 * 1000));
-        }
-    } catch(e) {}
-}
 
 // ===== Initialisierung =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -1944,9 +1842,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('aqua-wasser-rm').addEventListener('click', () => removeAquaEntry('Wasser', 750));
     $('aqua-espresso-rm').addEventListener('click', () => removeAquaEntry('Espresso', 30));
     $('aqua-kaffee-rm').addEventListener('click', () => removeAquaEntry('Kaffee', 200));
-    $('aqua-alarm-toggle').addEventListener('click', startDrinkAlarm);
     updateAquaTrack();
-    resumeDrinkAlarm();
 
     // --- Menue: Barcode ---
     $('menu-barcode-search').addEventListener('click', menuBarcodeSearch);
