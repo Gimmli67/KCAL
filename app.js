@@ -67,7 +67,8 @@ const GEMUESE_DB = [
 
 // ===== Basis-Lebensmittel (pro 100g, Schweizer Durchschnittswerte) =====
 const BASIS_DB = [
-    { name: 'Apfelmus', kcal: 68, fett: 0.1, ges: 0.0, kh: 16.0, zucker: 13.0, eiweiss: 0.3, salz: 0.0, ball: 1.5 },
+    { name: 'Apfelmus',    kcal: 68, fett: 0.1, ges: 0.0, kh: 16.0, zucker: 13.0, eiweiss: 0.3, salz: 0.0, ball: 1.5 },
+    { name: 'Rahmspinat', kcal: 70, fett: 4.5, ges: 2.5, kh:  3.5, zucker:  1.5, eiweiss: 3.5, salz: 0.6, ball: 2.0 },
 ];
 
 // ===== Teigwaren-Datenbank (pro 100g, roh/trocken) =====
@@ -718,6 +719,15 @@ function populateTemplateDropdown() {
 
 
 // ===== Scan Preview anzeigen (editierbar, kein Auto-Save) =====
+function findSimilarInDB(name) {
+    if (!name) return [];
+    const lower = name.toLowerCase();
+    return db.filter(d => {
+        const dLower = d.Lebensmittel.toLowerCase();
+        return dLower !== lower && (dLower.includes(lower) || lower.includes(dLower));
+    });
+}
+
 function showScanPreview(food) {
     $('food-display').classList.remove('hidden');
     $('fd-name').value = food.Lebensmittel || '';
@@ -735,6 +745,26 @@ function showScanPreview(food) {
     const favBtn = $('fd-favorit');
     if (favBtn) favBtn.textContent = scanFavorit ? '⭐' : '☆';
     updateScanPreviewHeader();
+    const hint = $('fd-similar-hint');
+    if (hint) {
+        const similars = findSimilarInDB(food.Lebensmittel || '');
+        if (similars.length > 0) {
+            hint.classList.remove('hidden');
+            const links = similars.map((s, i) =>
+                `<a href="#" data-idx="${i}" style="color:#f38ba8;text-decoration:underline">${s.Lebensmittel}</a>`
+            ).join(' &nbsp;|&nbsp; ');
+            hint.innerHTML = `Ähnlich in DB: ${links}`;
+            hint.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', e => {
+                    e.preventDefault();
+                    $('fd-name').value = similars[parseInt(a.dataset.idx)].Lebensmittel;
+                    hint.classList.add('hidden');
+                });
+            });
+        } else {
+            hint.classList.add('hidden');
+        }
+    }
 }
 
 function updateScanPreviewHeader() {
