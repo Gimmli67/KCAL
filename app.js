@@ -53,7 +53,6 @@ const GEMUESE_DB = [
     { name: 'Paprika rot',    kcal: 31,  fett: 0.3, ges: 0.0, kh: 6.0, zucker: 4.2, eiweiss: 1.0, salz: 0.0, ball: 2.1 },
     { name: 'Peperoni',       kcal: 40,  fett: 0.4, ges: 0.1, kh: 9.0, zucker: 5.1, eiweiss: 2.0, salz: 0.0, ball: 1.5 },
     { name: 'Randen',         kcal: 43,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 6.8, eiweiss: 1.6, salz: 0.1, ball: 2.8 },
-    { name: 'Salat gemischt', kcal: 16,  fett: 0.2, ges: 0.0, kh: 2.4, zucker: 1.4, eiweiss: 1.2, salz: 0.0, ball: 1.3 },
     { name: 'Sellerie',       kcal: 16,  fett: 0.2, ges: 0.0, kh: 3.0, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
     { name: 'Spinat',         kcal: 23,  fett: 0.4, ges: 0.1, kh: 3.6, zucker: 0.4, eiweiss: 2.9, salz: 0.2, ball: 2.2 },
     { name: 'Tomate',         kcal: 18,  fett: 0.2, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2 },
@@ -62,28 +61,172 @@ const GEMUESE_DB = [
     { name: 'Zuckerhut',     kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1 },
     { name: 'Rettich',       kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8 },
     { name: 'Radieschen',    kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
-    { name: 'Kartoffel',     kcal: 77,  fett: 0.1, ges: 0.0, kh: 17,  zucker: 0.8, eiweiss: 2.0, salz: 0.0, ball: 2.2 },
+    { name: 'Kartoffel',              kcal: 77,  fett: 0.1, ges: 0.0, kh: 17.0, zucker: 0.8, eiweiss: 2.0, salz: 0.0, ball: 2.2 },
+    { name: 'Champignons',            kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3 },
 ];
 
 // ===== Basis-Lebensmittel (pro 100g, Schweizer Durchschnittswerte) =====
 const BASIS_DB = [
-    { name: 'Rindgehacktes',      kcal: 195, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 0.1, ball: 0.0 },
-    { name: 'Hörnli (roh)',        kcal: 370, fett: 1.5,  ges: 0.3, kh: 74.0, zucker: 3.0, eiweiss: 13.0, salz: 0.1, ball: 3.0 },
-    { name: 'Apfelmus',            kcal: 68,  fett: 0.1,  ges: 0.0, kh: 16.0, zucker: 13.0, eiweiss: 0.3, salz: 0.0, ball: 1.5 },
-    { name: 'Pouletbrust (roh)',   kcal: 105, fett: 1.2,  ges: 0.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
-    { name: 'Schweineschnitzel',   kcal: 120, fett: 3.5,  ges: 1.2, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
-    { name: 'Cervelat',            kcal: 285, fett: 24.0, ges: 9.0, kh: 1.0, zucker: 0.5, eiweiss: 14.0, salz: 2.2, ball: 0.0 },
-    { name: 'Bratwurst (roh)',     kcal: 265, fett: 22.0, ges: 8.0, kh: 2.0, zucker: 0.5, eiweiss: 13.0, salz: 1.5, ball: 0.0 },
-    { name: 'Speckwürfel',         kcal: 330, fett: 28.0, ges: 10.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 2.0, ball: 0.0 },
-    { name: 'Lachs (frisch)',      kcal: 208, fett: 13.0, ges: 3.0,  kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.1, ball: 0.0 },
-    { name: 'Bratspeck',           kcal: 370, fett: 33.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3, ball: 0.0 },
-    // Fleisch-Kategorien (Ø Schweizer Nährwerte, pro 100g roh)
-    { name: 'Rind mager (Filet/Huft/Nierstück)',      kcal: 118, fett: 3.5,  ges: 1.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
-    { name: 'Rind fettdurchzogen (Entrecôte/Ribeye)', kcal: 212, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.1, ball: 0.0 },
-    { name: 'Schwein mager (Filet/Nierstück)',         kcal: 112, fett: 3.0,  ges: 1.1, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
-    { name: 'Schwein fettdurchzogen (Hals/Nacken)',   kcal: 225, fett: 16.0, ges: 6.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.1, ball: 0.0 },
-    { name: 'Poulet Brust (ohne Haut)',               kcal: 105, fett: 1.2,  ges: 0.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
-    { name: 'Poulet Schenkel (mit Haut)',             kcal: 165, fett: 8.8,  ges: 2.6, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.1, ball: 0.0 },
+    { name: 'Apfelmus', kcal: 68, fett: 0.1, ges: 0.0, kh: 16.0, zucker: 13.0, eiweiss: 0.3, salz: 0.0, ball: 1.5 },
+];
+
+// ===== Teigwaren-Datenbank (pro 100g, roh/trocken) =====
+const TEIGWAREN_DB = [
+    { name: 'Hörnli (roh)',         kcal: 370, fett: 1.5, ges: 0.3, kh: 74.0, zucker: 3.0, eiweiss: 13.0, salz: 0.1, ball: 3.0 },
+    { name: 'Spaghetti (roh)',      kcal: 365, fett: 1.5, ges: 0.3, kh: 73.0, zucker: 2.5, eiweiss: 13.0, salz: 0.0, ball: 2.5 },
+    { name: 'Penne (roh)',          kcal: 360, fett: 1.5, ges: 0.3, kh: 72.0, zucker: 2.5, eiweiss: 13.0, salz: 0.0, ball: 2.5 },
+    { name: 'Tagliatelle (roh)',    kcal: 365, fett: 2.0, ges: 0.5, kh: 72.0, zucker: 2.5, eiweiss: 13.0, salz: 0.1, ball: 2.5 },
+    { name: 'Lasagneplatten (roh)', kcal: 360, fett: 1.5, ges: 0.3, kh: 72.0, zucker: 2.0, eiweiss: 13.0, salz: 0.1, ball: 2.5 },
+    { name: 'Spätzli (roh)',        kcal: 225, fett: 3.5, ges: 1.0, kh: 38.0, zucker: 1.0, eiweiss: 8.5,  salz: 0.8, ball: 1.5 },
+];
+
+// ===== Milchprodukte-Datenbank (pro 100g/ml, Schweizer Durchschnittswerte) =====
+const MILCH_DB = [
+    // Milch
+    { name: 'Vollmilch (3.5%)',       kcal: 64,  fett: 3.5,  ges: 2.2,  kh: 4.8, zucker: 4.8, eiweiss: 3.3,  salz: 0.1, ball: 0.0 },
+    { name: 'Halbmilch (1.5%)',       kcal: 47,  fett: 1.5,  ges: 1.0,  kh: 4.8, zucker: 4.8, eiweiss: 3.3,  salz: 0.1, ball: 0.0 },
+    // Rahm
+    { name: 'Halbrahm (15%)',         kcal: 160, fett: 15.0, ges: 9.5,  kh: 3.5, zucker: 3.5, eiweiss: 2.8,  salz: 0.1, ball: 0.0 },
+    { name: 'Rahm (35%)',             kcal: 340, fett: 35.0, ges: 22.0, kh: 3.0, zucker: 3.0, eiweiss: 2.5,  salz: 0.1, ball: 0.0 },
+    // Joghurt
+    { name: 'Joghurt nature (3.5%)',  kcal: 63,  fett: 3.5,  ges: 2.2,  kh: 4.5, zucker: 4.5, eiweiss: 3.5,  salz: 0.1, ball: 0.0 },
+    { name: 'Joghurt mager (0.1%)',   kcal: 38,  fett: 0.1,  ges: 0.1,  kh: 5.0, zucker: 5.0, eiweiss: 4.0,  salz: 0.1, ball: 0.0 },
+    { name: 'Joghurt griechisch',     kcal: 130, fett: 10.0, ges: 6.0,  kh: 4.0, zucker: 4.0, eiweiss: 6.0,  salz: 0.1, ball: 0.0 },
+    // Quark & Frischkäse
+    { name: 'Quark (mager)',          kcal: 67,  fett: 0.3,  ges: 0.2,  kh: 4.0, zucker: 4.0, eiweiss: 12.0, salz: 0.1, ball: 0.0 },
+    { name: 'Frischkäse (Halbfett)', kcal: 110, fett: 7.0,  ges: 4.5,  kh: 3.0, zucker: 3.0, eiweiss: 8.0,  salz: 0.5, ball: 0.0 },
+    { name: 'Hüttenkäse',            kcal: 85,  fett: 3.5,  ges: 2.0,  kh: 3.0, zucker: 3.0, eiweiss: 10.0, salz: 0.5, ball: 0.0 },
+    // Käse
+    { name: 'Gruyère',               kcal: 413, fett: 32.0, ges: 20.0, kh: 0.1, zucker: 0.1, eiweiss: 29.0, salz: 1.5, ball: 0.0 },
+    { name: 'Emmentaler',            kcal: 380, fett: 29.0, ges: 18.0, kh: 0.5, zucker: 0.5, eiweiss: 28.0, salz: 0.9, ball: 0.0 },
+    { name: 'Raclette',              kcal: 335, fett: 26.0, ges: 17.0, kh: 0.5, zucker: 0.5, eiweiss: 24.0, salz: 1.2, ball: 0.0 },
+    { name: 'Mozzarella',            kcal: 250, fett: 19.0, ges: 12.0, kh: 1.0, zucker: 1.0, eiweiss: 18.0, salz: 0.6, ball: 0.0 },
+    { name: 'Parmesan',              kcal: 431, fett: 29.0, ges: 18.0, kh: 0.0, zucker: 0.0, eiweiss: 38.0, salz: 1.8, ball: 0.0 },
+    { name: 'Camembert',             kcal: 290, fett: 23.0, ges: 15.0, kh: 0.5, zucker: 0.5, eiweiss: 19.0, salz: 1.5, ball: 0.0 },
+    // Butter
+    { name: 'Butter',                        kcal: 735, fett: 82.0, ges: 52.0, kh: 0.6, zucker: 0.6, eiweiss: 0.7,  salz: 0.1,  ball: 0.0 },
+    // Gescannte Produkte
+    { name: 'Tilsiter',                      kcal: 354, fett: 28.0, ges: 18.0, kh: 0.5, zucker: 0.5, eiweiss: 25.0, salz: 1.7,  ball: 0.0 },
+    { name: 'Emmenthaler AOP mild',          kcal: 395, fett: 31.0, ges: 19.0, kh: 0.1, zucker: 0.1, eiweiss: 29.0, salz: 0.5,  ball: 0.0 },
+    { name: 'President Carré Gourmet',       kcal: 324, fett: 28.0, ges: 20.0, kh: 0.1, zucker: 0.1, eiweiss: 18.0, salz: 1.3,  ball: 0.0 },
+    { name: 'Molini Mozzarella Block',       kcal: 251, fett: 19.0, ges: 0.0,  kh: 1.0, zucker: 0.0, eiweiss: 19.0, salz: 0.6,  ball: 0.0 },
+    { name: 'Skyr Alternative Vanille Soja', kcal: 77,  fett: 2.9,  ges: 0.5,  kh: 6.8, zucker: 6.5, eiweiss: 5.1,  salz: 0.24, ball: 1.1 },
+];
+
+// ===== Menü-Vorlagen (werden beim Start eingefügt wenn Name noch nicht existiert) =====
+const VORLAGEN_DB = [
+    {
+        Name: "Hörnli & Ghackets",
+        Positionen: [
+            { Lebensmittel: 'Hörnli (roh)',   Einheit: 'g', Menge: 100, Kcal: 370, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 74, Zucker: 3,  Eiweiss: 13,  Salz: 0.1, Ballaststoffe: 3   },
+            { Lebensmittel: 'Rindsgehackets', Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0,  Zucker: 0,  Eiweiss: 17,  Salz: 0.1, Ballaststoffe: 0   },
+            { Lebensmittel: 'Apfelmus',        Einheit: 'g', Menge: 40,  Kcal: 68,  Fett: 0.1,  Gesaettigt: 0,   Kohlenhydrate: 16, Zucker: 13, Eiweiss: 0.3, Salz: 0,   Ballaststoffe: 1.5 },
+        ]
+    },
+    {
+        Name: "Spaghetti Bolognese",
+        Positionen: [
+            { Lebensmittel: 'Spaghetti (roh)', Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5, Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Rindsgehackets',  Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Tomate',          Einheit: 'g', Menge: 150, Kcal: 18,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Zwiebel',         Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
+            { Lebensmittel: 'Knoblauch',       Einheit: 'g', Menge: 10,  Kcal: 149, Fett: 0.5,  Gesaettigt: 0.1, Kohlenhydrate: 33.0, Zucker: 1.0, Eiweiss: 6.4,  Salz: 0.0, Ballaststoffe: 2.1 },
+        ]
+    },
+    {
+        Name: "Buure z'Morge",
+        Positionen: [
+            { Lebensmittel: 'Eier 63+',           Einheit: 'g', Menge: 4,   Kcal: 95,  Fett: 7,    Gesaettigt: 2,   Kohlenhydrate: 0.5, Zucker: 0, Eiweiss: 8,  Salz: 0.2,  Ballaststoffe: 0 },
+            { Lebensmittel: 'Rösti FixFertig',     Einheit: 'g', Menge: 125, Kcal: 110, Fett: 5,    Gesaettigt: 0.5, Kohlenhydrate: 13,  Zucker: 0, Eiweiss: 2,  Salz: 0.88, Ballaststoffe: 2 },
+            { Lebensmittel: 'Naturafarm Bratspeck', Einheit: 'g', Menge: 100, Kcal: 345, Fett: 33,   Gesaettigt: 9.9, Kohlenhydrate: 0,   Zucker: 0, Eiweiss: 12, Salz: 1.7,  Ballaststoffe: 0 },
+        ]
+    },
+];
+
+// ===== Brot-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
+const BROT_DB = [
+    { name: 'Baguette',          kcal: 270, fett: 1.5, ges: 0.4, kh: 54.0, zucker: 2.5, eiweiss: 9.0, salz: 1.2, ball: 2.0 },
+    { name: 'Laugen-Salzbrezel', kcal: 320, fett: 4.0, ges: 1.0, kh: 60.0, zucker: 2.0, eiweiss: 9.5, salz: 3.5, ball: 2.0 },
+    { name: 'Laugenbrot',        kcal: 255, fett: 2.5, ges: 0.6, kh: 48.0, zucker: 2.0, eiweiss: 9.0, salz: 1.8, ball: 2.5 },
+    { name: 'Bauernbrot',        kcal: 230, fett: 1.5, ges: 0.3, kh: 44.0, zucker: 1.5, eiweiss: 7.5, salz: 1.2, ball: 4.5 },
+    { name: 'Ruchbrot',          kcal: 245, fett: 1.5, ges: 0.3, kh: 46.0, zucker: 1.5, eiweiss: 9.0, salz: 1.2, ball: 3.5 },
+    { name: 'Vollkornbrot',      kcal: 210, fett: 2.0, ges: 0.4, kh: 38.0, zucker: 2.0, eiweiss: 8.0, salz: 1.1, ball: 6.0 },
+    { name: 'Toastbrot',         kcal: 265, fett: 3.5, ges: 0.8, kh: 48.0, zucker: 4.0, eiweiss: 8.5, salz: 1.3, ball: 2.0 },
+    { name: 'Weggli',            kcal: 285, fett: 4.5, ges: 1.0, kh: 53.0, zucker: 5.0, eiweiss: 9.0, salz: 1.2, ball: 2.0 },
+    { name: 'Semmeli',           kcal: 270, fett: 2.0, ges: 0.5, kh: 53.0, zucker: 2.0, eiweiss: 9.0, salz: 1.3, ball: 2.5 },
+    { name: 'Fussballbrötchen',  kcal: 265, fett: 2.5, ges: 0.5, kh: 50.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5 },
+    { name: 'Holzofenbrot',      kcal: 230, fett: 1.5, ges: 0.3, kh: 44.0, zucker: 1.5, eiweiss: 7.5, salz: 1.2, ball: 4.0 },
+    { name: 'Krustenkranz',      kcal: 260, fett: 2.0, ges: 0.4, kh: 50.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5 },
+    { name: 'Zopf',              kcal: 315, fett: 8.0, ges: 4.5, kh: 50.0, zucker: 5.0, eiweiss: 9.5, salz: 0.8, ball: 2.0 },
+    { name: 'Steinofen Twister', kcal: 255, fett: 2.5, ges: 0.5, kh: 49.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5 },
+    { name: 'Silserkranz',       kcal: 265, fett: 3.0, ges: 0.8, kh: 50.0, zucker: 3.0, eiweiss: 9.0, salz: 1.0,  ball: 2.0 },
+    // Gescannte Produkte
+    { name: 'Brot Weggli',           kcal: 326, fett: 8.3, ges: 5.8, kh: 50.0, zucker: 2.8, eiweiss: 9.8, salz: 1.3,  ball: 3.1 },
+    { name: 'Brot Huusbrot Rustico', kcal: 232, fett: 1.0, ges: 0.2, kh: 45.0, zucker: 0.6, eiweiss: 8.4, salz: 1.87, ball: 4.5 },
+    { name: 'Premium Butter-Brezel', kcal: 363, fett: 17.0, ges: 7.8, kh: 43.0, zucker: 0.7, eiweiss: 8.9, salz: 1.8,  ball: 0.0 },
+];
+
+// ===== Fleisch-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
+const FLEISCH_DB = [
+    // Rind
+    { name: 'Rindsgehackets',                     kcal: 195, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 0.1, ball: 0.0 },
+    { name: 'Rind mager (Filet/Huft/Nierstück)',  kcal: 118, fett: 3.5,  ges: 1.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    { name: 'Rind marmoriert (Entrecôte/Ribeye)', kcal: 212, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.1, ball: 0.0 },
+    // Schwein
+    { name: 'Schwein mager (Filet/Nierstück)',    kcal: 112, fett: 3.0,  ges: 1.1, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    { name: 'Schwein marmoriert (Hals/Nacken)',   kcal: 225, fett: 16.0, ges: 6.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.1, ball: 0.0 },
+    { name: 'Schweineschnitzel',                  kcal: 120, fett: 3.5,  ges: 1.2, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    // Geflügel
+    { name: 'Poulet Brust (ohne Haut)',           kcal: 105, fett: 1.2,  ges: 0.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
+    { name: 'Poulet Schenkel (mit Haut)',         kcal: 165, fett: 8.8,  ges: 2.6, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.1, ball: 0.0 },
+    // Verarbeitetes
+    { name: 'Cervelat',                           kcal: 285, fett: 24.0, ges: 9.0,  kh: 1.0, zucker: 0.5, eiweiss: 14.0, salz: 2.2,  ball: 0.0 },
+    { name: 'Bratwurst (roh)',                    kcal: 265, fett: 22.0, ges: 8.0,  kh: 2.0, zucker: 0.5, eiweiss: 13.0, salz: 1.5,  ball: 0.0 },
+    { name: 'Speckwürfel',                        kcal: 330, fett: 28.0, ges: 10.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 2.0,  ball: 0.0 },
+    { name: 'Bratspeck',                          kcal: 370, fett: 33.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
+    // Gescannte Produkte
+    { name: 'Citterio Salami Milano',             kcal: 383, fett: 31.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 26.0, salz: 4.03, ball: 0.0 },
+    { name: 'Naturafarm Bündnerfleisch',          kcal: 216, fett: 5.0,  ges: 2.2,  kh: 0.8, zucker: 0.8, eiweiss: 43.0, salz: 5.2,  ball: 0.0 },
+    { name: 'Naturafarm Bratspeck',               kcal: 345, fett: 33.0, ges: 9.9,  kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 1.7,  ball: 0.0 },
+    { name: 'Naturafarm Toastschinken',           kcal: 105, fett: 4.0,  ges: 1.5,  kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
+    { name: 'Naturafarm Poulet Lyoner',           kcal: 166, fett: 13.0, ges: 2.5,  kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 2.1,  ball: 0.0 },
+    { name: 'Hamburger aus Rinderhack',           kcal: 230, fett: 15.0, ges: 6.0,  kh: 0.5, zucker: 0.0, eiweiss: 18.0, salz: 1.0,  ball: 0.0 },
+    { name: 'Naturafarm Fleischkäse',             kcal: 336, fett: 32.0, ges: 13.0, kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 1.8,  ball: 0.0 },
+    { name: 'Malbuner Fleischkäse',               kcal: 202, fett: 16.0, ges: 6.0,  kh: 0.8, zucker: 0.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0 },
+    { name: 'Würstli Appenzell',                  kcal: 517, fett: 46.0, ges: 0.0,  kh: 0.7, zucker: 0.0, eiweiss: 25.0, salz: 4.0,  ball: 0.0 },
+];
+
+// ===== Getränke-Datenbank (pro 100ml, mit Gesamtmenge) =====
+const GETRÄNKE_DB = [
+    { name: 'Emi Energy Milk Vanilla',               kcal: 62, fett: 0.8,  ges: 0.5, kh: 4.9,  zucker: 4.8,  eiweiss: 8.0,  salz: 0.35, ball: 0.0,  gm: 330 },
+    { name: 'Emi Energy Milk Skyr Mango/Passion',    kcal: 61, fett: 0.1,  ges: 0.1, kh: 5.3,  zucker: 4.4,  eiweiss: 8.8,  salz: 0.03, ball: 0.0,  gm: 330 },
+    { name: 'Innocent Orangensaft mit Fruchtfleisch',kcal: 43, fett: 0.0,  ges: 0.0, kh: 9.5,  zucker: 8.8,  eiweiss: 0.73, salz: 0.0,  ball: 0.88, gm: 330 },
+    { name: 'Innocent Apfel & Mango',               kcal: 45, fett: 0.4,  ges: 0.1, kh: 11.0, zucker: 9.9,  eiweiss: 0.17, salz: 0.0,  ball: 0.66, gm: 330 },
+    { name: 'Bilz Stellare Limone',                 kcal: 21, fett: 0.0,  ges: 0.0, kh: 5.0,  zucker: 3.9,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 330 },
+    { name: 'Bilz Stellare Blutorange',             kcal: 32, fett: 0.0,  ges: 0.0, kh: 7.6,  zucker: 6.3,  eiweiss: 0.5,  salz: 0.0,  ball: 0.0,  gm: 330 },
+    { name: 'Comella Choco Drink',                  kcal: 64, fett: 1.0,  ges: 0.6, kh: 9.7,  zucker: 9.5,  eiweiss: 3.5,  salz: 0.1,  ball: 0.0,  gm: 330 },
+    { name: 'Coca Cola Original',                   kcal: 44, fett: 0.0,  ges: 0.0, kh: 10.9, zucker: 10.9, eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
+    { name: 'Red Bull Energy Drink',                kcal: 46, fett: 0.0,  ges: 0.0, kh: 11.0, zucker: 11.0, eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 250 },
+    { name: 'Somersby Apple Original',              kcal: 61, fett: 0.0,  ges: 0.0, kh: 8.6,  zucker: 7.7,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
+    { name: 'Nestea Eistee',                        kcal: 19, fett: 0.0,  ges: 0.0, kh: 4.5,  zucker: 4.5,  eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 500 },
+];
+
+// ===== Diverses (Fertigprodukte, pro 100g) =====
+const DIVERSES_DB = [
+    { name: 'Eier 63+',               kcal: 95,  fett: 7.0,  ges: 2.0, kh: 0.5, zucker: 0.0, eiweiss: 8.0,  salz: 0.2,  ball: 0.0, gm: null },
+    { name: 'Rösti FixFertig',        kcal: 110, fett: 5.0,  ges: 0.5, kh: 13,  zucker: 0.0, eiweiss: 2.0,  salz: 0.88, ball: 2.0, gm: 250  },
+    { name: 'Berner Rösti',           kcal: 107, fett: 5.0,  ges: 1.5, kh: 11,  zucker: 0.5, eiweiss: 3.5,  salz: 1.2,  ball: 2.0, gm: 250  },
+    { name: 'McCain Pommes Frites',   kcal: 158, fett: 5.0,  ges: 0.5, kh: 24,  zucker: 0.5, eiweiss: 2.9,  salz: 0.03, ball: 2.8, gm: 750  },
+    { name: 'Pommes Duchesse',        kcal: 165, fett: 8.0,  ges: 0.7, kh: 18,  zucker: 1.5, eiweiss: 4.5,  salz: 0.98, ball: 1.5, gm: 600  },
+    { name: 'Findus Chicken Nuggets', kcal: 253, fett: 11.0, ges: 1.5, kh: 25,  zucker: 0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
+    { name: 'Curry Balls',            kcal: 193, fett: 9.0,  ges: 2.0, kh: 14,  zucker: 2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
+];
+
+// ===== Portion-Datenbank (pro Portion) =====
+const PORTION_DB = [
+    { name: 'Nissin Asian Soba Chilli',         kcal: 479, fett: 19.7, ges: 9.7, kh: 62.1, zucker: 8.2, eiweiss: 10.2, salz: 2.8, ball: 0.0 },
+    { name: 'Knorr Asia Noodles Chicken',       kcal: 336, fett: 15.0, ges: 1.7, kh: 42.0, zucker: 2.6, eiweiss: 6.0,  salz: 2.7, ball: 1.6 },
+    { name: 'Knorr Asia Noodles Spicy Chicken', kcal: 345, fett: 15.0, ges: 1.5, kh: 43.0, zucker: 2.0, eiweiss: 6.9,  salz: 2.9, ball: 2.0 },
 ];
 
 function searchLokal(query) {
@@ -316,6 +459,121 @@ async function loadInitialData() {
         changed = true;
     }
 
+    // Milchprodukte: fehlende Einträge nachfügen
+    let milchAdded = false;
+    MILCH_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Dairy', Gesamtmenge: null,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            milchAdded = true;
+        }
+    });
+    if (milchAdded) { saveDB(); changed = true; }
+
+    // Teigwaren: fehlende Einträge nachfügen
+    let teigwarenAdded = false;
+    TEIGWAREN_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Pasta', Gesamtmenge: null,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            teigwarenAdded = true;
+        }
+    });
+    if (teigwarenAdded) { saveDB(); changed = true; }
+
+    // Brot: fehlende Einträge nachfügen
+    let brotAdded = false;
+    BROT_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Bread', Gesamtmenge: null,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            brotAdded = true;
+        }
+    });
+    if (brotAdded) { saveDB(); changed = true; }
+
+    // Menü-Vorlagen: fehlende Einträge nachfügen
+    let vorlagenAdded = false;
+    VORLAGEN_DB.forEach(v => {
+        if (!templates.find(t => t.Name === v.Name)) {
+            templates.push(v);
+            vorlagenAdded = true;
+        }
+    });
+    if (vorlagenAdded) { saveTemplates(); changed = true; }
+
+    // Fleisch: fehlende Einträge nachfügen
+    let fleischAdded = false;
+    FLEISCH_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Meat', Gesamtmenge: null,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            fleischAdded = true;
+        }
+    });
+    if (fleischAdded) { saveDB(); changed = true; }
+
+    // Getränke: fehlende Einträge nachfügen
+    let getraenkeAdded = false;
+    GETRÄNKE_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'ml', Kategorie: 'Drinks', Gesamtmenge: item.gm,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            getraenkeAdded = true;
+        }
+    });
+    if (getraenkeAdded) { saveDB(); changed = true; }
+
+    // Diverses: fehlende Einträge nachfügen
+    let diversesAdded = false;
+    DIVERSES_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Misc', Gesamtmenge: item.gm,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            diversesAdded = true;
+        }
+    });
+    if (diversesAdded) { saveDB(); changed = true; }
+
+    // Portionen: fehlende Einträge nachfügen
+    let portionAdded = false;
+    PORTION_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Portion', Gesamtmenge: 1,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            portionAdded = true;
+        }
+    });
+    if (portionAdded) { saveDB(); changed = true; }
+
     if (changed) {
         populateMenuFoodDropdown();
         populateEditorFoodDropdown();
@@ -374,7 +632,7 @@ function populateMenuFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
-    const groups = { Food: [], Gemüse: [], Fruit: [], Drinks: [], Portion: [] };
+    const groups = { Food: [], Meat: [], Dairy: [], Bread: [], Pasta: [], Misc: [], Gemüse: [], Fruit: [], Drinks: [], Portion: [] };
     filtered.forEach(item => {
         const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : item.Einheit === 'stk' ? 'Fruit' : 'Food');
         if (!groups[kat]) groups[kat] = [];
@@ -400,7 +658,7 @@ function populateEditorFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
-    const groups = { Food: [], Gemüse: [], Fruit: [], Drinks: [], Portion: [] };
+    const groups = { Food: [], Meat: [], Dairy: [], Bread: [], Pasta: [], Misc: [], Gemüse: [], Fruit: [], Drinks: [], Portion: [] };
     filtered.forEach(item => {
         const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : item.Einheit === 'stk' ? 'Fruit' : 'Food');
         if (!groups[kat]) groups[kat] = [];
