@@ -67,8 +67,7 @@ const GEMUESE_DB = [
 
 // ===== Basis-Lebensmittel (pro 100g, Schweizer Durchschnittswerte) =====
 const BASIS_DB = [
-    { name: 'Apfelmus',    kcal: 68, fett: 0.1, ges: 0.0, kh: 16.0, zucker: 13.0, eiweiss: 0.3, salz: 0.0, ball: 1.5 },
-    { name: 'Rahmspinat', kcal: 70, fett: 4.5, ges: 2.5, kh:  3.5, zucker:  1.5, eiweiss: 3.5, salz: 0.6, ball: 2.0 },
+    { name: 'Apfelmus',  kcal:  68, fett:   0.1, ges:  0.0, kh: 16.0, zucker: 13.0, eiweiss:  0.3, salz: 0.00, ball: 1.5 },
 ];
 
 // ===== Teigwaren-Datenbank (pro 100g, roh/trocken) =====
@@ -79,6 +78,11 @@ const TEIGWAREN_DB = [
     { name: 'Tagliatelle (roh)',    kcal: 365, fett: 2.0, ges: 0.5, kh: 72.0, zucker: 2.5, eiweiss: 13.0, salz: 0.1, ball: 2.5 },
     { name: 'Lasagneplatten (roh)', kcal: 360, fett: 1.5, ges: 0.3, kh: 72.0, zucker: 2.0, eiweiss: 13.0, salz: 0.1, ball: 2.5 },
     { name: 'Spätzli (roh)',        kcal: 225, fett: 3.5, ges: 1.0, kh: 38.0, zucker: 1.0, eiweiss: 8.5,  salz: 0.8, ball: 1.5 },
+    { name: 'Weisser Reis (roh)',   kcal: 350, fett: 0.5, ges: 0.1, kh: 77.0, zucker: 0.1, eiweiss: 7.0,  salz: 0.0, ball: 1.4 },
+    { name: 'Vollkornreis (roh)',   kcal: 330, fett: 2.7, ges: 0.5, kh: 69.0, zucker: 0.5, eiweiss: 7.5,  salz: 0.0, ball: 3.5 },
+    { name: 'Risotto Reis (roh)',   kcal: 350, fett: 0.4, ges: 0.1, kh: 78.0, zucker: 0.3, eiweiss: 6.5,  salz: 0.0, ball: 1.0 },
+    { name: 'Haferflocken (zart)', kcal: 367, fett: 7.0, ges: 1.3, kh: 59.0, zucker: 1.1, eiweiss: 13.0, salz: 0.0, ball: 10.0 },
+    { name: 'Granola Crunchy',     kcal: 430, fett: 15.0, ges: 2.0, kh: 62.0, zucker: 20.0, eiweiss: 8.0, salz: 0.1, ball: 5.0 },
 ];
 
 // ===== Milchprodukte-Datenbank (pro 100g/ml, Schweizer Durchschnittswerte) =====
@@ -221,13 +225,20 @@ const DIVERSES_DB = [
     { name: 'Pommes Duchesse',        kcal: 165, fett: 8.0,  ges: 0.7, kh: 18,  zucker: 1.5, eiweiss: 4.5,  salz: 0.98, ball: 1.5, gm: 600  },
     { name: 'Findus Chicken Nuggets', kcal: 253, fett: 11.0, ges: 1.5, kh: 25,  zucker: 0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
     { name: 'Curry Balls',            kcal: 193, fett: 9.0,  ges: 2.0, kh: 14,  zucker: 2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
+    { name: 'Pelican Fischstäbchen',      kcal: 214, fett: 8.9, ges: 0.7, kh: 19,  zucker: 0.5, eiweiss: 14.0, salz: 0.59, ball: 0.8, gm: 150 },
+    { name: "Farmer's Best Rahmspinat", kcal:  77, fett: 5.0, ges: 1.1, kh:  4.1, zucker: 1.8, eiweiss:  3.1, salz: 1.0,  ball: 0.0, gm: 600 },
+    { name: 'Thon in Wasser (Dose)',    kcal: 109, fett: 0.8, ges: 0.2, kh:  0.0, zucker: 0.0, eiweiss: 25.0, salz: 0.4,  ball: 0.0, gm: 130 },
+    { name: 'Thon in Öl (Dose)',        kcal: 198, fett: 10.0, ges: 1.5, kh: 0.0, zucker: 0.0, eiweiss: 27.0, salz: 0.5,  ball: 0.0, gm: 130 },
 ];
 
 // ===== Portion-Datenbank (pro Portion) =====
 const PORTION_DB = [
     { name: 'Nissin Asian Soba Chilli',         kcal: 479, fett: 19.7, ges: 9.7, kh: 62.1, zucker: 8.2, eiweiss: 10.2, salz: 2.8, ball: 0.0 },
     { name: 'Knorr Asia Noodles Chicken',       kcal: 336, fett: 15.0, ges: 1.7, kh: 42.0, zucker: 2.6, eiweiss: 6.0,  salz: 2.7, ball: 1.6 },
-    { name: 'Knorr Asia Noodles Spicy Chicken', kcal: 345, fett: 15.0, ges: 1.5, kh: 43.0, zucker: 2.0, eiweiss: 6.9,  salz: 2.9, ball: 2.0 },
+    { name: 'Knorr Asia Noodles Spicy Chicken', kcal: 345, fett: 15.0, ges: 1.5, kh: 43.0, zucker: 2.0, eiweiss: 6.9, salz: 2.9, ball: 2.0 },
+    { name: "Z'Morge Ei",                        kcal:  62, fett:  4.6, ges: 1.3, kh:  0.3, zucker: 0.0, eiweiss:  5.2, salz: 0.1, ball: 0.0 },
+    { name: 'Spiegelei (1 Stk)',                 kcal:  80, fett:  6.5, ges: 1.8, kh:  0.3, zucker: 0.0, eiweiss:  5.2, salz: 0.1, ball: 0.0 },
+    { name: 'Rührei (2 Eier)',                   kcal: 124, fett:  9.2, ges: 2.6, kh:  0.6, zucker: 0.0, eiweiss: 10.4, salz: 0.2, ball: 0.0 },
 ];
 
 function searchLokal(query) {
@@ -1968,6 +1979,36 @@ document.addEventListener('DOMContentLoaded', () => {
             if ($(calcId)) $(calcId).textContent = v !== null ? (v * f).toFixed(1) : '';
         });
     });
+
+    // --- Lust auf... Suche ---
+    function lustSearch() {
+        const q = $('lust-input').value.trim().toLowerCase();
+        const box = $('lust-results');
+        if (!q) { box.classList.add('hidden'); box.innerHTML = ''; return; }
+        const hits = db.filter(d => d.Lebensmittel.toLowerCase().includes(q));
+        if (hits.length === 0) { box.classList.remove('hidden'); box.innerHTML = '<span style="font-size:12px;color:var(--subtext)">Nichts gefunden</span>'; return; }
+        box.classList.remove('hidden');
+        box.innerHTML = '';
+        hits.forEach(item => {
+            const btn = document.createElement('button');
+            btn.textContent = item.Lebensmittel;
+            btn.style.cssText = 'font-size:12px;padding:4px 10px;border-radius:16px;background:var(--surface1);border:1px solid var(--border);color:var(--text);cursor:pointer';
+            btn.addEventListener('click', () => {
+                const amount = item.Gesamtmenge || 100;
+                menuList.push({
+                    Lebensmittel: item.Lebensmittel, Einheit: item.Einheit, Menge: amount,
+                    Kcal: item.Kcal, Fett: item.Fett, Gesaettigt: item.Gesaettigt,
+                    Kohlenhydrate: item.Kohlenhydrate, Zucker: item.Zucker, Eiweiss: item.Eiweiss,
+                    Salz: item.Salz, Ballaststoffe: item.Ballaststoffe
+                });
+                refreshMenuList();
+                $('menus-status').textContent = `'${item.Lebensmittel}' hinzugefuegt (${amount}${item.Einheit}).`;
+            });
+            box.appendChild(btn);
+        });
+    }
+    $('lust-search-btn').addEventListener('click', lustSearch);
+    $('lust-input').addEventListener('keydown', e => { if (e.key === 'Enter') lustSearch(); });
 
     // --- Menus Tab: Lebensmittel suchen ---
     $('menu-search-btn').addEventListener('click', () => populateMenuFoodDropdown($('menu-search').value));

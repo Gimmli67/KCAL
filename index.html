@@ -342,6 +342,16 @@
     <!-- ===== TAB: MENUS ===== -->
     <section id="tab-menus" class="tab-content">
 
+      <!-- Lust auf... -->
+      <div class="group">
+        <div class="group-header">Ich hätte lust auf...</div>
+        <div class="row">
+          <input type="text" id="lust-input" placeholder="z.B. Fischstäbchen, Rahmspinat...">
+          <button id="lust-search-btn">Search</button>
+        </div>
+        <div id="lust-results" class="hidden" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
+      </div>
+
       <!-- Create a Menu -->
       <div class="group">
         <div class="group-header">Create a Menu</div>
@@ -432,7 +442,7 @@
   <!-- Bottom Navigation -->
   <nav id="bottom-nav">
     <button class="nav-btn active" data-tab="home">Home</button>
-    <button class="nav-btn" data-tab="menu">Food Scan</button>
+    <button class="nav-btn" data-tab="menu">Scan</button>
     <button class="nav-btn" data-tab="editor">Daily Food</button>
     <button class="nav-btn" data-tab="menus">Menus</button>
     <button class="nav-btn" data-tab="history">History</button>
