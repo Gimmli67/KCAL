@@ -621,6 +621,7 @@ function switchTab(name) {
     document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
     $('tab-' + name).classList.add('active');
     document.querySelector(`.nav-btn[data-tab="${name}"]`).classList.add('active');
+    if (name === 'home') updateDailyCircles();
     if (name === 'editor') { editorClear(); $('editor-search').value = ''; $('editor-food-select').innerHTML = ''; $('editor-status').textContent = ''; }
     if (name === 'history') refreshHistory();
     if (name === 'menus') { if ($('menu-food-select')) $('menu-food-select').innerHTML = ''; if ($('menu-search')) $('menu-search').value = ''; if ($('menu-amount')) $('menu-amount').value = ''; refreshMenuList(); refreshMenuOverview(); }
