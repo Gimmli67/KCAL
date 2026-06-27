@@ -36,17 +36,17 @@ const FRUCHT_DB = [
 
 // ===== Gemüse-Datenbank (pro 100g) =====
 const GEMUESE_DB = [
-    { name: 'Blumenkohl',     kcal: 25,  fett: 0.3, ges: 0.1, kh: 5.0, zucker: 1.9, eiweiss: 1.9, salz: 0.1, ball: 2.0 },
+    { name: 'Blumenkohl',     kcal: 25,  fett: 0.3, ges: 0.1, kh: 5.0, zucker: 1.9, eiweiss: 1.9, salz: 0.1, ball: 2.0, favorit: true  },
     { name: 'Eisbergsalat',   kcal: 13,  fett: 0.2, ges: 0.0, kh: 2.2, zucker: 1.6, eiweiss: 0.9, salz: 0.0, ball: 1.2 },
     { name: 'Kopfsalat',      kcal: 14,  fett: 0.2, ges: 0.0, kh: 2.0, zucker: 0.9, eiweiss: 1.3, salz: 0.0, ball: 1.5 },
     { name: 'Weißkohl',       kcal: 25,  fett: 0.1, ges: 0.0, kh: 5.8, zucker: 3.2, eiweiss: 1.3, salz: 0.0, ball: 2.5 },
     { name: 'Erbsen',         kcal: 81,  fett: 0.4, ges: 0.1, kh: 14,  zucker: 5.7, eiweiss: 5.4, salz: 0.0, ball: 5.1 },
     { name: 'Fenchel',        kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.3, salz: 0.1, ball: 3.1 },
     { name: 'Gurke',          kcal: 15,  fett: 0.1, ges: 0.0, kh: 3.6, zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 0.5 },
-    { name: 'Karotte',        kcal: 41,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 4.7, eiweiss: 0.9, salz: 0.1, ball: 2.8 },
+    { name: 'Karotte',        kcal: 41,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 4.7, eiweiss: 0.9, salz: 0.1, ball: 2.8, favorit: true },
     { name: 'Knoblauch',      kcal: 149, fett: 0.5, ges: 0.1, kh: 33,  zucker: 1.0, eiweiss: 6.4, salz: 0.0, ball: 2.1 },
     { name: 'Kohlrabi',       kcal: 27,  fett: 0.1, ges: 0.0, kh: 6.2, zucker: 3.9, eiweiss: 1.7, salz: 0.0, ball: 3.6 },
-    { name: 'Lauch',          kcal: 31,  fett: 0.3, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.5, salz: 0.0, ball: 1.8 },
+    { name: 'Lauch',          kcal: 31,  fett: 0.3, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.5, salz: 0.0, ball: 1.8, favorit: true  },
     { name: 'Mais',           kcal: 86,  fett: 1.2, ges: 0.2, kh: 19,  zucker: 3.2, eiweiss: 3.2, salz: 0.0, ball: 2.7 },
     { name: 'Paprika gelb',   kcal: 27,  fett: 0.2, ges: 0.0, kh: 6.3, zucker: 4.6, eiweiss: 1.0, salz: 0.0, ball: 1.7 },
     { name: 'Paprika grün',   kcal: 20,  fett: 0.2, ges: 0.0, kh: 4.6, zucker: 2.4, eiweiss: 0.9, salz: 0.0, ball: 1.7 },
@@ -61,8 +61,8 @@ const GEMUESE_DB = [
     { name: 'Zuckerhut',     kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1 },
     { name: 'Rettich',       kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8 },
     { name: 'Radieschen',    kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
-    { name: 'Kartoffel',              kcal: 77,  fett: 0.1, ges: 0.0, kh: 17.0, zucker: 0.8, eiweiss: 2.0, salz: 0.0, ball: 2.2 },
-    { name: 'Champignons',            kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3 },
+    { name: 'Kartoffel',     kcal: 77,  fett: 0.1, ges: 0.0, kh: 17.0, zucker: 0.8, eiweiss: 2.0, salz: 0.0, ball: 2.2 },
+    { name: 'Champignons',   kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3 },
 ];
 
 // ===== Basis-Lebensmittel (pro 100g, Schweizer Durchschnittswerte) =====
@@ -324,6 +324,7 @@ let db = [];
 let meals = [];
 let templates = [];
 let menuList = [];
+let scanFavorit = false;
 let selectedMenuIndex = -1;
 let html5QrCode = null;
 
@@ -621,7 +622,7 @@ function switchTab(name) {
     document.querySelector(`.nav-btn[data-tab="${name}"]`).classList.add('active');
     if (name === 'editor') { editorClear(); $('editor-search').value = ''; $('editor-food-select').innerHTML = ''; $('editor-status').textContent = ''; }
     if (name === 'history') refreshHistory();
-    if (name === 'menus') { populateMenuFoodDropdown(); refreshMenuList(); refreshMenuOverview(); if ($('menu-amount')) $('menu-amount').value = ''; }
+    if (name === 'menus') { if ($('menu-food-select')) $('menu-food-select').innerHTML = ''; if ($('menu-search')) $('menu-search').value = ''; if ($('menu-amount')) $('menu-amount').value = ''; refreshMenuList(); refreshMenuOverview(); }
 }
 
 // ===== Dropdown Population =====
@@ -632,8 +633,20 @@ function populateMenuFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
+    const favItems = filtered.filter(item => item.Favorit);
+    if (favItems.length > 0) {
+        const grp = document.createElement('optgroup');
+        grp.label = '⭐ Favoriten';
+        favItems.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = db.indexOf(item);
+            opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal${item.Gesamtmenge ? ' | ' + item.Gesamtmenge + (item.Einheit === 'ml' ? 'ml' : 'g') : ''}`;
+            grp.appendChild(opt);
+        });
+        sel.appendChild(grp);
+    }
     const groups = { Food: [], Meat: [], Dairy: [], Bread: [], Pasta: [], Misc: [], Gemüse: [], Fruit: [], Drinks: [], Portion: [] };
-    filtered.forEach(item => {
+    filtered.filter(item => !item.Favorit).forEach(item => {
         const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : item.Einheit === 'stk' ? 'Fruit' : 'Food');
         if (!groups[kat]) groups[kat] = [];
         groups[kat].push(item);
@@ -658,8 +671,20 @@ function populateEditorFoodDropdown(filter) {
     const filtered = filter
         ? db.filter(d => d.Lebensmittel.toLowerCase().includes(filter.toLowerCase()))
         : db;
+    const favItems = filtered.filter(item => item.Favorit);
+    if (favItems.length > 0) {
+        const grp = document.createElement('optgroup');
+        grp.label = '⭐ Favoriten';
+        favItems.forEach(item => {
+            const opt = document.createElement('option');
+            opt.value = db.indexOf(item);
+            opt.textContent = `${item.Lebensmittel} (${item.Einheit}) - ${item.Kcal} kcal${item.Gesamtmenge ? ' | ' + item.Gesamtmenge + (item.Einheit === 'ml' ? 'ml' : 'g') : ''}`;
+            grp.appendChild(opt);
+        });
+        sel.appendChild(grp);
+    }
     const groups = { Food: [], Meat: [], Dairy: [], Bread: [], Pasta: [], Misc: [], Gemüse: [], Fruit: [], Drinks: [], Portion: [] };
-    filtered.forEach(item => {
+    filtered.filter(item => !item.Favorit).forEach(item => {
         const kat = item.Kategorie || (item.Einheit === 'ml' ? 'Drinks' : item.Einheit === 'p' ? 'Portion' : item.Einheit === 'stk' ? 'Fruit' : 'Food');
         if (!groups[kat]) groups[kat] = [];
         groups[kat].push(item);
@@ -706,6 +731,9 @@ function showScanPreview(food) {
     $('fd-eiweiss').value = food.Eiweiss ?? '';
     $('fd-salz').value = food.Salz ?? '';
     $('fd-ballaststoffe').value = food.Ballaststoffe ?? '';
+    scanFavorit = food.Favorit || false;
+    const favBtn = $('fd-favorit');
+    if (favBtn) favBtn.textContent = scanFavorit ? '⭐' : '☆';
     updateScanPreviewHeader();
 }
 
@@ -735,7 +763,8 @@ function saveScanPreview() {
         Zucker: round2(parseFloat($('fd-zucker').value) || 0),
         Eiweiss: round2(parseFloat($('fd-eiweiss').value) || 0),
         Salz: round2(parseFloat($('fd-salz').value) || 0),
-        Ballaststoffe: round2(parseFloat($('fd-ballaststoffe').value) || 0)
+        Ballaststoffe: round2(parseFloat($('fd-ballaststoffe').value) || 0),
+        Favorit: scanFavorit
     };
 
     const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
@@ -1870,6 +1899,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Food Display: Edit & Clear ---
     $('fd-save').addEventListener('click', saveScanPreview);
     $('fd-unit').addEventListener('change', updateScanPreviewHeader);
+    $('fd-favorit').addEventListener('click', () => {
+        scanFavorit = !scanFavorit;
+        $('fd-favorit').textContent = scanFavorit ? '⭐' : '☆';
+    });
     $('fd-clear').addEventListener('click', () => {
         $('food-display').classList.add('hidden');
     });
