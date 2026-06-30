@@ -167,6 +167,7 @@ const FLEISCH_DB = [
     { name: 'Bratwurst (roh)',                    kcal: 265, fett: 22.0, ges: 8.0,  kh: 2.0, zucker: 0.5, eiweiss: 13.0, salz: 1.5,  ball: 0.0 },
     { name: 'Speckwürfel',                        kcal: 330, fett: 28.0, ges: 10.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 2.0,  ball: 0.0 },
     { name: 'Bratspeck',                          kcal: 370, fett: 33.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
+    { name: 'Wienerli',                           kcal: 230, fett: 18.0, ges: 7.0,  kh: 1.0, zucker: 0.5, eiweiss: 14.0, salz: 2.0,  ball: 0.0, gm: 50  },
     // Gescannte Produkte
     { name: 'Citterio Salami Milano',             kcal: 383, fett: 31.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 26.0, salz: 4.03, ball: 0.0 },
     { name: 'Naturafarm Bündnerfleisch',          kcal: 216, fett: 5.0,  ges: 2.2,  kh: 0.8, zucker: 0.8, eiweiss: 43.0, salz: 5.2,  ball: 0.0 },
@@ -277,6 +278,20 @@ const FERTIGPRODUKTE_DB = [
     { name: "Farmer's Best Rahmspinat", kcal:  77, fett: 5.0, ges: 1.1, kh:  4.1, zucker: 1.8, eiweiss:  3.1, salz: 1.0,  ball: 0.0, gm: 600 },
     { name: 'Thon in Wasser (Dose)',    kcal: 109, fett: 0.8, ges: 0.2, kh:  0.0, zucker: 0.0, eiweiss: 25.0, salz: 0.4,  ball: 0.0, gm: 130 },
     { name: 'Thon in Öl (Dose)',        kcal: 198, fett: 10.0, ges: 1.5, kh: 0.0, zucker: 0.0, eiweiss: 27.0, salz: 0.5,  ball: 0.0, gm: 130 },
+    // Saucen
+    { name: 'Tomatensauce (Passata)',  kcal: 30,  fett: 0.2,  ges: 0.0, kh: 5.5, zucker: 4.0, eiweiss: 1.2,  salz: 0.5,  ball: 1.5, gm: 500 },
+    { name: 'Tomatenmark',            kcal: 82,  fett: 0.5,  ges: 0.1, kh: 16.0, zucker: 12.0, eiweiss: 4.0, salz: 1.5,  ball: 4.0, gm: 140 },
+    { name: 'Pesto (Basilico)',       kcal: 380, fett: 36.0, ges: 6.0, kh: 5.0, zucker: 2.0, eiweiss: 5.0,  salz: 2.5,  ball: 2.0, gm: 190 },
+    { name: 'Bratensauce',            kcal: 35,  fett: 1.5,  ges: 0.8, kh: 4.0, zucker: 1.0, eiweiss: 1.0,  salz: 1.2,  ball: 0.0, gm: null },
+    { name: 'Rahmsauce',              kcal: 120, fett: 10.0, ges: 6.0, kh: 4.0, zucker: 1.5, eiweiss: 2.0,  salz: 1.0,  ball: 0.0, gm: null },
+    { name: 'Jägersauce',             kcal: 75,  fett: 5.0,  ges: 3.0, kh: 4.5, zucker: 1.5, eiweiss: 2.0,  salz: 1.2,  ball: 0.5, gm: null },
+    { name: 'Pfeffersauce',           kcal: 95,  fett: 7.0,  ges: 4.0, kh: 5.0, zucker: 1.0, eiweiss: 2.0,  salz: 1.5,  ball: 0.3, gm: null },
+    { name: 'BBQ Sauce',              kcal: 150, fett: 0.5,  ges: 0.1, kh: 35.0, zucker: 28.0, eiweiss: 1.0, salz: 2.5,  ball: 0.5, gm: null },
+    { name: 'Currysauce',             kcal: 85,  fett: 5.0,  ges: 2.5, kh: 8.0, zucker: 4.0, eiweiss: 1.5,  salz: 1.5,  ball: 0.5, gm: null },
+    { name: 'Carbonara Sauce (Fertig)', kcal: 130, fett: 10.0, ges: 5.5, kh: 4.0, zucker: 1.5, eiweiss: 5.0, salz: 1.3,  ball: 0.0, gm: 250 },
+    { name: 'Arrabbiata Sauce (Fertig)', kcal: 55, fett: 2.0,  ges: 0.3, kh: 7.0, zucker: 5.0, eiweiss: 1.5, salz: 1.2,  ball: 1.5, gm: 400 },
+    { name: 'Bolognese Sauce (Fertig)',  kcal: 80, fett: 3.5,  ges: 1.2, kh: 6.5, zucker: 4.0, eiweiss: 5.0, salz: 1.0,  ball: 1.0, gm: 400 },
+    { name: 'Napoli Sauce (Fertig)',     kcal: 45, fett: 1.5,  ges: 0.2, kh: 6.0, zucker: 4.5, eiweiss: 1.2, salz: 1.0,  ball: 1.5, gm: 400 },
 ];
 
 // ===== Fastfood-Datenbank (pro Portion) =====
@@ -459,14 +474,54 @@ const MENU_PAIRINGS = [
     { keywords: ['pinsa', 'pizza selber', 'pizza homemade'],
       items: [
         { name: 'Pinsa Teig', menge: 230 },
-        { name: 'Tomate', menge: 80 },
+        { name: 'Tomatensauce (Passata)', menge: 80 },
         { name: 'Mozzarella', menge: 125 },
     ]},
     { keywords: ['pizzateig', 'pizza selbstgemacht'],
       items: [
         { name: 'Pizzateig', menge: 250 },
-        { name: 'Tomate', menge: 80 },
+        { name: 'Tomatensauce (Passata)', menge: 80 },
         { name: 'Mozzarella', menge: 125 },
+    ]},
+    // Grill & Smoker
+    { keywords: ['pulled pork'],
+      items: [
+        { name: 'Pulled Pork', menge: 200 },
+        { name: 'BBQ Sauce', menge: 30 },
+        { name: 'Eisbergsalat', menge: 50 },
+    ]},
+    { keywords: ['brisket'],
+      items: [
+        { name: 'Brisket (Rind)', menge: 250 },
+        { name: 'BBQ Sauce', menge: 30 },
+    ]},
+    { keywords: ['dino ribs', 'beef ribs'],
+      items: [
+        { name: 'Dino Ribs (Beef Short Ribs)', menge: 300 },
+        { name: 'BBQ Sauce', menge: 30 },
+    ]},
+    { keywords: ['spareribs', 'ribs'],
+      items: [
+        { name: 'Spareribs (Schwein)', menge: 300 },
+        { name: 'BBQ Sauce', menge: 30 },
+        { name: 'McCain Pommes Frites', menge: 200 },
+    ]},
+    { keywords: ['pouletflügeli', 'poulet flügeli', 'chicken wings'],
+      items: [
+        { name: 'Poulet Flügeli', menge: 250 },
+        { name: 'McCain Pommes Frites', menge: 200 },
+        { name: 'BBQ Sauce', menge: 30 },
+    ]},
+    { keywords: ['pouletschenkel', 'poulet schenkel', 'pouletoberschenkel', 'poulet oberschenkel'],
+      items: [
+        { name: 'Poulet Schenkel (mit Haut)', menge: 250 },
+        { name: 'Weisser Reis (roh)', menge: 80 },
+    ]},
+    { keywords: ['grillieren', 'grillen', 'bbq'],
+      items: [
+        { name: 'Bratwurst (roh)', menge: 150 },
+        { name: 'Cervelat', menge: 100 },
+        { name: 'Ruchbrot', menge: 60 },
     ]},
 ];
 
