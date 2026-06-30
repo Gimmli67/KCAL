@@ -241,6 +241,98 @@ const PORTION_DB = [
     { name: 'Rührei (2 Eier)',                   kcal: 124, fett:  9.2, ges: 2.6, kh:  0.6, zucker: 0.0, eiweiss: 10.4, salz: 0.2, ball: 0.0 },
 ];
 
+// ===== Menu-Pairings (automatische Menu-Vorschlaege) =====
+// Jeder Eintrag: keywords = Suchbegriffe, items = [{name, menge}] aus DB
+const MENU_PAIRINGS = [
+    { keywords: ['fischstäbchen', 'fischstaebchen', 'fischstabchen'],
+      items: [
+        { name: 'Pelican Fischstäbchen', menge: 150 },
+        { name: 'Kartoffel', menge: 200 },
+        { name: "Farmer's Best Rahmspinat", menge: 200 },
+    ]},
+    { keywords: ['chicken nuggets', 'nuggets'],
+      items: [
+        { name: 'Findus Chicken Nuggets', menge: 250 },
+        { name: 'McCain Pommes Frites', menge: 200 },
+    ]},
+    { keywords: ['hörnli', 'hoernli', 'ghackets'],
+      items: [
+        { name: 'Hörnli (roh)', menge: 100 },
+        { name: 'Rindsgehackets', menge: 150 },
+        { name: 'Apfelmus', menge: 40 },
+    ]},
+    { keywords: ['spaghetti', 'bolognese'],
+      items: [
+        { name: 'Spaghetti (roh)', menge: 100 },
+        { name: 'Rindsgehackets', menge: 150 },
+        { name: 'Tomate', menge: 150 },
+        { name: 'Zwiebel', menge: 50 },
+    ]},
+    { keywords: ['bratwurst'],
+      items: [
+        { name: 'Bratwurst (roh)', menge: 150 },
+        { name: 'Rösti FixFertig', menge: 250 },
+    ]},
+    { keywords: ['poulet', 'chicken', 'pouletbrust'],
+      items: [
+        { name: 'Poulet Brust (ohne Haut)', menge: 200 },
+        { name: 'Weisser Reis (roh)', menge: 80 },
+        { name: 'Erbsen', menge: 100 },
+    ]},
+    { keywords: ['cervelat'],
+      items: [
+        { name: 'Cervelat', menge: 200 },
+        { name: 'Brot Huusbrot Rustico', menge: 80 },
+    ]},
+    { keywords: ['rösti', 'roesti', 'buure'],
+      items: [
+        { name: 'Rösti FixFertig', menge: 250 },
+        { name: 'Naturafarm Bratspeck', menge: 100 },
+        { name: 'Eier 63+', menge: 4 },
+    ]},
+    { keywords: ['curry', 'curry balls'],
+      items: [
+        { name: 'Curry Balls', menge: 250 },
+        { name: 'Weisser Reis (roh)', menge: 80 },
+    ]},
+    { keywords: ['schnitzel', 'schweineschnitzel'],
+      items: [
+        { name: 'Schweineschnitzel', menge: 200 },
+        { name: 'McCain Pommes Frites', menge: 200 },
+        { name: 'Erbsen', menge: 100 },
+    ]},
+    { keywords: ['pommes', 'frites'],
+      items: [
+        { name: 'McCain Pommes Frites', menge: 250 },
+        { name: 'Findus Chicken Nuggets', menge: 200 },
+    ]},
+    { keywords: ['hamburger', 'burger'],
+      items: [
+        { name: 'Hamburger aus Rinderhack', menge: 200 },
+        { name: 'McCain Pommes Frites', menge: 200 },
+        { name: 'Eisbergsalat', menge: 50 },
+    ]},
+    { keywords: ['thon', 'thunfisch', 'tuna'],
+      items: [
+        { name: 'Thon in Wasser (Dose)', menge: 130 },
+        { name: 'Weisser Reis (roh)', menge: 80 },
+        { name: 'Mais', menge: 50 },
+    ]},
+    { keywords: ['lasagne'],
+      items: [
+        { name: 'Lasagneplatten (roh)', menge: 100 },
+        { name: 'Rindsgehackets', menge: 150 },
+        { name: 'Tomate', menge: 100 },
+        { name: 'Mozzarella', menge: 50 },
+    ]},
+    { keywords: ['penne'],
+      items: [
+        { name: 'Penne (roh)', menge: 100 },
+        { name: 'Poulet Brust (ohne Haut)', menge: 150 },
+        { name: 'Halbrahm (15%)', menge: 50 },
+    ]},
+];
+
 function searchLokal(query) {
     const q = query.toLowerCase().trim();
     if (!q) return [];
@@ -1981,12 +2073,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Lust auf... Suche ---
+    function findMenuPairing(query) {
+        const q = query.toLowerCase();
+        return MENU_PAIRINGS.find(p => p.keywords.some(kw => q.includes(kw) || kw.includes(q)));
+    }
+
+    function resolvePairingItems(pairing) {
+        return pairing.items.map(pi => {
+            const dbItem = db.find(d => d.Lebensmittel === pi.name);
+            if (!dbItem) return null;
+            return {
+                Lebensmittel: dbItem.Lebensmittel, Einheit: dbItem.Einheit, Menge: pi.menge,
+                Kcal: dbItem.Kcal, Fett: dbItem.Fett, Gesaettigt: dbItem.Gesaettigt,
+                Kohlenhydrate: dbItem.Kohlenhydrate, Zucker: dbItem.Zucker, Eiweiss: dbItem.Eiweiss,
+                Salz: dbItem.Salz, Ballaststoffe: dbItem.Ballaststoffe
+            };
+        }).filter(Boolean);
+    }
+
+    function renderMenuSuggestion(pairing) {
+        const sugBox = $('lust-suggestion');
+        if (!sugBox) return;
+        const resolved = resolvePairingItems(pairing);
+        if (resolved.length === 0) { sugBox.classList.add('hidden'); sugBox.innerHTML = ''; return; }
+
+        let totalKcal = 0;
+        let html = '<div style="background:var(--surface0);border:1px solid var(--green);border-radius:8px;padding:10px">';
+        html += '<div style="font-size:13px;font-weight:bold;color:var(--green);margin-bottom:8px">🍽️ Menu-Vorschlag</div>';
+        resolved.forEach(item => {
+            const kcal = Math.round(item.Kcal * item.Menge / 100);
+            totalKcal += kcal;
+            html += `<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid var(--surface1)">`;
+            html += `<span style="color:var(--text)">${item.Lebensmittel}</span>`;
+            html += `<span style="color:var(--subtext)">${item.Menge}${item.Einheit} · ${kcal} kcal</span>`;
+            html += `</div>`;
+        });
+        html += `<div style="display:flex;justify-content:space-between;font-size:12px;font-weight:bold;padding:6px 0 4px;color:var(--text)">`;
+        html += `<span>Total</span><span>${totalKcal} kcal</span></div>`;
+        html += `<button id="lust-add-menu" style="margin-top:8px;width:100%;height:38px;font-size:12px;background:var(--green);color:var(--base);border:none;border-radius:6px;cursor:pointer;font-weight:bold">Add Menu</button>`;
+        html += '</div>';
+        sugBox.innerHTML = html;
+        sugBox.classList.remove('hidden');
+
+        $('lust-add-menu').addEventListener('click', () => {
+            resolved.forEach(item => menuList.push({ ...item }));
+            refreshMenuList();
+            $('menus-status').textContent = `Menu mit ${resolved.length} Positionen hinzugefuegt (${totalKcal} kcal).`;
+            sugBox.classList.add('hidden');
+            sugBox.innerHTML = '';
+            showToast(`Menu hinzugefuegt (${totalKcal} kcal)`);
+        });
+    }
+
     function lustSearch() {
         const q = $('lust-input').value.trim().toLowerCase();
         const box = $('lust-results');
-        if (!q) { box.classList.add('hidden'); box.innerHTML = ''; return; }
+        const sugBox = $('lust-suggestion');
+        if (!q) { box.classList.add('hidden'); box.innerHTML = ''; if (sugBox) { sugBox.classList.add('hidden'); sugBox.innerHTML = ''; } return; }
+
+        // Menu-Pairing pruefen
+        const pairing = findMenuPairing(q);
+        if (pairing) {
+            renderMenuSuggestion(pairing);
+        } else if (sugBox) {
+            sugBox.classList.add('hidden');
+            sugBox.innerHTML = '';
+        }
+
+        // Einzelne Treffer weiterhin anzeigen
         const hits = db.filter(d => d.Lebensmittel.toLowerCase().includes(q));
-        if (hits.length === 0) { box.classList.remove('hidden'); box.innerHTML = '<span style="font-size:12px;color:var(--subtext)">Nichts gefunden</span>'; return; }
+        if (hits.length === 0 && !pairing) { box.classList.remove('hidden'); box.innerHTML = '<span style="font-size:12px;color:var(--subtext)">Nichts gefunden</span>'; return; }
+        if (hits.length === 0) { box.classList.add('hidden'); box.innerHTML = ''; return; }
         box.classList.remove('hidden');
         box.innerHTML = '';
         hits.forEach(item => {
