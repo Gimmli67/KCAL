@@ -61,7 +61,6 @@ const GEMUESE_DB = [
     { name: 'Zuckerhut',     kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1 },
     { name: 'Rettich',       kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8 },
     { name: 'Radieschen',    kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
-    { name: 'Kartoffel',     kcal: 77,  fett: 0.1, ges: 0.0, kh: 17.0, zucker: 0.8, eiweiss: 2.0, salz: 0.0, ball: 2.2 },
     { name: 'Champignons',   kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3 },
 ];
 
@@ -70,17 +69,26 @@ const BASIS_DB = [
     { name: 'Apfelmus',  kcal:  68, fett:   0.1, ges:  0.0, kh: 16.0, zucker: 13.0, eiweiss:  0.3, salz: 0.00, ball: 1.5 },
 ];
 
-// ===== Teigwaren-Datenbank (pro 100g, roh/trocken) =====
-const TEIGWAREN_DB = [
+// ===== Beilagen-Datenbank (pro 100g, roh/trocken) =====
+const BEILAGEN_DB = [
+    // Teigwaren
     { name: 'Hörnli (roh)',         kcal: 370, fett: 1.5, ges: 0.3, kh: 74.0, zucker: 3.0, eiweiss: 13.0, salz: 0.1, ball: 3.0 },
     { name: 'Spaghetti (roh)',      kcal: 365, fett: 1.5, ges: 0.3, kh: 73.0, zucker: 2.5, eiweiss: 13.0, salz: 0.0, ball: 2.5 },
     { name: 'Penne (roh)',          kcal: 360, fett: 1.5, ges: 0.3, kh: 72.0, zucker: 2.5, eiweiss: 13.0, salz: 0.0, ball: 2.5 },
     { name: 'Tagliatelle (roh)',    kcal: 365, fett: 2.0, ges: 0.5, kh: 72.0, zucker: 2.5, eiweiss: 13.0, salz: 0.1, ball: 2.5 },
     { name: 'Lasagneplatten (roh)', kcal: 360, fett: 1.5, ges: 0.3, kh: 72.0, zucker: 2.0, eiweiss: 13.0, salz: 0.1, ball: 2.5 },
     { name: 'Spätzli (roh)',        kcal: 225, fett: 3.5, ges: 1.0, kh: 38.0, zucker: 1.0, eiweiss: 8.5,  salz: 0.8, ball: 1.5 },
+    // Reis
     { name: 'Weisser Reis (roh)',   kcal: 350, fett: 0.5, ges: 0.1, kh: 77.0, zucker: 0.1, eiweiss: 7.0,  salz: 0.0, ball: 1.4 },
     { name: 'Vollkornreis (roh)',   kcal: 330, fett: 2.7, ges: 0.5, kh: 69.0, zucker: 0.5, eiweiss: 7.5,  salz: 0.0, ball: 3.5 },
     { name: 'Risotto Reis (roh)',   kcal: 350, fett: 0.4, ges: 0.1, kh: 78.0, zucker: 0.3, eiweiss: 6.5,  salz: 0.0, ball: 1.0 },
+    // Kartoffel-Beilagen
+    { name: 'Kartoffel',            kcal: 77,  fett: 0.1, ges: 0.0, kh: 17.0, zucker: 0.8, eiweiss: 2.0,  salz: 0.0, ball: 2.2 },
+    { name: 'Rösti FixFertig',      kcal: 110, fett: 5.0, ges: 0.5, kh: 13,   zucker: 0.0, eiweiss: 2.0,  salz: 0.88, ball: 2.0, gm: 250 },
+    { name: 'Berner Rösti',         kcal: 107, fett: 5.0, ges: 1.5, kh: 11,   zucker: 0.5, eiweiss: 3.5,  salz: 1.2,  ball: 2.0, gm: 250 },
+    { name: 'McCain Pommes Frites', kcal: 158, fett: 5.0, ges: 0.5, kh: 24,   zucker: 0.5, eiweiss: 2.9,  salz: 0.03, ball: 2.8, gm: 750 },
+    { name: 'Pommes Duchesse',      kcal: 165, fett: 8.0, ges: 0.7, kh: 18,   zucker: 1.5, eiweiss: 4.5,  salz: 0.98, ball: 1.5, gm: 600 },
+    // Frühstück
     { name: 'Haferflocken (zart)', kcal: 367, fett: 7.0, ges: 1.3, kh: 59.0, zucker: 1.1, eiweiss: 13.0, salz: 0.0, ball: 10.0 },
     { name: 'Granola Crunchy',     kcal: 430, fett: 15.0, ges: 2.0, kh: 62.0, zucker: 20.0, eiweiss: 8.0, salz: 0.1, ball: 5.0 },
 ];
@@ -116,36 +124,6 @@ const MILCH_DB = [
     { name: 'President Carré Gourmet',       kcal: 324, fett: 28.0, ges: 20.0, kh: 0.1, zucker: 0.1, eiweiss: 18.0, salz: 1.3,  ball: 0.0 },
     { name: 'Molini Mozzarella Block',       kcal: 251, fett: 19.0, ges: 0.0,  kh: 1.0, zucker: 0.0, eiweiss: 19.0, salz: 0.6,  ball: 0.0 },
     { name: 'Skyr Alternative Vanille Soja', kcal: 77,  fett: 2.9,  ges: 0.5,  kh: 6.8, zucker: 6.5, eiweiss: 5.1,  salz: 0.24, ball: 1.1 },
-];
-
-// ===== Menü-Vorlagen (werden beim Start eingefügt wenn Name noch nicht existiert) =====
-const VORLAGEN_DB = [
-    {
-        Name: "Hörnli & Ghackets",
-        Positionen: [
-            { Lebensmittel: 'Hörnli (roh)',   Einheit: 'g', Menge: 100, Kcal: 370, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 74, Zucker: 3,  Eiweiss: 13,  Salz: 0.1, Ballaststoffe: 3   },
-            { Lebensmittel: 'Rindsgehackets', Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0,  Zucker: 0,  Eiweiss: 17,  Salz: 0.1, Ballaststoffe: 0   },
-            { Lebensmittel: 'Apfelmus',        Einheit: 'g', Menge: 40,  Kcal: 68,  Fett: 0.1,  Gesaettigt: 0,   Kohlenhydrate: 16, Zucker: 13, Eiweiss: 0.3, Salz: 0,   Ballaststoffe: 1.5 },
-        ]
-    },
-    {
-        Name: "Spaghetti Bolognese",
-        Positionen: [
-            { Lebensmittel: 'Spaghetti (roh)', Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5, Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
-            { Lebensmittel: 'Rindsgehackets',  Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
-            { Lebensmittel: 'Tomate',          Einheit: 'g', Menge: 150, Kcal: 18,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
-            { Lebensmittel: 'Zwiebel',         Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
-            { Lebensmittel: 'Knoblauch',       Einheit: 'g', Menge: 10,  Kcal: 149, Fett: 0.5,  Gesaettigt: 0.1, Kohlenhydrate: 33.0, Zucker: 1.0, Eiweiss: 6.4,  Salz: 0.0, Ballaststoffe: 2.1 },
-        ]
-    },
-    {
-        Name: "Buure z'Morge",
-        Positionen: [
-            { Lebensmittel: 'Eier 63+',           Einheit: 'g', Menge: 4,   Kcal: 95,  Fett: 7,    Gesaettigt: 2,   Kohlenhydrate: 0.5, Zucker: 0, Eiweiss: 8,  Salz: 0.2,  Ballaststoffe: 0 },
-            { Lebensmittel: 'Rösti FixFertig',     Einheit: 'g', Menge: 125, Kcal: 110, Fett: 5,    Gesaettigt: 0.5, Kohlenhydrate: 13,  Zucker: 0, Eiweiss: 2,  Salz: 0.88, Ballaststoffe: 2 },
-            { Lebensmittel: 'Naturafarm Bratspeck', Einheit: 'g', Menge: 100, Kcal: 345, Fett: 33,   Gesaettigt: 9.9, Kohlenhydrate: 0,   Zucker: 0, Eiweiss: 12, Salz: 1.7,  Ballaststoffe: 0 },
-        ]
-    },
 ];
 
 // ===== Brot-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
@@ -215,10 +193,6 @@ const GETRÄNKE_DB = [
 // ===== Diverses (Fertigprodukte, pro 100g) =====
 const DIVERSES_DB = [
     { name: 'Eier 63+',               kcal: 95,  fett: 7.0,  ges: 2.0, kh: 0.5, zucker: 0.0, eiweiss: 8.0,  salz: 0.2,  ball: 0.0, gm: null },
-    { name: 'Rösti FixFertig',        kcal: 110, fett: 5.0,  ges: 0.5, kh: 13,  zucker: 0.0, eiweiss: 2.0,  salz: 0.88, ball: 2.0, gm: 250  },
-    { name: 'Berner Rösti',           kcal: 107, fett: 5.0,  ges: 1.5, kh: 11,  zucker: 0.5, eiweiss: 3.5,  salz: 1.2,  ball: 2.0, gm: 250  },
-    { name: 'McCain Pommes Frites',   kcal: 158, fett: 5.0,  ges: 0.5, kh: 24,  zucker: 0.5, eiweiss: 2.9,  salz: 0.03, ball: 2.8, gm: 750  },
-    { name: 'Pommes Duchesse',        kcal: 165, fett: 8.0,  ges: 0.7, kh: 18,  zucker: 1.5, eiweiss: 4.5,  salz: 0.98, ball: 1.5, gm: 600  },
     { name: 'Findus Chicken Nuggets', kcal: 253, fett: 11.0, ges: 1.5, kh: 25,  zucker: 0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
     { name: 'Curry Balls',            kcal: 193, fett: 9.0,  ges: 2.0, kh: 14,  zucker: 2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
     { name: 'Pelican Fischstäbchen',      kcal: 214, fett: 8.9, ges: 0.7, kh: 19,  zucker: 0.5, eiweiss: 14.0, salz: 0.59, ball: 0.8, gm: 150 },
@@ -235,6 +209,36 @@ const PORTION_DB = [
     { name: "Z'Morge Ei",                        kcal:  62, fett:  4.6, ges: 1.3, kh:  0.3, zucker: 0.0, eiweiss:  5.2, salz: 0.1, ball: 0.0 },
     { name: 'Spiegelei (1 Stk)',                 kcal:  80, fett:  6.5, ges: 1.8, kh:  0.3, zucker: 0.0, eiweiss:  5.2, salz: 0.1, ball: 0.0 },
     { name: 'Rührei (2 Eier)',                   kcal: 124, fett:  9.2, ges: 2.6, kh:  0.6, zucker: 0.0, eiweiss: 10.4, salz: 0.2, ball: 0.0 },
+];
+
+// ===== Menü-Vorlagen (werden beim Start eingefügt wenn Name noch nicht existiert) =====
+const VORLAGEN_DB = [
+    {
+        Name: "Hörnli & Ghackets",
+        Positionen: [
+            { Lebensmittel: 'Hörnli (roh)',   Einheit: 'g', Menge: 100, Kcal: 370, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 74, Zucker: 3,  Eiweiss: 13,  Salz: 0.1, Ballaststoffe: 3   },
+            { Lebensmittel: 'Rindsgehackets', Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0,  Zucker: 0,  Eiweiss: 17,  Salz: 0.1, Ballaststoffe: 0   },
+            { Lebensmittel: 'Apfelmus',        Einheit: 'g', Menge: 40,  Kcal: 68,  Fett: 0.1,  Gesaettigt: 0,   Kohlenhydrate: 16, Zucker: 13, Eiweiss: 0.3, Salz: 0,   Ballaststoffe: 1.5 },
+        ]
+    },
+    {
+        Name: "Spaghetti Bolognese",
+        Positionen: [
+            { Lebensmittel: 'Spaghetti (roh)', Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5, Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Rindsgehackets',  Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Tomate',          Einheit: 'g', Menge: 150, Kcal: 18,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Zwiebel',         Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
+            { Lebensmittel: 'Knoblauch',       Einheit: 'g', Menge: 10,  Kcal: 149, Fett: 0.5,  Gesaettigt: 0.1, Kohlenhydrate: 33.0, Zucker: 1.0, Eiweiss: 6.4,  Salz: 0.0, Ballaststoffe: 2.1 },
+        ]
+    },
+    {
+        Name: "Buure z'Morge",
+        Positionen: [
+            { Lebensmittel: 'Eier 63+',           Einheit: 'g', Menge: 4,   Kcal: 95,  Fett: 7,    Gesaettigt: 2,   Kohlenhydrate: 0.5, Zucker: 0, Eiweiss: 8,  Salz: 0.2,  Ballaststoffe: 0 },
+            { Lebensmittel: 'Rösti FixFertig',     Einheit: 'g', Menge: 125, Kcal: 110, Fett: 5,    Gesaettigt: 0.5, Kohlenhydrate: 13,  Zucker: 0, Eiweiss: 2,  Salz: 0.88, Ballaststoffe: 2 },
+            { Lebensmittel: 'Naturafarm Bratspeck', Einheit: 'g', Menge: 100, Kcal: 345, Fett: 33,   Gesaettigt: 9.9, Kohlenhydrate: 0,   Zucker: 0, Eiweiss: 12, Salz: 1.7,  Ballaststoffe: 0 },
+        ]
+    },
 ];
 
 // ===== Menu-Pairings (automatische Menu-Vorschlaege) =====
@@ -599,20 +603,20 @@ async function loadInitialData() {
     });
     if (milchAdded) { saveDB(); changed = true; }
 
-    // Teigwaren: fehlende Einträge nachfügen
-    let teigwarenAdded = false;
-    TEIGWAREN_DB.forEach(item => {
+    // Beilagen: fehlende Einträge nachfügen
+    let beilagenAdded = false;
+    BEILAGEN_DB.forEach(item => {
         if (!db.find(d => d.Lebensmittel === item.name)) {
             db.push({
-                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Pasta', Gesamtmenge: null,
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Beilagen', Gesamtmenge: item.gm || null,
                 Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
                 Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
                 Salz: item.salz, Ballaststoffe: item.ball
             });
-            teigwarenAdded = true;
+            beilagenAdded = true;
         }
     });
-    if (teigwarenAdded) { saveDB(); changed = true; }
+    if (beilagenAdded) { saveDB(); changed = true; }
 
     // Brot: fehlende Einträge nachfügen
     let brotAdded = false;
