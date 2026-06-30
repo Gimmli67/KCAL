@@ -64,11 +64,6 @@ const GEMUESE_DB = [
     { name: 'Champignons',   kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3 },
 ];
 
-// ===== Basis-Lebensmittel (pro 100g, Schweizer Durchschnittswerte) =====
-const BASIS_DB = [
-    { name: 'Apfelmus',  kcal:  68, fett:   0.1, ges:  0.0, kh: 16.0, zucker: 13.0, eiweiss:  0.3, salz: 0.00, ball: 1.5 },
-];
-
 // ===== Beilagen-Datenbank (pro 100g, roh/trocken) =====
 const BEILAGEN_DB = [
     // Teigwaren
@@ -124,6 +119,8 @@ const MILCH_DB = [
     { name: 'President Carré Gourmet',       kcal: 324, fett: 28.0, ges: 20.0, kh: 0.1, zucker: 0.1, eiweiss: 18.0, salz: 1.3,  ball: 0.0 },
     { name: 'Molini Mozzarella Block',       kcal: 251, fett: 19.0, ges: 0.0,  kh: 1.0, zucker: 0.0, eiweiss: 19.0, salz: 0.6,  ball: 0.0 },
     { name: 'Skyr Alternative Vanille Soja', kcal: 77,  fett: 2.9,  ges: 0.5,  kh: 6.8, zucker: 6.5, eiweiss: 5.1,  salz: 0.24, ball: 1.1 },
+    // Eier
+    { name: 'Eier 63+',                     kcal: 95,  fett: 7.0,  ges: 2.0,  kh: 0.5, zucker: 0.0, eiweiss: 8.0,  salz: 0.2,  ball: 0.0 },
 ];
 
 // ===== Brot-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
@@ -143,6 +140,13 @@ const BROT_DB = [
     { name: 'Zopf',              kcal: 315, fett: 8.0, ges: 4.5, kh: 50.0, zucker: 5.0, eiweiss: 9.5, salz: 0.8, ball: 2.0 },
     { name: 'Steinofen Twister', kcal: 255, fett: 2.5, ges: 0.5, kh: 49.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5 },
     { name: 'Silserkranz',       kcal: 265, fett: 3.0, ges: 0.8, kh: 50.0, zucker: 3.0, eiweiss: 9.0, salz: 1.0,  ball: 2.0 },
+    // Gipfeli
+    { name: 'Buttergipfeli',     kcal: 400, fett: 22.0, ges: 14.0, kh: 42.0, zucker: 5.0, eiweiss: 8.0, salz: 1.0, ball: 1.5 },
+    { name: 'Laugengipfeli',     kcal: 300, fett: 10.0, ges: 5.0,  kh: 44.0, zucker: 3.0, eiweiss: 9.0, salz: 2.0, ball: 2.0 },
+    { name: 'Vollkorngipfeli',   kcal: 340, fett: 15.0, ges: 8.0,  kh: 40.0, zucker: 4.0, eiweiss: 9.5, salz: 1.0, ball: 4.5 },
+    // Pizza-/Pinsateig
+    { name: 'Pinsa Teig',            kcal: 240, fett: 4.0, ges: 0.6, kh: 42.0, zucker: 1.5, eiweiss: 8.0, salz: 1.2,  ball: 2.5 },
+    { name: 'Pizzateig',             kcal: 260, fett: 3.5, ges: 0.5, kh: 48.0, zucker: 2.0, eiweiss: 8.5, salz: 1.3,  ball: 2.0 },
 ];
 
 // ===== Fleisch-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
@@ -190,15 +194,61 @@ const GETRÄNKE_DB = [
     { name: 'Nestea Eistee',                        kcal: 19, fett: 0.0,  ges: 0.0, kh: 4.5,  zucker: 4.5,  eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 500 },
 ];
 
-// ===== Diverses (Fertigprodukte, pro 100g) =====
-const DIVERSES_DB = [
-    { name: 'Eier 63+',               kcal: 95,  fett: 7.0,  ges: 2.0, kh: 0.5, zucker: 0.0, eiweiss: 8.0,  salz: 0.2,  ball: 0.0, gm: null },
+// ===== Dessert-Datenbank =====
+// Glace pro 100g/ml
+const DESSERT_DB_100 = [
+    { name: 'Vanilleglace',       kcal: 200, fett: 11.0, ges: 7.0,  kh: 24.0, zucker: 20.0, eiweiss: 3.5, salz: 0.1, ball: 0.0 },
+    { name: 'Schokoladenglace',   kcal: 220, fett: 12.0, ges: 7.5,  kh: 26.0, zucker: 22.0, eiweiss: 4.0, salz: 0.1, ball: 1.5 },
+    { name: 'Erdbeerglace',       kcal: 180, fett: 8.0,  ges: 5.0,  kh: 25.0, zucker: 20.0, eiweiss: 3.0, salz: 0.1, ball: 0.5 },
+    { name: 'Rahmglace',          kcal: 240, fett: 15.0, ges: 9.0,  kh: 24.0, zucker: 20.0, eiweiss: 3.5, salz: 0.1, ball: 0.0 },
+];
+// Stück-Desserts pro Portion
+const DESSERT_DB_PORTION = [
+    // Glace-Stücke
+    { name: 'Rakete (Glace)',          kcal: 80,  fett: 1.5,  ges: 1.0,  kh: 16.0, zucker: 12.0, eiweiss: 0.5, salz: 0.0, ball: 0.0 },
+    { name: 'Pralinato Vanille',       kcal: 280, fett: 17.0, ges: 12.0, kh: 28.0, zucker: 24.0, eiweiss: 4.0, salz: 0.1, ball: 0.5 },
+    { name: 'Cornetto Classico',       kcal: 260, fett: 14.0, ges: 10.0, kh: 30.0, zucker: 22.0, eiweiss: 3.5, salz: 0.1, ball: 1.0 },
+    // Gebäck/Desserts
+    { name: 'Cremeschnitte',           kcal: 350, fett: 22.0, ges: 14.0, kh: 32.0, zucker: 18.0, eiweiss: 5.0, salz: 0.3, ball: 0.5 },
+    { name: 'Tiramisu',                kcal: 320, fett: 18.0, ges: 10.0, kh: 30.0, zucker: 22.0, eiweiss: 7.0, salz: 0.2, ball: 0.5 },
+    { name: 'Mousse au Chocolat',      kcal: 280, fett: 18.0, ges: 11.0, kh: 24.0, zucker: 20.0, eiweiss: 5.0, salz: 0.1, ball: 1.5 },
+    { name: 'Panna Cotta',             kcal: 240, fett: 16.0, ges: 10.0, kh: 20.0, zucker: 18.0, eiweiss: 3.5, salz: 0.1, ball: 0.0 },
+    { name: 'Berliner (Krapfen)',      kcal: 330, fett: 14.0, ges: 3.5,  kh: 44.0, zucker: 18.0, eiweiss: 6.0, salz: 0.5, ball: 1.5 },
+    { name: 'Nussgipfel',              kcal: 420, fett: 24.0, ges: 8.0,  kh: 42.0, zucker: 20.0, eiweiss: 9.0, salz: 0.5, ball: 2.0 },
+];
+
+// ===== Fertigprodukte (pro 100g) =====
+const FERTIGPRODUKTE_DB = [
+    { name: 'Apfelmus',              kcal: 68,  fett: 0.1,  ges: 0.0, kh: 16,  zucker: 13.0, eiweiss: 0.3,  salz: 0.0,  ball: 1.5, gm: null },
     { name: 'Findus Chicken Nuggets', kcal: 253, fett: 11.0, ges: 1.5, kh: 25,  zucker: 0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
     { name: 'Curry Balls',            kcal: 193, fett: 9.0,  ges: 2.0, kh: 14,  zucker: 2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
     { name: 'Pelican Fischstäbchen',      kcal: 214, fett: 8.9, ges: 0.7, kh: 19,  zucker: 0.5, eiweiss: 14.0, salz: 0.59, ball: 0.8, gm: 150 },
     { name: "Farmer's Best Rahmspinat", kcal:  77, fett: 5.0, ges: 1.1, kh:  4.1, zucker: 1.8, eiweiss:  3.1, salz: 1.0,  ball: 0.0, gm: 600 },
     { name: 'Thon in Wasser (Dose)',    kcal: 109, fett: 0.8, ges: 0.2, kh:  0.0, zucker: 0.0, eiweiss: 25.0, salz: 0.4,  ball: 0.0, gm: 130 },
     { name: 'Thon in Öl (Dose)',        kcal: 198, fett: 10.0, ges: 1.5, kh: 0.0, zucker: 0.0, eiweiss: 27.0, salz: 0.5,  ball: 0.0, gm: 130 },
+];
+
+// ===== Fastfood-Datenbank (pro Portion) =====
+const FASTFOOD_DB = [
+    // Döner
+    { name: 'Döner Kebab',              kcal: 650, fett: 30.0, ges: 12.0, kh: 55.0, zucker: 5.0,  eiweiss: 35.0, salz: 2.5, ball: 3.0 },
+    { name: 'Dürüm Kebab',             kcal: 700, fett: 32.0, ges: 13.0, kh: 60.0, zucker: 5.0,  eiweiss: 35.0, salz: 2.8, ball: 3.0 },
+    { name: 'Falafel Döner',           kcal: 550, fett: 22.0, ges: 3.0,  kh: 65.0, zucker: 6.0,  eiweiss: 18.0, salz: 2.5, ball: 6.0 },
+    // Pizza (1 Portion/halbe Pizza)
+    { name: 'Pizza Margherita',         kcal: 750, fett: 25.0, ges: 12.0, kh: 90.0, zucker: 8.0,  eiweiss: 30.0, salz: 2.5, ball: 3.5 },
+    { name: 'Pizza Salami',             kcal: 900, fett: 40.0, ges: 18.0, kh: 85.0, zucker: 7.0,  eiweiss: 38.0, salz: 3.5, ball: 3.0 },
+    { name: 'Pizza Prosciutto',         kcal: 800, fett: 28.0, ges: 13.0, kh: 88.0, zucker: 7.0,  eiweiss: 35.0, salz: 3.0, ball: 3.0 },
+    { name: 'Pizza Quattro Formaggi',   kcal: 880, fett: 38.0, ges: 20.0, kh: 82.0, zucker: 6.0,  eiweiss: 40.0, salz: 3.5, ball: 2.5 },
+    // McDonald's
+    { name: 'Big Mac',                  kcal: 503, fett: 25.0, ges: 9.5,  kh: 42.0, zucker: 8.0,  eiweiss: 26.0, salz: 2.3, ball: 3.0 },
+    { name: 'Cheeseburger',             kcal: 300, fett: 13.0, ges: 6.0,  kh: 30.0, zucker: 6.0,  eiweiss: 16.0, salz: 1.8, ball: 1.5 },
+    { name: 'McChicken',                kcal: 400, fett: 18.0, ges: 2.5,  kh: 40.0, zucker: 5.0,  eiweiss: 16.0, salz: 1.8, ball: 2.0 },
+    { name: 'Chicken McNuggets (6er)',   kcal: 260, fett: 15.0, ges: 2.5,  kh: 16.0, zucker: 0.5,  eiweiss: 16.0, salz: 1.5, ball: 1.0 },
+    { name: 'Chicken McNuggets (9er)',   kcal: 390, fett: 22.0, ges: 3.5,  kh: 24.0, zucker: 0.8,  eiweiss: 24.0, salz: 2.2, ball: 1.5 },
+    { name: 'McFlurry Oreo',            kcal: 340, fett: 12.0, ges: 7.0,  kh: 50.0, zucker: 40.0, eiweiss: 7.0,  salz: 0.5, ball: 1.0 },
+    // Burger King
+    { name: 'Whopper',                   kcal: 660, fett: 35.0, ges: 12.0, kh: 50.0, zucker: 10.0, eiweiss: 30.0, salz: 2.5, ball: 2.0 },
+    { name: 'Chicken Royale',            kcal: 570, fett: 30.0, ges: 5.0,  kh: 48.0, zucker: 7.0,  eiweiss: 22.0, salz: 2.5, ball: 2.0 },
 ];
 
 // ===== Portion-Datenbank (pro Portion) =====
@@ -282,7 +332,7 @@ const MENU_PAIRINGS = [
     { keywords: ['cervelat'],
       items: [
         { name: 'Cervelat', menge: 200 },
-        { name: 'Brot Huusbrot Rustico', menge: 80 },
+        { name: 'Ruchbrot', menge: 80 },
     ]},
     { keywords: ['rösti', 'roesti', 'buure'],
       items: [
@@ -354,6 +404,18 @@ const MENU_PAIRINGS = [
         { name: 'Penne (roh)', menge: 100 },
         { name: 'Poulet Brust (ohne Haut)', menge: 150 },
         { name: 'Halbrahm (15%)', menge: 50 },
+    ]},
+    { keywords: ['pinsa', 'pizza selber', 'pizza homemade'],
+      items: [
+        { name: 'Pinsa Teig', menge: 230 },
+        { name: 'Tomate', menge: 80 },
+        { name: 'Mozzarella', menge: 125 },
+    ]},
+    { keywords: ['pizzateig', 'pizza selbstgemacht'],
+      items: [
+        { name: 'Pizzateig', menge: 250 },
+        { name: 'Tomate', menge: 80 },
+        { name: 'Mozzarella', menge: 125 },
     ]},
 ];
 
@@ -569,25 +631,6 @@ async function loadInitialData() {
     });
     if (fruchtAdded) { saveDB(); changed = true; }
 
-    // Basis-Lebensmittel: fehlende Einträge nachfügen
-    let basisAdded = false;
-    BASIS_DB.forEach(item => {
-        if (!db.find(d => d.Lebensmittel === item.name)) {
-            db.push({
-                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Food', Gesamtmenge: null,
-                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
-                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
-                Salz: item.salz, Ballaststoffe: item.ball
-            });
-            basisAdded = true;
-        }
-    });
-    if (basisAdded) {
-        localStorage.setItem('kcal_basis_seeded', '1');
-        saveDB();
-        changed = true;
-    }
-
     // Milchprodukte: fehlende Einträge nachfügen
     let milchAdded = false;
     MILCH_DB.forEach(item => {
@@ -674,8 +717,8 @@ async function loadInitialData() {
     if (getraenkeAdded) { saveDB(); changed = true; }
 
     // Diverses: fehlende Einträge nachfügen
-    let diversesAdded = false;
-    DIVERSES_DB.forEach(item => {
+    let fertigprodukteAdded = false;
+    FERTIGPRODUKTE_DB.forEach(item => {
         if (!db.find(d => d.Lebensmittel === item.name)) {
             db.push({
                 Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Misc', Gesamtmenge: item.gm,
@@ -683,10 +726,40 @@ async function loadInitialData() {
                 Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
                 Salz: item.salz, Ballaststoffe: item.ball
             });
-            diversesAdded = true;
+            fertigprodukteAdded = true;
         }
     });
-    if (diversesAdded) { saveDB(); changed = true; }
+    if (fertigprodukteAdded) { saveDB(); changed = true; }
+
+    // Desserts (pro 100g): fehlende Einträge nachfügen
+    let dessert100Added = false;
+    DESSERT_DB_100.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Dessert', Gesamtmenge: null,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            dessert100Added = true;
+        }
+    });
+    if (dessert100Added) { saveDB(); changed = true; }
+
+    // Desserts (pro Portion): fehlende Einträge nachfügen
+    let dessertPortionAdded = false;
+    DESSERT_DB_PORTION.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Dessert', Gesamtmenge: 1,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            dessertPortionAdded = true;
+        }
+    });
+    if (dessertPortionAdded) { saveDB(); changed = true; }
 
     // Portionen: fehlende Einträge nachfügen
     let portionAdded = false;
@@ -702,6 +775,21 @@ async function loadInitialData() {
         }
     });
     if (portionAdded) { saveDB(); changed = true; }
+
+    // Fastfood: fehlende Einträge nachfügen
+    let fastfoodAdded = false;
+    FASTFOOD_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Fastfood', Gesamtmenge: 1,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            fastfoodAdded = true;
+        }
+    });
+    if (fastfoodAdded) { saveDB(); changed = true; }
 
     if (changed) {
         populateMenuFoodDropdown();
