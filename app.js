@@ -190,8 +190,17 @@ const GETRÄNKE_DB = [
     { name: 'Comella Choco Drink',                  kcal: 64, fett: 1.0,  ges: 0.6, kh: 9.7,  zucker: 9.5,  eiweiss: 3.5,  salz: 0.1,  ball: 0.0,  gm: 330 },
     { name: 'Coca Cola Original',                   kcal: 44, fett: 0.0,  ges: 0.0, kh: 10.9, zucker: 10.9, eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
     { name: 'Red Bull Energy Drink',                kcal: 46, fett: 0.0,  ges: 0.0, kh: 11.0, zucker: 11.0, eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 250 },
-    { name: 'Somersby Apple Original',              kcal: 61, fett: 0.0,  ges: 0.0, kh: 8.6,  zucker: 7.7,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
     { name: 'Nestea Eistee',                        kcal: 19, fett: 0.0,  ges: 0.0, kh: 4.5,  zucker: 4.5,  eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 500 },
+    // Alkoholische Getränke
+    { name: 'Bier (Lager)',                          kcal: 42, fett: 0.0,  ges: 0.0, kh: 3.5,  zucker: 0.3,  eiweiss: 0.5,  salz: 0.0,  ball: 0.0,  gm: 330 },
+    { name: 'Bier (Weizen)',                         kcal: 45, fett: 0.0,  ges: 0.0, kh: 4.0,  zucker: 0.5,  eiweiss: 0.5,  salz: 0.0,  ball: 0.0,  gm: 500 },
+    { name: 'Somersby Apple Original',               kcal: 61, fett: 0.0,  ges: 0.0, kh: 8.6,  zucker: 7.7,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
+    { name: 'Prosecco',                              kcal: 75, fett: 0.0,  ges: 0.0, kh: 1.5,  zucker: 1.0,  eiweiss: 0.1,  salz: 0.0,  ball: 0.0,  gm: 100 },
+    { name: 'Trojka Black',                          kcal: 228, fett: 0.0, ges: 0.0, kh: 17.0, zucker: 17.0, eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 40  },
+    { name: 'Trojka Green',                          kcal: 213, fett: 0.0, ges: 0.0, kh: 15.0, zucker: 15.0, eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 40  },
+    { name: 'Eve Litchi',                            kcal: 60, fett: 0.0,  ges: 0.0, kh: 8.0,  zucker: 7.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
+    { name: 'Eve Pink Mimosa',                       kcal: 55, fett: 0.0,  ges: 0.0, kh: 7.0,  zucker: 6.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
+    { name: 'Smirnoff Ice',                          kcal: 70, fett: 0.0,  ges: 0.0, kh: 9.0,  zucker: 8.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
 ];
 
 // ===== Snacks-Datenbank (pro 100g) =====
@@ -204,7 +213,7 @@ const SNACKS_DB = [
     { name: 'Popcorn (süss)',            kcal: 420, fett: 15.0, ges: 2.0,  kh: 62.0, zucker: 25.0, eiweiss: 7.0,  salz: 1.0,  ball: 10.0, gm: 100 },
     { name: 'Popcorn (salzig)',          kcal: 380, fett: 12.0, ges: 1.5,  kh: 58.0, zucker: 1.0,  eiweiss: 8.0,  salz: 2.5,  ball: 10.0, gm: 100 },
     { name: 'Erdnüsse (gesalzen)',       kcal: 600, fett: 50.0, ges: 7.0,  kh: 12.0, zucker: 4.0,  eiweiss: 26.0, salz: 1.2,  ball: 8.0, gm: 200 },
-    { name: 'Studentenfutter',           kcal: 480, fett: 28.0, ges: 4.0,  kh: 42.0, zucker: 30.0, eiweiss: 12.0, salz: 0.1,  ball: 5.0, gm: 200 },
+
 ];
 
 // ===== Süsses-Datenbank =====
