@@ -660,6 +660,16 @@ async function loadInitialData() {
     });
     if (gmUpdated) { saveDB(); changed = true; }
 
+    // Migration: falsche Gesamtmenge=1 bei Portions-Items (p) auf null setzen
+    let portionGmFixed = false;
+    db.forEach(d => {
+        if (d.Einheit === 'p' && d.Gesamtmenge === 1) {
+            d.Gesamtmenge = null;
+            portionGmFixed = true;
+        }
+    });
+    if (portionGmFixed) { saveDB(); changed = true; }
+
     // Migration: alte 'Brot Weggli' Duplikat entfernen (wurde durch 'Weggli' ersetzt)
     const brotWeggli = db.filter(d => d.Lebensmittel === 'Brot Weggli');
     if (brotWeggli.length > 0) {
