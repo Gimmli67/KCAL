@@ -346,9 +346,11 @@
       <div class="group">
         <div class="group-header">Ich hätte lust auf...</div>
         <div class="row">
-          <input type="text" id="lust-input" placeholder="z.B. Fischstäbchen, Rahmspinat...">
+          <div class="input-clear-wrap">
+            <input type="text" id="lust-input" placeholder="z.B. Fischstäbchen, Rahmspinat...">
+            <span class="input-clear-x hidden" id="lust-clear-btn">×</span>
+          </div>
           <button id="lust-search-btn">Search</button>
-          <button id="lust-clear-btn">Clear</button>
         </div>
         <div id="lust-results" class="hidden" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px"></div>
         <div id="lust-suggestion" class="hidden" style="margin-top:10px"></div>
@@ -443,12 +445,12 @@
 
   <!-- Bottom Navigation -->
   <nav id="bottom-nav">
-    <button class="nav-btn active" data-tab="home">Home</button>
-    <button class="nav-btn" data-tab="menu">Scan</button>
-    <button class="nav-btn" data-tab="editor">Daily Food</button>
-    <button class="nav-btn" data-tab="menus">Menus</button>
-    <button class="nav-btn" data-tab="history">History</button>
-    <button class="nav-btn" data-tab="data">Data</button>
+    <button class="nav-btn active" data-tab="home"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button>
+    <button class="nav-btn" data-tab="menu"><span class="nav-icon">📷</span><span class="nav-label">Scan</span></button>
+    <button class="nav-btn" data-tab="editor"><span class="nav-icon">🍽️</span><span class="nav-label">Daily</span></button>
+    <button class="nav-btn" data-tab="menus"><span class="nav-icon">📋</span><span class="nav-label">Menus</span></button>
+    <button class="nav-btn" data-tab="history"><span class="nav-icon">📊</span><span class="nav-label">History</span></button>
+    <button class="nav-btn" data-tab="data"><span class="nav-icon">⚙️</span><span class="nav-label">Data</span></button>
   </nav>
 
   <!-- Scanner Modal -->

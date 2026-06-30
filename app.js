@@ -83,6 +83,7 @@ const BEILAGEN_DB = [
     { name: 'Berner Rösti',         kcal: 107, fett: 5.0, ges: 1.5, kh: 11,   zucker: 0.5, eiweiss: 3.5,  salz: 1.2,  ball: 2.0, gm: 250 },
     { name: 'McCain Pommes Frites', kcal: 158, fett: 5.0, ges: 0.5, kh: 24,   zucker: 0.5, eiweiss: 2.9,  salz: 0.03, ball: 2.8, gm: 750 },
     { name: 'Pommes Duchesse',      kcal: 165, fett: 8.0, ges: 0.7, kh: 18,   zucker: 1.5, eiweiss: 4.5,  salz: 0.98, ball: 1.5, gm: 600 },
+    { name: 'Kartoffelsalat',       kcal: 160, fett: 10.0, ges: 1.5, kh: 14,  zucker: 1.5, eiweiss: 3.0,  salz: 1.0,  ball: 1.5 },
     // Frühstück
     { name: 'Haferflocken (zart)', kcal: 367, fett: 7.0, ges: 1.3, kh: 59.0, zucker: 1.1, eiweiss: 13.0, salz: 0.0, ball: 10.0 },
     { name: 'Granola Crunchy',     kcal: 430, fett: 15.0, ges: 2.0, kh: 62.0, zucker: 20.0, eiweiss: 8.0, salz: 0.1, ball: 5.0 },
@@ -111,6 +112,7 @@ const MILCH_DB = [
     { name: 'Mozzarella',            kcal: 250, fett: 19.0, ges: 12.0, kh: 1.0, zucker: 1.0, eiweiss: 18.0, salz: 0.6, ball: 0.0 },
     { name: 'Parmesan',              kcal: 431, fett: 29.0, ges: 18.0, kh: 0.0, zucker: 0.0, eiweiss: 38.0, salz: 1.8, ball: 0.0 },
     { name: 'Camembert',             kcal: 290, fett: 23.0, ges: 15.0, kh: 0.5, zucker: 0.5, eiweiss: 19.0, salz: 1.5, ball: 0.0 },
+    { name: 'Fondue-Mischung',      kcal: 300, fett: 20.0, ges: 13.0, kh: 3.0, zucker: 0.5, eiweiss: 24.0, salz: 1.5, ball: 0.0 },
     // Butter
     { name: 'Butter',                        kcal: 735, fett: 82.0, ges: 52.0, kh: 0.6, zucker: 0.6, eiweiss: 0.7,  salz: 0.1,  ball: 0.0 },
     // Gescannte Produkte
@@ -516,6 +518,21 @@ const MENU_PAIRINGS = [
       items: [
         { name: 'Poulet Schenkel (mit Haut)', menge: 250 },
         { name: 'Weisser Reis (roh)', menge: 80 },
+    ]},
+    { keywords: ['raclette'],
+      items: [
+        { name: 'Raclette', menge: 150 },
+        { name: 'Kartoffel', menge: 200 },
+    ]},
+    { keywords: ['fondue', 'käsefondue'],
+      items: [
+        { name: 'Fondue-Mischung', menge: 200 },
+        { name: 'Ruchbrot', menge: 120 },
+    ]},
+    { keywords: ['wienerli'],
+      items: [
+        { name: 'Wienerli', menge: 150 },
+        { name: 'Kartoffelsalat', menge: 200 },
     ]},
     { keywords: ['grillieren', 'grillen', 'bbq'],
       items: [
@@ -2399,13 +2416,64 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Lust auf... Suche ---
+    // Smart-Fallback: automatische Menu-Vorschlaege basierend auf Kategorie
+    // Kein Fallback fuer: Fruit, Drinks, Snacks, Süsses, Dessert (macht keinen Sinn)
+    function buildSmartPairing(query) {
+        const q = query.toLowerCase();
+        const item = db.find(d => d.Lebensmittel.toLowerCase().includes(q));
+        if (!item) return null;
+
+        const cat = item.Kategorie;
+        const noFallback = ['Fruit', 'Drinks', 'Snacks', 'Süsses', 'Dessert'];
+        if (noFallback.includes(cat)) return null;
+
+        const items = [{ name: item.Lebensmittel, menge: item.Gesamtmenge || (item.Einheit === 'p' ? 1 : 150) }];
+
+        if (cat === 'Meat' || cat === 'Misc' || cat === 'Fastfood' || cat === 'Portion') {
+            // Fleisch/Fertigprodukt → Beilage + Gemuese
+            const beilage = db.find(d => d.Kategorie === 'Beilagen' && d.Lebensmittel.includes('Reis'));
+            const gemuese = db.filter(d => d.Kategorie === 'Gemüse' && d.Favorit).find(Boolean)
+                         || db.find(d => d.Kategorie === 'Gemüse');
+            if (beilage) items.push({ name: beilage.Lebensmittel, menge: 80 });
+            if (gemuese) items.push({ name: gemuese.Lebensmittel, menge: 100 });
+        } else if (cat === 'Beilagen') {
+            // Beilage → Fleisch + Gemuese
+            const fleisch = db.find(d => d.Kategorie === 'Meat' && d.Lebensmittel.includes('Poulet Brust'));
+            const gemuese = db.filter(d => d.Kategorie === 'Gemüse' && d.Favorit).find(Boolean)
+                         || db.find(d => d.Kategorie === 'Gemüse');
+            if (fleisch) items.push({ name: fleisch.Lebensmittel, menge: 150 });
+            if (gemuese) items.push({ name: gemuese.Lebensmittel, menge: 100 });
+        } else if (cat === 'Gemüse') {
+            // Gemuese → Fleisch + Beilage
+            const fleisch = db.find(d => d.Kategorie === 'Meat' && d.Lebensmittel.includes('Poulet Brust'));
+            const beilage = db.find(d => d.Kategorie === 'Beilagen' && d.Lebensmittel.includes('Reis'));
+            if (fleisch) items.push({ name: fleisch.Lebensmittel, menge: 150 });
+            if (beilage) items.push({ name: beilage.Lebensmittel, menge: 80 });
+        } else if (cat === 'Dairy') {
+            // Milchprodukt (Käse) → Beilage
+            const beilage = db.find(d => d.Kategorie === 'Beilagen' && d.Lebensmittel.includes('Kartoffel'));
+            if (beilage) items.push({ name: beilage.Lebensmittel, menge: 200 });
+        } else if (cat === 'Bread') {
+            // Brot → Käse + Fleisch
+            const kaese = db.find(d => d.Kategorie === 'Dairy' && d.Lebensmittel.includes('Gruyère'));
+            const aufschnitt = db.find(d => d.Kategorie === 'Meat' && d.Lebensmittel.includes('Toastschinken'));
+            if (kaese) items.push({ name: kaese.Lebensmittel, menge: 40 });
+            if (aufschnitt) items.push({ name: aufschnitt.Lebensmittel, menge: 50 });
+        }
+
+        return items.length > 1 ? { keywords: [], items } : null;
+    }
+
     function findMenuPairing(query) {
         const q = query.toLowerCase();
         // Zuerst: Keyword-Match (Hauptgericht)
         const byKeyword = MENU_PAIRINGS.find(p => p.keywords.some(kw => q.includes(kw) || kw.includes(q)));
         if (byKeyword) return byKeyword;
         // Dann: Item-Match (Beilage/Zutat) — sucht Pairings die dieses Produkt enthalten
-        return MENU_PAIRINGS.find(p => p.items.some(it => it.name.toLowerCase().includes(q)));
+        const byItem = MENU_PAIRINGS.find(p => p.items.some(it => it.name.toLowerCase().includes(q)));
+        if (byItem) return byItem;
+        // Fallback: Smart-Pairing basierend auf Kategorie
+        return buildSmartPairing(q);
     }
 
     function resolvePairingItems(pairing) {
@@ -2428,19 +2496,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resolved.length === 0) { sugBox.classList.add('hidden'); sugBox.innerHTML = ''; return; }
 
         let totalKcal = 0;
-        let html = '<div style="background:var(--surface0);border:1px solid var(--green);border-radius:8px;padding:10px">';
-        html += '<div style="font-size:13px;font-weight:bold;color:var(--green);margin-bottom:8px">🍽️ Menu-Vorschlag</div>';
+        let html = '<div class="menu-suggestion">';
+        html += '<div class="menu-suggestion-title">Menu-Vorschlag</div>';
         resolved.forEach(item => {
             const kcal = Math.round(item.Kcal * item.Menge / 100);
             totalKcal += kcal;
-            html += `<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px solid var(--surface1)">`;
-            html += `<span style="color:var(--text)">${item.Lebensmittel}</span>`;
-            html += `<span style="color:var(--subtext)">${item.Menge}${item.Einheit} · ${kcal} kcal</span>`;
+            html += `<div class="menu-suggestion-item">`;
+            html += `<span>${item.Lebensmittel}</span>`;
+            html += `<span>${item.Menge}${item.Einheit} · ${kcal} kcal</span>`;
             html += `</div>`;
         });
-        html += `<div style="display:flex;justify-content:space-between;font-size:12px;font-weight:bold;padding:6px 0 4px;color:var(--text)">`;
+        html += `<div class="menu-suggestion-total">`;
         html += `<span>Total</span><span>${totalKcal} kcal</span></div>`;
-        html += `<button id="lust-add-menu" style="margin-top:8px;width:100%;height:38px;font-size:12px;background:var(--green);color:#1e1e2e;border:none;border-radius:6px;cursor:pointer;font-weight:bold">Add Menu</button>`;
+        html += `<button id="lust-add-menu" class="menu-suggestion-add">Add Menu</button>`;
         html += '</div>';
         sugBox.innerHTML = html;
         sugBox.classList.remove('hidden');
@@ -2498,8 +2566,12 @@ document.addEventListener('DOMContentLoaded', () => {
     $('lust-input').addEventListener('keydown', e => { if (e.key === 'Enter') lustSearch(); });
     $('lust-clear-btn').addEventListener('click', () => {
         $('lust-input').value = '';
+        $('lust-clear-btn').classList.add('hidden');
         $('lust-results').classList.add('hidden'); $('lust-results').innerHTML = '';
         const sugBox = $('lust-suggestion'); if (sugBox) { sugBox.classList.add('hidden'); sugBox.innerHTML = ''; }
+    });
+    $('lust-input').addEventListener('input', () => {
+        $('lust-clear-btn').classList.toggle('hidden', !$('lust-input').value);
     });
 
     // --- Menus Tab: Lebensmittel suchen ---
