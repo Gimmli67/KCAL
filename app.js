@@ -1961,7 +1961,14 @@ function startBarcodeScanner(onSuccess) {
     const boxH = Math.round(boxW * 0.45);
 
     html5QrCode.start(
-        { facingMode: 'environment' },
+        { facingMode: 'environment',
+          width: { ideal: 1920 },
+          height: { ideal: 1080 },
+          advanced: [
+            { focusMode: 'continuous' },
+            { zoom: 2.0 }
+          ]
+        },
         {
             fps: 15,
             qrbox: { width: boxW, height: boxH },
@@ -1973,7 +1980,26 @@ function startBarcodeScanner(onSuccess) {
         },
         text => { stopBarcodeScanner(); onSuccess(text); },
         () => {}
-    ).catch(err => {
+    ).then(() => {
+        // Hauptkamera + Zoom erzwingen (verhindert Makro-Modus auf iPhone 14 Pro)
+        try {
+            const video = document.querySelector('#scanner-reader video');
+            if (video && video.srcObject) {
+                const track = video.srcObject.getVideoTracks()[0];
+                const caps = track.getCapabilities ? track.getCapabilities() : {};
+                const settings = {};
+                if (caps.focusMode && caps.focusMode.includes('continuous')) {
+                    settings.focusMode = 'continuous';
+                }
+                if (caps.zoom && caps.zoom.max >= 2.0) {
+                    settings.zoom = 2.0;
+                }
+                if (Object.keys(settings).length > 0) {
+                    track.applyConstraints({ advanced: [settings] });
+                }
+            }
+        } catch(e) { /* nicht alle Kameras unterstuetzen das */ }
+    }).catch(err => {
         $('scanner-modal').classList.add('hidden');
         alert('Kamera konnte nicht gestartet werden:\n' + err);
     });
