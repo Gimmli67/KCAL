@@ -165,10 +165,6 @@ const BROT_DB = [
     { name: 'Zopf',              kcal: 315, fett: 8.0, ges: 4.5, kh: 50.0, zucker: 5.0, eiweiss: 9.5, salz: 0.8, ball: 2.0 },
     { name: 'Steinofen Twister', kcal: 255, fett: 2.5, ges: 0.5, kh: 49.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5 },
     { name: 'Silserkranz',       kcal: 265, fett: 3.0, ges: 0.8, kh: 50.0, zucker: 3.0, eiweiss: 9.0, salz: 1.0,  ball: 2.0 },
-    // Gescannte Produkte
-    { name: 'Brot Weggli',           kcal: 326, fett: 8.3, ges: 5.8, kh: 50.0, zucker: 2.8, eiweiss: 9.8, salz: 1.3,  ball: 3.1 },
-    { name: 'Brot Huusbrot Rustico', kcal: 232, fett: 1.0, ges: 0.2, kh: 45.0, zucker: 0.6, eiweiss: 8.4, salz: 1.87, ball: 4.5 },
-    { name: 'Premium Butter-Brezel', kcal: 363, fett: 17.0, ges: 7.8, kh: 43.0, zucker: 0.7, eiweiss: 8.9, salz: 1.8,  ball: 0.0 },
 ];
 
 // ===== Fleisch-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
@@ -311,6 +307,30 @@ const MENU_PAIRINGS = [
         { name: 'Hamburger aus Rinderhack', menge: 200 },
         { name: 'McCain Pommes Frites', menge: 200 },
         { name: 'Eisbergsalat', menge: 50 },
+    ]},
+    { keywords: ['rindsgeschnetzeltes', 'rind geschnetzeltes'],
+      items: [
+        { name: 'Rind mager (Filet/Huft/Nierstück)', menge: 200 },
+        { name: 'Spätzli (roh)', menge: 120 },
+        { name: 'Lauch', menge: 100 },
+    ]},
+    { keywords: ['schweinsgeschnetzeltes', 'schwein geschnetzeltes'],
+      items: [
+        { name: 'Schwein mager (Filet/Nierstück)', menge: 200 },
+        { name: 'Spätzli (roh)', menge: 120 },
+        { name: 'Lauch', menge: 100 },
+    ]},
+    { keywords: ['pouletgeschnetzeltes', 'poulet geschnetzeltes'],
+      items: [
+        { name: 'Poulet Brust (ohne Haut)', menge: 200 },
+        { name: 'Spätzli (roh)', menge: 120 },
+        { name: 'Lauch', menge: 100 },
+    ]},
+    { keywords: ['geschnetzeltes', 'geschnetzelte'],
+      items: [
+        { name: 'Rind mager (Filet/Huft/Nierstück)', menge: 200 },
+        { name: 'Spätzli (roh)', menge: 120 },
+        { name: 'Lauch', menge: 100 },
     ]},
     { keywords: ['thon', 'thunfisch', 'tuna'],
       items: [
@@ -2075,7 +2095,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Lust auf... Suche ---
     function findMenuPairing(query) {
         const q = query.toLowerCase();
-        return MENU_PAIRINGS.find(p => p.keywords.some(kw => q.includes(kw) || kw.includes(q)));
+        // Zuerst: Keyword-Match (Hauptgericht)
+        const byKeyword = MENU_PAIRINGS.find(p => p.keywords.some(kw => q.includes(kw) || kw.includes(q)));
+        if (byKeyword) return byKeyword;
+        // Dann: Item-Match (Beilage/Zutat) — sucht Pairings die dieses Produkt enthalten
+        return MENU_PAIRINGS.find(p => p.items.some(it => it.name.toLowerCase().includes(q)));
     }
 
     function resolvePairingItems(pairing) {
@@ -2166,6 +2190,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     $('lust-search-btn').addEventListener('click', lustSearch);
     $('lust-input').addEventListener('keydown', e => { if (e.key === 'Enter') lustSearch(); });
+    $('lust-clear-btn').addEventListener('click', () => {
+        $('lust-input').value = '';
+        $('lust-results').classList.add('hidden'); $('lust-results').innerHTML = '';
+        const sugBox = $('lust-suggestion'); if (sugBox) { sugBox.classList.add('hidden'); sugBox.innerHTML = ''; }
+    });
 
     // --- Menus Tab: Lebensmittel suchen ---
     $('menu-search-btn').addEventListener('click', () => populateMenuFoodDropdown($('menu-search').value));
