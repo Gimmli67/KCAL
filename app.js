@@ -36,32 +36,32 @@ const FRUCHT_DB = [
 
 // ===== Gemüse-Datenbank (pro 100g) =====
 const GEMUESE_DB = [
-    { name: 'Blumenkohl',     kcal: 25,  fett: 0.3, ges: 0.1, kh: 5.0, zucker: 1.9, eiweiss: 1.9, salz: 0.1, ball: 2.0, favorit: true  },
-    { name: 'Eisbergsalat',   kcal: 13,  fett: 0.2, ges: 0.0, kh: 2.2, zucker: 1.6, eiweiss: 0.9, salz: 0.0, ball: 1.2 },
-    { name: 'Kopfsalat',      kcal: 14,  fett: 0.2, ges: 0.0, kh: 2.0, zucker: 0.9, eiweiss: 1.3, salz: 0.0, ball: 1.5 },
-    { name: 'Weißkohl',       kcal: 25,  fett: 0.1, ges: 0.0, kh: 5.8, zucker: 3.2, eiweiss: 1.3, salz: 0.0, ball: 2.5 },
+    { name: 'Blumenkohl',     kcal: 25,  fett: 0.3, ges: 0.1, kh: 5.0, zucker: 1.9, eiweiss: 1.9, salz: 0.1, ball: 2.0, favorit: true, gm: 600  },
+    { name: 'Eisbergsalat',   kcal: 13,  fett: 0.2, ges: 0.0, kh: 2.2, zucker: 1.6, eiweiss: 0.9, salz: 0.0, ball: 1.2, gm: 300 },
+    { name: 'Kopfsalat',      kcal: 14,  fett: 0.2, ges: 0.0, kh: 2.0, zucker: 0.9, eiweiss: 1.3, salz: 0.0, ball: 1.5, gm: 200 },
+    { name: 'Weißkohl',       kcal: 25,  fett: 0.1, ges: 0.0, kh: 5.8, zucker: 3.2, eiweiss: 1.3, salz: 0.0, ball: 2.5, gm: 1000 },
     { name: 'Erbsen',         kcal: 81,  fett: 0.4, ges: 0.1, kh: 14,  zucker: 5.7, eiweiss: 5.4, salz: 0.0, ball: 5.1 },
-    { name: 'Fenchel',        kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.3, salz: 0.1, ball: 3.1 },
-    { name: 'Gurke',          kcal: 15,  fett: 0.1, ges: 0.0, kh: 3.6, zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 0.5 },
-    { name: 'Karotte',        kcal: 41,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 4.7, eiweiss: 0.9, salz: 0.1, ball: 2.8, favorit: true },
-    { name: 'Knoblauch',      kcal: 149, fett: 0.5, ges: 0.1, kh: 33,  zucker: 1.0, eiweiss: 6.4, salz: 0.0, ball: 2.1 },
-    { name: 'Kohlrabi',       kcal: 27,  fett: 0.1, ges: 0.0, kh: 6.2, zucker: 3.9, eiweiss: 1.7, salz: 0.0, ball: 3.6 },
-    { name: 'Lauch',          kcal: 31,  fett: 0.3, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.5, salz: 0.0, ball: 1.8, favorit: true  },
+    { name: 'Fenchel',        kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.3, salz: 0.1, ball: 3.1, gm: 250 },
+    { name: 'Gurke',          kcal: 15,  fett: 0.1, ges: 0.0, kh: 3.6, zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 0.5, gm: 400 },
+    { name: 'Karotte',        kcal: 41,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 4.7, eiweiss: 0.9, salz: 0.1, ball: 2.8, favorit: true, gm: 80 },
+    { name: 'Knoblauch',      kcal: 149, fett: 0.5, ges: 0.1, kh: 33,  zucker: 1.0, eiweiss: 6.4, salz: 0.0, ball: 2.1, gm: 5   },
+    { name: 'Kohlrabi',       kcal: 27,  fett: 0.1, ges: 0.0, kh: 6.2, zucker: 3.9, eiweiss: 1.7, salz: 0.0, ball: 3.6, gm: 300 },
+    { name: 'Lauch',          kcal: 31,  fett: 0.3, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.5, salz: 0.0, ball: 1.8, favorit: true, gm: 200 },
     { name: 'Mais',           kcal: 86,  fett: 1.2, ges: 0.2, kh: 19,  zucker: 3.2, eiweiss: 3.2, salz: 0.0, ball: 2.7 },
-    { name: 'Paprika gelb',   kcal: 27,  fett: 0.2, ges: 0.0, kh: 6.3, zucker: 4.6, eiweiss: 1.0, salz: 0.0, ball: 1.7 },
-    { name: 'Paprika grün',   kcal: 20,  fett: 0.2, ges: 0.0, kh: 4.6, zucker: 2.4, eiweiss: 0.9, salz: 0.0, ball: 1.7 },
-    { name: 'Paprika rot',    kcal: 31,  fett: 0.3, ges: 0.0, kh: 6.0, zucker: 4.2, eiweiss: 1.0, salz: 0.0, ball: 2.1 },
-    { name: 'Peperoni',       kcal: 40,  fett: 0.4, ges: 0.1, kh: 9.0, zucker: 5.1, eiweiss: 2.0, salz: 0.0, ball: 1.5 },
-    { name: 'Randen',         kcal: 43,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 6.8, eiweiss: 1.6, salz: 0.1, ball: 2.8 },
-    { name: 'Sellerie',       kcal: 16,  fett: 0.2, ges: 0.0, kh: 3.0, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
+    { name: 'Paprika gelb',   kcal: 27,  fett: 0.2, ges: 0.0, kh: 6.3, zucker: 4.6, eiweiss: 1.0, salz: 0.0, ball: 1.7, gm: 160 },
+    { name: 'Paprika grün',   kcal: 20,  fett: 0.2, ges: 0.0, kh: 4.6, zucker: 2.4, eiweiss: 0.9, salz: 0.0, ball: 1.7, gm: 160 },
+    { name: 'Paprika rot',    kcal: 31,  fett: 0.3, ges: 0.0, kh: 6.0, zucker: 4.2, eiweiss: 1.0, salz: 0.0, ball: 2.1, gm: 160 },
+    { name: 'Peperoni',       kcal: 40,  fett: 0.4, ges: 0.1, kh: 9.0, zucker: 5.1, eiweiss: 2.0, salz: 0.0, ball: 1.5, gm: 15  },
+    { name: 'Randen',         kcal: 43,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 6.8, eiweiss: 1.6, salz: 0.1, ball: 2.8, gm: 200 },
+    { name: 'Sellerie',       kcal: 16,  fett: 0.2, ges: 0.0, kh: 3.0, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6, gm: 40  },
     { name: 'Spinat',         kcal: 23,  fett: 0.4, ges: 0.1, kh: 3.6, zucker: 0.4, eiweiss: 2.9, salz: 0.2, ball: 2.2 },
-    { name: 'Tomate',         kcal: 18,  fett: 0.2, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2 },
-    { name: 'Zwiebel',        kcal: 40,  fett: 0.1, ges: 0.0, kh: 9.3, zucker: 4.2, eiweiss: 1.1, salz: 0.0, ball: 1.7 },
+    { name: 'Tomate',         kcal: 18,  fett: 0.2, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2, gm: 120 },
+    { name: 'Zwiebel',        kcal: 40,  fett: 0.1, ges: 0.0, kh: 9.3, zucker: 4.2, eiweiss: 1.1, salz: 0.0, ball: 1.7, gm: 80  },
     { name: 'Bohnen (grün)', kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.3, eiweiss: 1.8, salz: 0.0, ball: 3.4 },
-    { name: 'Zuckerhut',     kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1 },
-    { name: 'Rettich',       kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8 },
-    { name: 'Radieschen',    kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6 },
-    { name: 'Champignons',   kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3 },
+    { name: 'Zuckerhut',     kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1, gm: 400 },
+    { name: 'Rettich',       kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8, gm: 250 },
+    { name: 'Radieschen',    kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6, gm: 10  },
+    { name: 'Champignons',   kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3, gm: 20  },
 ];
 
 // ===== Beilagen-Datenbank (pro 100g, roh/trocken) =====
@@ -192,6 +192,40 @@ const GETRÄNKE_DB = [
     { name: 'Red Bull Energy Drink',                kcal: 46, fett: 0.0,  ges: 0.0, kh: 11.0, zucker: 11.0, eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 250 },
     { name: 'Somersby Apple Original',              kcal: 61, fett: 0.0,  ges: 0.0, kh: 8.6,  zucker: 7.7,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
     { name: 'Nestea Eistee',                        kcal: 19, fett: 0.0,  ges: 0.0, kh: 4.5,  zucker: 4.5,  eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 500 },
+];
+
+// ===== Snacks-Datenbank (pro 100g) =====
+const SNACKS_DB = [
+    // Salziges
+    { name: 'Salzstängeli',              kcal: 380, fett: 5.0,  ges: 0.8,  kh: 72.0, zucker: 2.0,  eiweiss: 11.0, salz: 4.5,  ball: 2.5, gm: 100 },
+    { name: 'Zweifel Chips Nature',      kcal: 535, fett: 33.0, ges: 3.0,  kh: 50.0, zucker: 0.5,  eiweiss: 6.5,  salz: 1.3,  ball: 4.0, gm: 170 },
+    { name: 'Zweifel Chips Paprika',     kcal: 530, fett: 32.0, ges: 3.0,  kh: 52.0, zucker: 3.0,  eiweiss: 6.0,  salz: 1.5,  ball: 4.0, gm: 170 },
+    { name: 'Zweifel Kezz',              kcal: 500, fett: 26.0, ges: 2.5,  kh: 57.0, zucker: 2.5,  eiweiss: 7.0,  salz: 2.0,  ball: 3.0, gm: 110 },
+    { name: 'Popcorn (süss)',            kcal: 420, fett: 15.0, ges: 2.0,  kh: 62.0, zucker: 25.0, eiweiss: 7.0,  salz: 1.0,  ball: 10.0, gm: 100 },
+    { name: 'Popcorn (salzig)',          kcal: 380, fett: 12.0, ges: 1.5,  kh: 58.0, zucker: 1.0,  eiweiss: 8.0,  salz: 2.5,  ball: 10.0, gm: 100 },
+    { name: 'Erdnüsse (gesalzen)',       kcal: 600, fett: 50.0, ges: 7.0,  kh: 12.0, zucker: 4.0,  eiweiss: 26.0, salz: 1.2,  ball: 8.0, gm: 200 },
+    { name: 'Studentenfutter',           kcal: 480, fett: 28.0, ges: 4.0,  kh: 42.0, zucker: 30.0, eiweiss: 12.0, salz: 0.1,  ball: 5.0, gm: 200 },
+];
+
+// ===== Süsses-Datenbank =====
+// Pro 100g
+const SÜSSES_DB_100 = [
+    // Schokolade (gm = 1 Tafel)
+    { name: 'Milchschokolade',           kcal: 535, fett: 30.0, ges: 18.0, kh: 58.0, zucker: 55.0, eiweiss: 7.0,  salz: 0.2,  ball: 1.5,  gm: 100 },
+    { name: 'Dunkle Schokolade (70%)',   kcal: 590, fett: 42.0, ges: 25.0, kh: 33.0, zucker: 25.0, eiweiss: 8.0,  salz: 0.1,  ball: 10.0, gm: 100 },
+    { name: 'Schokolade mit Nüssen',     kcal: 560, fett: 36.0, ges: 15.0, kh: 48.0, zucker: 45.0, eiweiss: 9.0,  salz: 0.2,  ball: 3.0,  gm: 100 },
+    { name: 'Weisse Schokolade',         kcal: 540, fett: 32.0, ges: 19.0, kh: 59.0, zucker: 58.0, eiweiss: 6.0,  salz: 0.3,  ball: 0.0,  gm: 100 },
+    // Gummibärli (gm = 1 Beutel)
+    { name: 'Haribo Goldbären',          kcal: 340, fett: 0.5,  ges: 0.1,  kh: 77.0, zucker: 46.0, eiweiss: 6.9,  salz: 0.1,  ball: 0.0,  gm: 25  }, // ~10 Stk
+    { name: 'Haribo Colaflaschen',       kcal: 340, fett: 0.5,  ges: 0.1,  kh: 77.0, zucker: 45.0, eiweiss: 6.5,  salz: 0.1,  ball: 0.0,  gm: 50  }, // ~10 Stk
+    { name: 'Haribo Saure Bären',        kcal: 335, fett: 0.4,  ges: 0.1,  kh: 76.0, zucker: 43.0, eiweiss: 6.5,  salz: 0.3,  ball: 0.0,  gm: 25  }, // ~10 Stk
+];
+// Pro Portion
+const SÜSSES_DB_PORTION = [
+    { name: 'Kinderschokolade (1 Riegel)', kcal: 78,  fett: 4.8,  ges: 3.0,  kh: 7.5,  zucker: 7.2,  eiweiss: 1.2,  salz: 0.05, ball: 0.0 },
+    { name: 'Toffifee (1 Stk)',            kcal: 65,  fett: 3.8,  ges: 1.5,  kh: 7.0,  zucker: 6.0,  eiweiss: 0.8,  salz: 0.02, ball: 0.2 },
+    { name: 'Dubler Mohrenkopf',           kcal: 210, fett: 10.0, ges: 7.0,  kh: 28.0, zucker: 24.0, eiweiss: 2.0,  salz: 0.1,  ball: 0.5 },
+    { name: 'Ferrero Rocher (1 Stk)',      kcal: 75,  fett: 5.3,  ges: 2.0,  kh: 5.8,  zucker: 5.0,  eiweiss: 1.0,  salz: 0.03, ball: 0.3 },
 ];
 
 // ===== Dessert-Datenbank =====
@@ -603,7 +637,7 @@ async function loadInitialData() {
     GEMUESE_DB.forEach(g => {
         if (!db.find(d => d.Lebensmittel === g.name)) {
             db.push({
-                Lebensmittel: g.name, Einheit: 'g', Kategorie: 'Gemüse', Gesamtmenge: null,
+                Lebensmittel: g.name, Einheit: 'g', Kategorie: 'Gemüse', Gesamtmenge: g.gm || null,
                 Kcal: g.kcal, Fett: g.fett, Gesaettigt: g.ges,
                 Kohlenhydrate: g.kh, Zucker: g.zucker, Eiweiss: g.eiweiss,
                 Salz: g.salz, Ballaststoffe: g.ball
@@ -730,6 +764,51 @@ async function loadInitialData() {
         }
     });
     if (fertigprodukteAdded) { saveDB(); changed = true; }
+
+    // Snacks: fehlende Einträge nachfügen
+    let snacksAdded = false;
+    SNACKS_DB.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Snacks', Gesamtmenge: item.gm || null,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            snacksAdded = true;
+        }
+    });
+    if (snacksAdded) { saveDB(); changed = true; }
+
+    // Süsses (pro 100g): fehlende Einträge nachfügen
+    let suesses100Added = false;
+    SÜSSES_DB_100.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Süsses', Gesamtmenge: item.gm || null,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            suesses100Added = true;
+        }
+    });
+    if (suesses100Added) { saveDB(); changed = true; }
+
+    // Süsses (pro Portion): fehlende Einträge nachfügen
+    let suessesPortionAdded = false;
+    SÜSSES_DB_PORTION.forEach(item => {
+        if (!db.find(d => d.Lebensmittel === item.name)) {
+            db.push({
+                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Süsses', Gesamtmenge: 1,
+                Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
+                Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
+                Salz: item.salz, Ballaststoffe: item.ball
+            });
+            suessesPortionAdded = true;
+        }
+    });
+    if (suessesPortionAdded) { saveDB(); changed = true; }
 
     // Desserts (pro 100g): fehlende Einträge nachfügen
     let dessert100Added = false;
