@@ -641,6 +641,33 @@ async function loadInitialData() {
         changed = true;
     }
 
+    // Migration: Gesamtmenge (Durchschnittsgewicht) nachpflegen fuer bestehende Eintraege
+    const allStaticDBs = [
+        ...GEMUESE_DB.map(i => ({ name: i.name, gm: i.gm })),
+        ...BROT_DB.map(i => ({ name: i.name, gm: i.gm })),
+        ...SNACKS_DB.map(i => ({ name: i.name, gm: i.gm })),
+        ...SÜSSES_DB_100.map(i => ({ name: i.name, gm: i.gm })),
+        ...BEILAGEN_DB.map(i => ({ name: i.name, gm: i.gm })),
+    ];
+    let gmUpdated = false;
+    allStaticDBs.forEach(item => {
+        if (!item.gm) return;
+        const existing = db.find(d => d.Lebensmittel === item.name);
+        if (existing && !existing.Gesamtmenge) {
+            existing.Gesamtmenge = item.gm;
+            gmUpdated = true;
+        }
+    });
+    if (gmUpdated) { saveDB(); changed = true; }
+
+    // Migration: alte 'Brot Weggli' Duplikat entfernen (wurde durch 'Weggli' ersetzt)
+    const brotWeggli = db.filter(d => d.Lebensmittel === 'Brot Weggli');
+    if (brotWeggli.length > 0) {
+        db = db.filter(d => d.Lebensmittel !== 'Brot Weggli');
+        saveDB();
+        changed = true;
+    }
+
     // Gemüse: fehlende Einträge nachfügen (Werte pro 100g)
     let gemuseAdded = false;
     GEMUESE_DB.forEach(g => {
@@ -809,7 +836,7 @@ async function loadInitialData() {
     SÜSSES_DB_PORTION.forEach(item => {
         if (!db.find(d => d.Lebensmittel === item.name)) {
             db.push({
-                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Süsses', Gesamtmenge: 1,
+                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Süsses', Gesamtmenge: null,
                 Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
                 Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
                 Salz: item.salz, Ballaststoffe: item.ball
@@ -839,7 +866,7 @@ async function loadInitialData() {
     DESSERT_DB_PORTION.forEach(item => {
         if (!db.find(d => d.Lebensmittel === item.name)) {
             db.push({
-                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Dessert', Gesamtmenge: 1,
+                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Dessert', Gesamtmenge: null,
                 Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
                 Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
                 Salz: item.salz, Ballaststoffe: item.ball
@@ -854,7 +881,7 @@ async function loadInitialData() {
     PORTION_DB.forEach(item => {
         if (!db.find(d => d.Lebensmittel === item.name)) {
             db.push({
-                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Portion', Gesamtmenge: 1,
+                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Portion', Gesamtmenge: null,
                 Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
                 Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
                 Salz: item.salz, Ballaststoffe: item.ball
@@ -869,7 +896,7 @@ async function loadInitialData() {
     FASTFOOD_DB.forEach(item => {
         if (!db.find(d => d.Lebensmittel === item.name)) {
             db.push({
-                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Fastfood', Gesamtmenge: 1,
+                Lebensmittel: item.name, Einheit: 'p', Kategorie: 'Fastfood', Gesamtmenge: null,
                 Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
                 Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
                 Salz: item.salz, Ballaststoffe: item.ball
