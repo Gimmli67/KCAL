@@ -2110,7 +2110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         html += `<div style="display:flex;justify-content:space-between;font-size:12px;font-weight:bold;padding:6px 0 4px;color:var(--text)">`;
         html += `<span>Total</span><span>${totalKcal} kcal</span></div>`;
-        html += `<button id="lust-add-menu" style="margin-top:8px;width:100%;height:38px;font-size:12px;background:var(--green);color:var(--base);border:none;border-radius:6px;cursor:pointer;font-weight:bold">Add Menu</button>`;
+        html += `<button id="lust-add-menu" style="margin-top:8px;width:100%;height:38px;font-size:12px;background:var(--green);color:#1e1e2e;border:none;border-radius:6px;cursor:pointer;font-weight:bold">Add Menu</button>`;
         html += '</div>';
         sugBox.innerHTML = html;
         sugBox.classList.remove('hidden');
