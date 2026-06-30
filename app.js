@@ -125,28 +125,28 @@ const MILCH_DB = [
 
 // ===== Brot-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
 const BROT_DB = [
-    { name: 'Baguette',          kcal: 270, fett: 1.5, ges: 0.4, kh: 54.0, zucker: 2.5, eiweiss: 9.0, salz: 1.2, ball: 2.0 },
-    { name: 'Laugen-Salzbrezel', kcal: 320, fett: 4.0, ges: 1.0, kh: 60.0, zucker: 2.0, eiweiss: 9.5, salz: 3.5, ball: 2.0 },
-    { name: 'Laugenbrot',        kcal: 255, fett: 2.5, ges: 0.6, kh: 48.0, zucker: 2.0, eiweiss: 9.0, salz: 1.8, ball: 2.5 },
-    { name: 'Bauernbrot',        kcal: 230, fett: 1.5, ges: 0.3, kh: 44.0, zucker: 1.5, eiweiss: 7.5, salz: 1.2, ball: 4.5 },
-    { name: 'Ruchbrot',          kcal: 245, fett: 1.5, ges: 0.3, kh: 46.0, zucker: 1.5, eiweiss: 9.0, salz: 1.2, ball: 3.5 },
-    { name: 'Vollkornbrot',      kcal: 210, fett: 2.0, ges: 0.4, kh: 38.0, zucker: 2.0, eiweiss: 8.0, salz: 1.1, ball: 6.0 },
-    { name: 'Toastbrot',         kcal: 265, fett: 3.5, ges: 0.8, kh: 48.0, zucker: 4.0, eiweiss: 8.5, salz: 1.3, ball: 2.0 },
-    { name: 'Weggli',            kcal: 285, fett: 4.5, ges: 1.0, kh: 53.0, zucker: 5.0, eiweiss: 9.0, salz: 1.2, ball: 2.0 },
-    { name: 'Semmeli',           kcal: 270, fett: 2.0, ges: 0.5, kh: 53.0, zucker: 2.0, eiweiss: 9.0, salz: 1.3, ball: 2.5 },
-    { name: 'Fussballbrötchen',  kcal: 265, fett: 2.5, ges: 0.5, kh: 50.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5 },
-    { name: 'Holzofenbrot',      kcal: 230, fett: 1.5, ges: 0.3, kh: 44.0, zucker: 1.5, eiweiss: 7.5, salz: 1.2, ball: 4.0 },
-    { name: 'Krustenkranz',      kcal: 260, fett: 2.0, ges: 0.4, kh: 50.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5 },
-    { name: 'Zopf',              kcal: 315, fett: 8.0, ges: 4.5, kh: 50.0, zucker: 5.0, eiweiss: 9.5, salz: 0.8, ball: 2.0 },
-    { name: 'Steinofen Twister', kcal: 255, fett: 2.5, ges: 0.5, kh: 49.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5 },
-    { name: 'Silserkranz',       kcal: 265, fett: 3.0, ges: 0.8, kh: 50.0, zucker: 3.0, eiweiss: 9.0, salz: 1.0,  ball: 2.0 },
+    { name: 'Baguette',          kcal: 270, fett: 1.5, ges: 0.4, kh: 54.0, zucker: 2.5, eiweiss: 9.0, salz: 1.2, ball: 2.0, gm: 250 },
+    { name: 'Laugen-Salzbrezel', kcal: 320, fett: 4.0, ges: 1.0, kh: 60.0, zucker: 2.0, eiweiss: 9.5, salz: 3.5, ball: 2.0, gm: 85  },
+    { name: 'Laugenbrot',        kcal: 255, fett: 2.5, ges: 0.6, kh: 48.0, zucker: 2.0, eiweiss: 9.0, salz: 1.8, ball: 2.5, gm: 80  },
+    { name: 'Bauernbrot',        kcal: 230, fett: 1.5, ges: 0.3, kh: 44.0, zucker: 1.5, eiweiss: 7.5, salz: 1.2, ball: 4.5, gm: 60  },
+    { name: 'Ruchbrot',          kcal: 245, fett: 1.5, ges: 0.3, kh: 46.0, zucker: 1.5, eiweiss: 9.0, salz: 1.2, ball: 3.5, gm: 60  },
+    { name: 'Vollkornbrot',      kcal: 210, fett: 2.0, ges: 0.4, kh: 38.0, zucker: 2.0, eiweiss: 8.0, salz: 1.1, ball: 6.0, gm: 60  },
+    { name: 'Toastbrot',         kcal: 265, fett: 3.5, ges: 0.8, kh: 48.0, zucker: 4.0, eiweiss: 8.5, salz: 1.3, ball: 2.0, gm: 25  },
+    { name: 'Weggli',            kcal: 285, fett: 4.5, ges: 1.0, kh: 53.0, zucker: 5.0, eiweiss: 9.0, salz: 1.2, ball: 2.0, gm: 50  },
+    { name: 'Semmeli',           kcal: 270, fett: 2.0, ges: 0.5, kh: 53.0, zucker: 2.0, eiweiss: 9.0, salz: 1.3, ball: 2.5, gm: 50  },
+    { name: 'Fussballbrötchen',  kcal: 265, fett: 2.5, ges: 0.5, kh: 50.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5, gm: 55  },
+    { name: 'Holzofenbrot',      kcal: 230, fett: 1.5, ges: 0.3, kh: 44.0, zucker: 1.5, eiweiss: 7.5, salz: 1.2, ball: 4.0, gm: 60  },
+    { name: 'Krustenkranz',      kcal: 260, fett: 2.0, ges: 0.4, kh: 50.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5, gm: 60  },
+    { name: 'Zopf',              kcal: 315, fett: 8.0, ges: 4.5, kh: 50.0, zucker: 5.0, eiweiss: 9.5, salz: 0.8, ball: 2.0, gm: 80  },
+    { name: 'Steinofen Twister', kcal: 255, fett: 2.5, ges: 0.5, kh: 49.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5, gm: 60  },
+    { name: 'Silserkranz',       kcal: 265, fett: 3.0, ges: 0.8, kh: 50.0, zucker: 3.0, eiweiss: 9.0, salz: 1.0, ball: 2.0, gm: 60  },
     // Gipfeli
-    { name: 'Buttergipfeli',     kcal: 400, fett: 22.0, ges: 14.0, kh: 42.0, zucker: 5.0, eiweiss: 8.0, salz: 1.0, ball: 1.5 },
-    { name: 'Laugengipfeli',     kcal: 300, fett: 10.0, ges: 5.0,  kh: 44.0, zucker: 3.0, eiweiss: 9.0, salz: 2.0, ball: 2.0 },
-    { name: 'Vollkorngipfeli',   kcal: 340, fett: 15.0, ges: 8.0,  kh: 40.0, zucker: 4.0, eiweiss: 9.5, salz: 1.0, ball: 4.5 },
+    { name: 'Buttergipfeli',     kcal: 400, fett: 22.0, ges: 14.0, kh: 42.0, zucker: 5.0, eiweiss: 8.0, salz: 1.0, ball: 1.5, gm: 60  },
+    { name: 'Laugengipfeli',     kcal: 300, fett: 10.0, ges: 5.0,  kh: 44.0, zucker: 3.0, eiweiss: 9.0, salz: 2.0, ball: 2.0, gm: 65  },
+    { name: 'Vollkorngipfeli',   kcal: 340, fett: 15.0, ges: 8.0,  kh: 40.0, zucker: 4.0, eiweiss: 9.5, salz: 1.0, ball: 4.5, gm: 65  },
     // Pizza-/Pinsateig
-    { name: 'Pinsa Teig',            kcal: 240, fett: 4.0, ges: 0.6, kh: 42.0, zucker: 1.5, eiweiss: 8.0, salz: 1.2,  ball: 2.5 },
-    { name: 'Pizzateig',             kcal: 260, fett: 3.5, ges: 0.5, kh: 48.0, zucker: 2.0, eiweiss: 8.5, salz: 1.3,  ball: 2.0 },
+    { name: 'Pinsa Teig',        kcal: 240, fett: 4.0, ges: 0.6, kh: 42.0, zucker: 1.5, eiweiss: 8.0, salz: 1.2, ball: 2.5, gm: 230 },
+    { name: 'Pizzateig',         kcal: 260, fett: 3.5, ges: 0.5, kh: 48.0, zucker: 2.0, eiweiss: 8.5, salz: 1.3, ball: 2.0, gm: 250 },
 ];
 
 // ===== Fleisch-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
@@ -666,7 +666,7 @@ async function loadInitialData() {
     BROT_DB.forEach(item => {
         if (!db.find(d => d.Lebensmittel === item.name)) {
             db.push({
-                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Bread', Gesamtmenge: null,
+                Lebensmittel: item.name, Einheit: 'g', Kategorie: 'Bread', Gesamtmenge: item.gm || null,
                 Kcal: item.kcal, Fett: item.fett, Gesaettigt: item.ges,
                 Kohlenhydrate: item.kh, Zucker: item.zucker, Eiweiss: item.eiweiss,
                 Salz: item.salz, Ballaststoffe: item.ball
