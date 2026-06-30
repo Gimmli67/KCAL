@@ -177,6 +177,14 @@ const FLEISCH_DB = [
     { name: 'Naturafarm Fleischkäse',             kcal: 336, fett: 32.0, ges: 13.0, kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 1.8,  ball: 0.0 },
     { name: 'Malbuner Fleischkäse',               kcal: 202, fett: 16.0, ges: 6.0,  kh: 0.8, zucker: 0.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0 },
     { name: 'Würstli Appenzell',                  kcal: 517, fett: 46.0, ges: 0.0,  kh: 0.7, zucker: 0.0, eiweiss: 25.0, salz: 4.0,  ball: 0.0 },
+    // Grill & Smoker
+    { name: 'Spareribs (Schwein)',                kcal: 250, fett: 18.0, ges: 7.0,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.2,  ball: 0.0 },
+    { name: 'Pulled Pork',                        kcal: 210, fett: 12.0, ges: 4.5,  kh: 0.0, zucker: 0.0, eiweiss: 25.0, salz: 0.8,  ball: 0.0 },
+    { name: 'Brisket (Rind)',                     kcal: 235, fett: 15.0, ges: 6.0,  kh: 0.0, zucker: 0.0, eiweiss: 24.0, salz: 0.3,  ball: 0.0 },
+    { name: 'Dino Ribs (Beef Short Ribs)',        kcal: 280, fett: 21.0, ges: 9.0,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.3,  ball: 0.0 },
+    { name: 'Smoked Pork Ribs',                   kcal: 260, fett: 19.0, ges: 7.5,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.5,  ball: 0.0 },
+    { name: 'Poulet Flügeli',                     kcal: 190, fett: 12.0, ges: 3.5,  kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.2,  ball: 0.0 },
+    { name: 'Halloumi (Grillkäse)',               kcal: 320, fett: 25.0, ges: 16.0, kh: 2.0, zucker: 1.0, eiweiss: 22.0, salz: 2.5,  ball: 0.0, gm: 200 },
 ];
 
 // ===== Getränke-Datenbank (pro 100ml, mit Gesamtmenge) =====
