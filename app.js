@@ -37,13 +37,13 @@ const FRUCHT_DB = [
 // ===== Gemüse-Datenbank (pro 100g) =====
 const GEMUESE_DB = [
     { name: 'Blumenkohl',     kcal: 25,  fett: 0.3, ges: 0.1, kh: 5.0, zucker: 1.9, eiweiss: 1.9, salz: 0.1, ball: 2.0, favorit: true, gm: 600  },
-    { name: 'Eisbergsalat',   kcal: 13,  fett: 0.2, ges: 0.0, kh: 2.2, zucker: 1.6, eiweiss: 0.9, salz: 0.0, ball: 1.2, gm: 300 },
+    { name: 'Icebergsalat',   kcal: 13,  fett: 0.2, ges: 0.0, kh: 2.2, zucker: 1.6, eiweiss: 0.9, salz: 0.0, ball: 1.2, gm: 300 },
     { name: 'Kopfsalat',      kcal: 14,  fett: 0.2, ges: 0.0, kh: 2.0, zucker: 0.9, eiweiss: 1.3, salz: 0.0, ball: 1.5, gm: 200 },
     { name: 'Weißkohl',       kcal: 25,  fett: 0.1, ges: 0.0, kh: 5.8, zucker: 3.2, eiweiss: 1.3, salz: 0.0, ball: 2.5, gm: 1000 },
     { name: 'Erbsen',         kcal: 81,  fett: 0.4, ges: 0.1, kh: 14,  zucker: 5.7, eiweiss: 5.4, salz: 0.0, ball: 5.1 },
     { name: 'Fenchel',        kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.3, salz: 0.1, ball: 3.1, gm: 250 },
     { name: 'Gurke',          kcal: 15,  fett: 0.1, ges: 0.0, kh: 3.6, zucker: 1.7, eiweiss: 0.7, salz: 0.0, ball: 0.5, gm: 400 },
-    { name: 'Karotte',        kcal: 41,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 4.7, eiweiss: 0.9, salz: 0.1, ball: 2.8, favorit: true, gm: 80 },
+    { name: 'Rüebli',         kcal: 41,  fett: 0.2, ges: 0.0, kh: 10,  zucker: 4.7, eiweiss: 0.9, salz: 0.1, ball: 2.8, favorit: true, gm: 80 },
     { name: 'Knoblauch',      kcal: 149, fett: 0.5, ges: 0.1, kh: 33,  zucker: 1.0, eiweiss: 6.4, salz: 0.0, ball: 2.1, gm: 5   },
     { name: 'Kohlrabi',       kcal: 27,  fett: 0.1, ges: 0.0, kh: 6.2, zucker: 3.9, eiweiss: 1.7, salz: 0.0, ball: 3.6, gm: 300 },
     { name: 'Lauch',          kcal: 31,  fett: 0.3, ges: 0.0, kh: 7.0, zucker: 3.9, eiweiss: 1.5, salz: 0.0, ball: 1.8, favorit: true, gm: 200 },
@@ -57,6 +57,7 @@ const GEMUESE_DB = [
     { name: 'Spinat',         kcal: 23,  fett: 0.4, ges: 0.1, kh: 3.6, zucker: 0.4, eiweiss: 2.9, salz: 0.2, ball: 2.2 },
     { name: 'Tomate',         kcal: 18,  fett: 0.2, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2, gm: 120 },
     { name: 'Zwiebel',        kcal: 40,  fett: 0.1, ges: 0.0, kh: 9.3, zucker: 4.2, eiweiss: 1.1, salz: 0.0, ball: 1.7, gm: 80  },
+    { name: 'Coleslaw Salat', kcal: 140, fett: 10.0, ges: 1.5, kh: 11.0, zucker: 8.0, eiweiss: 1.2, salz: 0.7, ball: 1.8 },
     { name: 'Bohnen (grün)', kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.3, eiweiss: 1.8, salz: 0.0, ball: 3.4 },
     { name: 'Zuckerhut',     kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1, gm: 400 },
     { name: 'Rettich',       kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8, gm: 250 },
@@ -78,12 +79,13 @@ const BEILAGEN_DB = [
     { name: 'Vollkornreis (roh)',   kcal: 330, fett: 2.7, ges: 0.5, kh: 69.0, zucker: 0.5, eiweiss: 7.5,  salz: 0.0, ball: 3.5 },
     { name: 'Risotto Reis (roh)',   kcal: 350, fett: 0.4, ges: 0.1, kh: 78.0, zucker: 0.3, eiweiss: 6.5,  salz: 0.0, ball: 1.0 },
     // Kartoffel-Beilagen
-    { name: 'Kartoffel',            kcal: 77,  fett: 0.1, ges: 0.0, kh: 17.0, zucker: 0.8, eiweiss: 2.0,  salz: 0.0, ball: 2.2 },
+    { name: 'Härdöpfel',            kcal: 77,  fett: 0.1, ges: 0.0, kh: 17.0, zucker: 0.8, eiweiss: 2.0,  salz: 0.0, ball: 2.2 },
     { name: 'Rösti FixFertig',      kcal: 110, fett: 5.0, ges: 0.5, kh: 13,   zucker: 0.0, eiweiss: 2.0,  salz: 0.88, ball: 2.0, gm: 250 },
     { name: 'Berner Rösti',         kcal: 107, fett: 5.0, ges: 1.5, kh: 11,   zucker: 0.5, eiweiss: 3.5,  salz: 1.2,  ball: 2.0, gm: 250 },
     { name: 'McCain Pommes Frites', kcal: 158, fett: 5.0, ges: 0.5, kh: 24,   zucker: 0.5, eiweiss: 2.9,  salz: 0.03, ball: 2.8, gm: 750 },
     { name: 'Pommes Duchesse',      kcal: 165, fett: 8.0, ges: 0.7, kh: 18,   zucker: 1.5, eiweiss: 4.5,  salz: 0.98, ball: 1.5, gm: 600 },
-    { name: 'Kartoffelsalat',       kcal: 160, fett: 10.0, ges: 1.5, kh: 14,  zucker: 1.5, eiweiss: 3.0,  salz: 1.0,  ball: 1.5 },
+    { name: 'Stocki',                 kcal: 83,  fett: 3.0, ges: 1.8, kh: 11.0, zucker: 1.0, eiweiss: 2.0,  salz: 0.6,  ball: 1.5 },
+    { name: 'Härdöpfelsalat',       kcal: 160, fett: 10.0, ges: 1.5, kh: 14,  zucker: 1.5, eiweiss: 3.0,  salz: 1.0,  ball: 1.5 },
     // Frühstück
     { name: 'Haferflocken (zart)', kcal: 367, fett: 7.0, ges: 1.3, kh: 59.0, zucker: 1.1, eiweiss: 13.0, salz: 0.0, ball: 10.0 },
     { name: 'Granola Crunchy',     kcal: 430, fett: 15.0, ges: 2.0, kh: 62.0, zucker: 20.0, eiweiss: 8.0, salz: 0.1, ball: 5.0 },
@@ -154,7 +156,7 @@ const BROT_DB = [
 // ===== Fleisch-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
 const FLEISCH_DB = [
     // Rind
-    { name: 'Rindsgehackets',                     kcal: 195, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 0.1, ball: 0.0 },
+    { name: 'Rindsghackets',                     kcal: 195, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 0.1, ball: 0.0 },
     { name: 'Rind mager (Filet/Huft/Nierstück)',  kcal: 118, fett: 3.5,  ges: 1.3, kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.1, ball: 0.0 },
     { name: 'Rind marmoriert (Entrecôte/Ribeye)', kcal: 212, fett: 14.0, ges: 5.8, kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.1, ball: 0.0 },
     // Schwein
@@ -170,6 +172,7 @@ const FLEISCH_DB = [
     { name: 'Speckwürfel',                        kcal: 330, fett: 28.0, ges: 10.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 2.0,  ball: 0.0 },
     { name: 'Bratspeck',                          kcal: 370, fett: 33.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
     { name: 'Wienerli',                           kcal: 230, fett: 18.0, ges: 7.0,  kh: 1.0, zucker: 0.5, eiweiss: 14.0, salz: 2.0,  ball: 0.0, gm: 50  },
+    { name: 'Schinkewürfeli',                     kcal: 118, fett: 4.0,  ges: 1.5,  kh: 1.0, zucker: 0.5, eiweiss: 19.0, salz: 2.5,  ball: 0.0 },
     // Gescannte Produkte
     { name: 'Citterio Salami Milano',             kcal: 383, fett: 31.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 26.0, salz: 4.03, ball: 0.0 },
     { name: 'Naturafarm Bündnerfleisch',          kcal: 216, fett: 5.0,  ges: 2.2,  kh: 0.8, zucker: 0.8, eiweiss: 43.0, salz: 5.2,  ball: 0.0 },
@@ -187,7 +190,6 @@ const FLEISCH_DB = [
     { name: 'Dino Ribs (Beef Short Ribs)',        kcal: 280, fett: 21.0, ges: 9.0,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.3,  ball: 0.0 },
     { name: 'Smoked Pork Ribs',                   kcal: 260, fett: 19.0, ges: 7.5,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.5,  ball: 0.0 },
     { name: 'Poulet Flügeli',                     kcal: 190, fett: 12.0, ges: 3.5,  kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.2,  ball: 0.0 },
-    { name: 'Halloumi (Grillkäse)',               kcal: 320, fett: 25.0, ges: 16.0, kh: 2.0, zucker: 1.0, eiweiss: 22.0, salz: 2.5,  ball: 0.0, gm: 200 },
 ];
 
 // ===== Getränke-Datenbank (pro 100ml, mit Gesamtmenge) =====
@@ -330,30 +332,56 @@ const PORTION_DB = [
 ];
 
 // ===== Menü-Vorlagen (werden beim Start eingefügt wenn Name noch nicht existiert) =====
-const VORLAGEN_DB = [
+const MENU_DB = [
     {
         Name: "Hörnli & Ghackets",
         Positionen: [
             { Lebensmittel: 'Hörnli (roh)',   Einheit: 'g', Menge: 100, Kcal: 370, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 74, Zucker: 3,  Eiweiss: 13,  Salz: 0.1, Ballaststoffe: 3   },
-            { Lebensmittel: 'Rindsgehackets', Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0,  Zucker: 0,  Eiweiss: 17,  Salz: 0.1, Ballaststoffe: 0   },
-            { Lebensmittel: 'Apfelmus',        Einheit: 'g', Menge: 40,  Kcal: 68,  Fett: 0.1,  Gesaettigt: 0,   Kohlenhydrate: 16, Zucker: 13, Eiweiss: 0.3, Salz: 0,   Ballaststoffe: 1.5 },
+            { Lebensmittel: 'Rindsghackets',  Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0,  Zucker: 0,  Eiweiss: 17,  Salz: 0.1, Ballaststoffe: 0   },
+            { Lebensmittel: 'Apfelmus',       Einheit: 'g', Menge: 40,  Kcal: 68,  Fett: 0.1,  Gesaettigt: 0,   Kohlenhydrate: 16, Zucker: 13, Eiweiss: 0.3, Salz: 0,   Ballaststoffe: 1.5 },
         ]
     },
     {
         Name: "Spaghetti Bolognese",
         Positionen: [
             { Lebensmittel: 'Spaghetti (roh)', Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5, Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
-            { Lebensmittel: 'Rindsgehackets',  Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Rindsghackets',   Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Tomate',          Einheit: 'g', Menge: 150, Kcal: 18,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
             { Lebensmittel: 'Zwiebel',         Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
             { Lebensmittel: 'Knoblauch',       Einheit: 'g', Menge: 10,  Kcal: 149, Fett: 0.5,  Gesaettigt: 0.1, Kohlenhydrate: 33.0, Zucker: 1.0, Eiweiss: 6.4,  Salz: 0.0, Ballaststoffe: 2.1 },
         ]
     },
     {
+        Name: "Gschnätzelts mit Stocki",
+        Positionen: [
+            { Lebensmittel: 'Pouletgschnätzelts',   Einheit: 'g', Menge: 180, Kcal: 203, Fett: 9.0,  Gesaettigt: 2.5, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 30.0, Salz: 0.3, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Stocki',               Einheit: 'g', Menge: 250, Kcal: 83,  Fett: 3.0,  Gesaettigt: 1.8, Kohlenhydrate: 11.0, Zucker: 1.0, Eiweiss: 2.0,  Salz: 0.6, Ballaststoffe: 1.5 },
+            { Lebensmittel: 'Bratensauce',          Einheit: 'g', Menge: 80,  Kcal: 25,  Fett: 0.8,  Gesaettigt: 0.3, Kohlenhydrate: 3.5,  Zucker: 0.5, Eiweiss: 0.5,  Salz: 1.0, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Rüebli',               Einheit: 'g', Menge: 150, Kcal: 41,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 10.0, Zucker: 5.0, Eiweiss: 0.9,  Salz: 0.1, Ballaststoffe: 2.8 },
+        ]
+    },
+    {
+        Name: "Icebergsalat mit Toppings",
+        Positionen: [
+            { Lebensmittel: 'Icebergsalat',     Einheit: 'g', Menge: 150, Kcal: 13,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 2.2,  Zucker: 1.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Cherrytomaten',    Einheit: 'g', Menge: 100, Kcal: 20,  Fett: 0.3,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Pouletgschnätzelts', Einheit: 'g', Menge: 120, Kcal: 203, Fett: 9.0, Gesaettigt: 2.5, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 30.0, Salz: 0.3, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Emmentaler',       Einheit: 'g', Menge: 40,  Kcal: 380, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.5, Zucker: 0.5, Eiweiss: 28.0, Salz: 0.9, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: "Fischstäbli mit Spinat",
+        Positionen: [
+            { Lebensmittel: 'Pelican Fischstäbchen',    Einheit: 'g', Menge: 150, Kcal: 214, Fett: 8.9,  Gesaettigt: 0.7, Kohlenhydrate: 19.0, Zucker: 0.5, Eiweiss: 14.0, Salz: 0.59, Ballaststoffe: 0.8 },
+            { Lebensmittel: "Farmer's Best Rahmspinat", Einheit: 'g', Menge: 200, Kcal: 77, Fett: 5.0, Gesaettigt: 1.1, Kohlenhydrate: 4.1, Zucker: 1.8, Eiweiss: 3.1, Salz: 1.0, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Härdöpfel',                Einheit: 'g', Menge: 250, Kcal: 77,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 17.0, Zucker: 0.8, Eiweiss: 2.0,  Salz: 0.0, Ballaststoffe: 2.2 },
+        ]
+    },
+    {
         Name: "Buure z'Morge",
         Positionen: [
-            { Lebensmittel: 'Eier 63+',           Einheit: 'g', Menge: 4,   Kcal: 95,  Fett: 7,    Gesaettigt: 2,   Kohlenhydrate: 0.5, Zucker: 0, Eiweiss: 8,  Salz: 0.2,  Ballaststoffe: 0 },
-            { Lebensmittel: 'Rösti FixFertig',     Einheit: 'g', Menge: 125, Kcal: 110, Fett: 5,    Gesaettigt: 0.5, Kohlenhydrate: 13,  Zucker: 0, Eiweiss: 2,  Salz: 0.88, Ballaststoffe: 2 },
+            { Lebensmittel: 'Eier 63+',             Einheit: 'g', Menge: 4,   Kcal: 95,  Fett: 7,    Gesaettigt: 2,   Kohlenhydrate: 0.5, Zucker: 0, Eiweiss: 8,  Salz: 0.2,  Ballaststoffe: 0 },
+            { Lebensmittel: 'Rösti FixFertig',      Einheit: 'g', Menge: 125, Kcal: 110, Fett: 5,    Gesaettigt: 0.5, Kohlenhydrate: 13,  Zucker: 0, Eiweiss: 2,  Salz: 0.88, Ballaststoffe: 2 },
             { Lebensmittel: 'Naturafarm Bratspeck', Einheit: 'g', Menge: 100, Kcal: 345, Fett: 33,   Gesaettigt: 9.9, Kohlenhydrate: 0,   Zucker: 0, Eiweiss: 12, Salz: 1.7,  Ballaststoffe: 0 },
         ]
     },
@@ -365,7 +393,7 @@ const MENU_PAIRINGS = [
     { keywords: ['fischstäbchen', 'fischstaebchen', 'fischstabchen'],
       items: [
         { name: 'Pelican Fischstäbchen', menge: 150 },
-        { name: 'Kartoffel', menge: 200 },
+        { name: 'Härdöpfel', menge: 200 },
         { name: "Farmer's Best Rahmspinat", menge: 200 },
     ]},
     { keywords: ['chicken nuggets', 'nuggets'],
@@ -376,13 +404,13 @@ const MENU_PAIRINGS = [
     { keywords: ['hörnli', 'hoernli', 'ghackets'],
       items: [
         { name: 'Hörnli (roh)', menge: 100 },
-        { name: 'Rindsgehackets', menge: 150 },
+        { name: 'Rindsghackets', menge: 150 },
         { name: 'Apfelmus', menge: 40 },
     ]},
     { keywords: ['spaghetti', 'bolognese'],
       items: [
         { name: 'Spaghetti (roh)', menge: 100 },
-        { name: 'Rindsgehackets', menge: 150 },
+        { name: 'Rindsghackets', menge: 150 },
         { name: 'Tomate', menge: 150 },
         { name: 'Zwiebel', menge: 50 },
     ]},
@@ -428,27 +456,27 @@ const MENU_PAIRINGS = [
       items: [
         { name: 'Hamburger aus Rinderhack', menge: 200 },
         { name: 'McCain Pommes Frites', menge: 200 },
-        { name: 'Eisbergsalat', menge: 50 },
+        { name: 'Icebergsalat', menge: 50 },
     ]},
-    { keywords: ['rindsgeschnetzeltes', 'rind geschnetzeltes'],
+    { keywords: ['rindsgeschnetzeltes', 'rindsgschnätzelts', 'rind geschnetzeltes'],
       items: [
         { name: 'Rind mager (Filet/Huft/Nierstück)', menge: 200 },
         { name: 'Spätzli (roh)', menge: 120 },
         { name: 'Lauch', menge: 100 },
     ]},
-    { keywords: ['schweinsgeschnetzeltes', 'schwein geschnetzeltes'],
+    { keywords: ['schweinsgeschnetzeltes', 'schweinsgschnätzelts', 'schwein geschnetzeltes'],
       items: [
         { name: 'Schwein mager (Filet/Nierstück)', menge: 200 },
         { name: 'Spätzli (roh)', menge: 120 },
         { name: 'Lauch', menge: 100 },
     ]},
-    { keywords: ['pouletgeschnetzeltes', 'poulet geschnetzeltes'],
+    { keywords: ['pouletgeschnetzeltes', 'pouletgschnätzelts', 'poulet geschnetzeltes'],
       items: [
         { name: 'Poulet Brust (ohne Haut)', menge: 200 },
         { name: 'Spätzli (roh)', menge: 120 },
         { name: 'Lauch', menge: 100 },
     ]},
-    { keywords: ['geschnetzeltes', 'geschnetzelte'],
+    { keywords: ['geschnetzeltes', 'gschnätzelts', 'geschnetzelte'],
       items: [
         { name: 'Rind mager (Filet/Huft/Nierstück)', menge: 200 },
         { name: 'Spätzli (roh)', menge: 120 },
@@ -463,7 +491,7 @@ const MENU_PAIRINGS = [
     { keywords: ['lasagne'],
       items: [
         { name: 'Lasagneplatten (roh)', menge: 100 },
-        { name: 'Rindsgehackets', menge: 150 },
+        { name: 'Rindsghackets', menge: 150 },
         { name: 'Tomate', menge: 100 },
         { name: 'Mozzarella', menge: 50 },
     ]},
@@ -490,7 +518,7 @@ const MENU_PAIRINGS = [
       items: [
         { name: 'Pulled Pork', menge: 200 },
         { name: 'BBQ Sauce', menge: 30 },
-        { name: 'Eisbergsalat', menge: 50 },
+        { name: 'Icebergsalat', menge: 50 },
     ]},
     { keywords: ['brisket'],
       items: [
@@ -522,7 +550,7 @@ const MENU_PAIRINGS = [
     { keywords: ['raclette'],
       items: [
         { name: 'Raclette', menge: 150 },
-        { name: 'Kartoffel', menge: 200 },
+        { name: 'Härdöpfel', menge: 200 },
     ]},
     { keywords: ['fondue', 'käsefondue'],
       items: [
@@ -532,7 +560,7 @@ const MENU_PAIRINGS = [
     { keywords: ['wienerli'],
       items: [
         { name: 'Wienerli', menge: 150 },
-        { name: 'Kartoffelsalat', menge: 200 },
+        { name: 'Härdöpfelsalat', menge: 200 },
     ]},
     { keywords: ['grillieren', 'grillen', 'bbq'],
       items: [
@@ -838,7 +866,7 @@ async function loadInitialData() {
 
     // Menü-Vorlagen: fehlende Einträge nachfügen
     let vorlagenAdded = false;
-    VORLAGEN_DB.forEach(v => {
+    MENU_DB.forEach(v => {
         if (!templates.find(t => t.Name === v.Name)) {
             templates.push(v);
             vorlagenAdded = true;
@@ -1837,6 +1865,9 @@ function updateDailyCircles() {
         ['zucker', totals.zucker, GOALS.zucker]
     ];
 
+    const kcalTotal = $('daily-kcal-total');
+    if (kcalTotal) kcalTotal.textContent = '— ' + Math.round(totals.kcal) + ' / ' + GOALS.kcal + ' kcal';
+
     items.forEach(([id, current, goal]) => {
         const pct = goal > 0 ? Math.round((current / goal) * 100) : 0;
         const ratio = Math.min(current / goal, 1);
@@ -2452,7 +2483,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (beilage) items.push({ name: beilage.Lebensmittel, menge: 80 });
         } else if (cat === 'Dairy') {
             // Milchprodukt (Käse) → Beilage
-            const beilage = db.find(d => d.Kategorie === 'Beilagen' && d.Lebensmittel.includes('Kartoffel'));
+            const beilage = db.find(d => d.Kategorie === 'Beilagen' && d.Lebensmittel.includes('Härdöpfel'));
             if (beilage) items.push({ name: beilage.Lebensmittel, menge: 200 });
         } else if (cat === 'Bread') {
             // Brot → Käse + Fleisch
