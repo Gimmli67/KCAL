@@ -1,24 +1,24 @@
 [
   {
-    "name": "SwissTPH Eiersalat Sandwich",
-    "kategorie": "Food",
-    "einheit": "g",
-    "gesamtmenge": 120,
-    "kcal": 258,
-    "eiweiss": 8.2,
-    "kohlenhydrate": 24.6,
-    "fett": 12.6,
-    "zucker": 1.5
+    "Lebensmittel": "SwissTPH Eiersalat Sandwich",
+    "Kategorie": "Food",
+    "Einheit": "g",
+    "Gesamtmenge": 120,
+    "Kcal": 258,
+    "Eiweiss": 8.2,
+    "Kohlenhydrate": 24.6,
+    "Fett": 12.6,
+    "Zucker": 1.5
   },
   {
-    "name": "SwissTPH Schinken-Sandwich",
-    "kategorie": "Food",
-    "einheit": "g",
-    "gesamtmenge": 120,
-    "kcal": 201,
-    "eiweiss": 15.6,
-    "kohlenhydrate": 23.5,
-    "fett": 4.5,
-    "zucker": 2.6
+    "Lebensmittel": "SwissTPH Schinken-Sandwich",
+    "Kategorie": "Food",
+    "Einheit": "g",
+    "Gesamtmenge": 120,
+    "Kcal": 201,
+    "Eiweiss": 15.6,
+    "Kohlenhydrate": 23.5,
+    "Fett": 4.5,
+    "Zucker": 2.6
   }
 ]

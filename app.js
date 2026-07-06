@@ -275,6 +275,10 @@ const DESSERT_DB_PORTION = [
 
 // ===== Fertigprodukte (pro 100g) =====
 const FERTIGPRODUKTE_DB = [
+    // SwissTPH
+    { name: 'SwissTPH Eiersalat Sandwich',       kcal: 258, fett: 12.6, ges: 2.5, kh: 24.6, zucker: 1.5, eiweiss: 8.2,  salz: 1.0, ball: 1.0, gm: 120 },
+    { name: 'SwissTPH Schinken-Sandwich',        kcal: 201, fett: 4.5,  ges: 1.5, kh: 23.5, zucker: 2.6, eiweiss: 15.6, salz: 1.2, ball: 1.5, gm: 120 },
+    { name: 'SwissTPH Premium Butter-Brezel',    kcal: 380, fett: 18.0, ges: 8.0, kh: 45.0, zucker: 1.3, eiweiss: 6.0,  salz: 1.3, ball: 0.0, gm: 72  },
     { name: 'Apfelmus',              kcal: 68,  fett: 0.1,  ges: 0.0, kh: 16,  zucker: 13.0, eiweiss: 0.3,  salz: 0.0,  ball: 1.5, gm: null },
     { name: 'Findus Chicken Nuggets', kcal: 253, fett: 11.0, ges: 1.5, kh: 25,  zucker: 0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
     { name: 'Curry Balls',            kcal: 193, fett: 9.0,  ges: 2.0, kh: 14,  zucker: 2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
