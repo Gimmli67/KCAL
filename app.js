@@ -109,7 +109,7 @@ const MILCH_DB = [
     { name: 'Hüttenkäse',            kcal: 85,  fett: 3.5,  ges: 2.0,  kh: 3.0, zucker: 3.0, eiweiss: 10.0, salz: 0.5, ball: 0.0 },
     // Käse
     { name: 'Gruyère',               kcal: 413, fett: 32.0, ges: 20.0, kh: 0.1, zucker: 0.1, eiweiss: 29.0, salz: 1.5, ball: 0.0 },
-    { name: 'Emmentaler',            kcal: 380, fett: 29.0, ges: 18.0, kh: 0.5, zucker: 0.5, eiweiss: 28.0, salz: 0.9, ball: 0.0 },
+    { name: 'Emmenthaler',            kcal: 380, fett: 29.0, ges: 18.0, kh: 0.5, zucker: 0.5, eiweiss: 28.0, salz: 0.9, ball: 0.0 },
     { name: 'Raclette',              kcal: 335, fett: 26.0, ges: 17.0, kh: 0.5, zucker: 0.5, eiweiss: 24.0, salz: 1.2, ball: 0.0 },
     { name: 'Mozzarella',            kcal: 250, fett: 19.0, ges: 12.0, kh: 1.0, zucker: 1.0, eiweiss: 18.0, salz: 0.6, ball: 0.0 },
     { name: 'Parmesan',              kcal: 431, fett: 29.0, ges: 18.0, kh: 0.0, zucker: 0.0, eiweiss: 38.0, salz: 1.8, ball: 0.0 },
@@ -282,6 +282,10 @@ const FERTIGPRODUKTE_DB = [
     { name: "Farmer's Best Rahmspinat", kcal:  77, fett: 5.0, ges: 1.1, kh:  4.1, zucker: 1.8, eiweiss:  3.1, salz: 1.0,  ball: 0.0, gm: 600 },
     { name: 'Thon in Wasser (Dose)',    kcal: 109, fett: 0.8, ges: 0.2, kh:  0.0, zucker: 0.0, eiweiss: 25.0, salz: 0.4,  ball: 0.0, gm: 130 },
     { name: 'Thon in Öl (Dose)',        kcal: 198, fett: 10.0, ges: 1.5, kh: 0.0, zucker: 0.0, eiweiss: 27.0, salz: 0.5,  ball: 0.0, gm: 130 },
+    // Tex-Mex
+    { name: 'Old El Paso Tortilla Pockets', kcal: 300, fett: 7.0,  ges: 3.5, kh: 50.0, zucker: 2.0, eiweiss: 7.0, salz: 1.2, ball: 2.0, gm: 223 },
+    { name: 'Old El Paso Barquitas',        kcal: 320, fett: 9.0,  ges: 4.0, kh: 50.0, zucker: 2.5, eiweiss: 7.5, salz: 1.3, ball: 2.5, gm: 312 },
+    { name: 'Salsa Sauce',                  kcal: 35,  fett: 0.2,  ges: 0.0, kh: 7.0,  zucker: 5.0, eiweiss: 1.0, salz: 1.5, ball: 1.0, gm: null },
     // Saucen
     { name: 'Tomatensauce (Passata)',  kcal: 30,  fett: 0.2,  ges: 0.0, kh: 5.5, zucker: 4.0, eiweiss: 1.2,  salz: 0.5,  ball: 1.5, gm: 500 },
     { name: 'Tomatenmark',            kcal: 82,  fett: 0.5,  ges: 0.1, kh: 16.0, zucker: 12.0, eiweiss: 4.0, salz: 1.5,  ball: 4.0, gm: 140 },
@@ -358,6 +362,7 @@ const MENU_DB = [
             { Lebensmittel: 'Stocki',               Einheit: 'g', Menge: 250, Kcal: 83,  Fett: 3.0,  Gesaettigt: 1.8, Kohlenhydrate: 11.0, Zucker: 1.0, Eiweiss: 2.0,  Salz: 0.6, Ballaststoffe: 1.5 },
             { Lebensmittel: 'Bratensauce',          Einheit: 'g', Menge: 80,  Kcal: 25,  Fett: 0.8,  Gesaettigt: 0.3, Kohlenhydrate: 3.5,  Zucker: 0.5, Eiweiss: 0.5,  Salz: 1.0, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Rüebli',               Einheit: 'g', Menge: 150, Kcal: 41,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 10.0, Zucker: 5.0, Eiweiss: 0.9,  Salz: 0.1, Ballaststoffe: 2.8 },
+            { Lebensmittel: 'Grüne Bohnen (Dose)',   Einheit: 'g', Menge: 150, Kcal: 22,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 3.2,  Zucker: 1.0, Eiweiss: 1.5,  Salz: 0.5, Ballaststoffe: 2.5 },
         ]
     },
     {
@@ -366,7 +371,7 @@ const MENU_DB = [
             { Lebensmittel: 'Icebergsalat',     Einheit: 'g', Menge: 150, Kcal: 13,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 2.2,  Zucker: 1.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
             { Lebensmittel: 'Cherrytomaten',    Einheit: 'g', Menge: 100, Kcal: 20,  Fett: 0.3,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
             { Lebensmittel: 'Pouletgschnätzelts', Einheit: 'g', Menge: 120, Kcal: 203, Fett: 9.0, Gesaettigt: 2.5, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 30.0, Salz: 0.3, Ballaststoffe: 0.0 },
-            { Lebensmittel: 'Emmentaler',       Einheit: 'g', Menge: 40,  Kcal: 380, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.5, Zucker: 0.5, Eiweiss: 28.0, Salz: 0.9, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Emmenthaler',       Einheit: 'g', Menge: 40,  Kcal: 380, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.5, Zucker: 0.5, Eiweiss: 28.0, Salz: 0.9, Ballaststoffe: 0.0 },
         ]
     },
     {
@@ -383,6 +388,55 @@ const MENU_DB = [
             { Lebensmittel: 'Eier 63+',             Einheit: 'g', Menge: 4,   Kcal: 95,  Fett: 7,    Gesaettigt: 2,   Kohlenhydrate: 0.5, Zucker: 0, Eiweiss: 8,  Salz: 0.2,  Ballaststoffe: 0 },
             { Lebensmittel: 'Rösti FixFertig',      Einheit: 'g', Menge: 125, Kcal: 110, Fett: 5,    Gesaettigt: 0.5, Kohlenhydrate: 13,  Zucker: 0, Eiweiss: 2,  Salz: 0.88, Ballaststoffe: 2 },
             { Lebensmittel: 'Naturafarm Bratspeck', Einheit: 'g', Menge: 100, Kcal: 345, Fett: 33,   Gesaettigt: 9.9, Kohlenhydrate: 0,   Zucker: 0, Eiweiss: 12, Salz: 1.7,  Ballaststoffe: 0 },
+        ]
+    },
+    {
+        Name: "Reis mit Ghackets & Gemüse",
+        Positionen: [
+            { Lebensmittel: 'Weisser Reis (roh)',  Einheit: 'g', Menge: 80,  Kcal: 350, Fett: 0.6,  Gesaettigt: 0.2, Kohlenhydrate: 78.0, Zucker: 0.0, Eiweiss: 7.0,  Salz: 0.0, Ballaststoffe: 1.3 },
+            { Lebensmittel: 'Rindsghackets',       Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Rüebli',              Einheit: 'g', Menge: 100, Kcal: 41,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 10.0, Zucker: 5.0, Eiweiss: 0.9,  Salz: 0.1, Ballaststoffe: 2.8 },
+            { Lebensmittel: 'Lauch',               Einheit: 'g', Menge: 100, Kcal: 31,  Fett: 0.3,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.3, Eiweiss: 1.5,  Salz: 0.0, Ballaststoffe: 1.8 },
+        ]
+    },
+    {
+        Name: "Riz Casimir (ohne Früchte)",
+        Positionen: [
+            { Lebensmittel: 'Pouletgschnätzelts',        Einheit: 'g', Menge: 180, Kcal: 203, Fett: 9.0,  Gesaettigt: 2.5, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 30.0, Salz: 0.3, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Weisser Reis (roh)',        Einheit: 'g', Menge: 80,  Kcal: 350, Fett: 0.6,  Gesaettigt: 0.2, Kohlenhydrate: 78.0, Zucker: 0.0, Eiweiss: 7.0,  Salz: 0.0, Ballaststoffe: 1.3 },
+            { Lebensmittel: 'Currysauce',                Einheit: 'g', Menge: 100, Kcal: 80,  Fett: 5.0,  Gesaettigt: 2.5, Kohlenhydrate: 6.0,  Zucker: 2.0, Eiweiss: 1.5,  Salz: 1.0, Ballaststoffe: 0.5 },
+        ]
+    },
+    {
+        Name: "Tacos",
+        Positionen: [
+            { Lebensmittel: 'Old El Paso',                  Einheit: 'g', Menge: 140, Kcal: 310, Fett: 8.0,  Gesaettigt: 3.8, Kohlenhydrate: 50.0, Zucker: 2.3, Eiweiss: 7.3,  Salz: 1.3, Ballaststoffe: 2.3 },
+            { Lebensmittel: 'Rindsghackets',                Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Mais',                         Einheit: 'g', Menge: 80,  Kcal: 86,  Fett: 1.2,  Gesaettigt: 0.2, Kohlenhydrate: 19.0, Zucker: 3.2, Eiweiss: 3.2,  Salz: 0.0, Ballaststoffe: 2.7 },
+            { Lebensmittel: 'Zwiebel',                      Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
+        ]
+    },
+    {
+        Name: "Chicken Nuggets mit Pommes",
+        Positionen: [
+            { Lebensmittel: 'Findus Chicken Nuggets', Einheit: 'g', Menge: 250, Kcal: 253, Fett: 11.0, Gesaettigt: 1.5, Kohlenhydrate: 25.0, Zucker: 0.6, Eiweiss: 13.0, Salz: 1.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'McCain Pommes Frites',   Einheit: 'g', Menge: 200, Kcal: 158, Fett: 5.0,  Gesaettigt: 0.5, Kohlenhydrate: 24.0, Zucker: 0.5, Eiweiss: 2.9,  Salz: 0.03, Ballaststoffe: 2.8 },
+        ]
+    },
+    {
+        Name: "Thon-Salat",
+        Positionen: [
+            { Lebensmittel: 'Thon in Wasser (Dose)', Einheit: 'g', Menge: 130, Kcal: 109, Fett: 0.8,  Gesaettigt: 0.2, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 25.0, Salz: 0.4, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Icebergsalat',           Einheit: 'g', Menge: 150, Kcal: 13,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 2.2,  Zucker: 1.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Tomate',                 Einheit: 'g', Menge: 100, Kcal: 18,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+        ]
+    },
+    {
+        Name: "Fleischkäse mit Spiegelei",
+        Positionen: [
+            { Lebensmittel: 'Malbuner Fleischkäse',   Einheit: 'g', Menge: 150, Kcal: 202, Fett: 16.0, Gesaettigt: 6.0, Kohlenhydrate: 0.8,  Zucker: 0.5, Eiweiss: 14.0, Salz: 1.8, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Spiegelei (1 Stk)',      Einheit: 'g', Menge: 2,   Kcal: 80,  Fett: 6.5,  Gesaettigt: 1.8, Kohlenhydrate: 0.3,  Zucker: 0.0, Eiweiss: 5.2,  Salz: 0.1, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Rösti FixFertig',        Einheit: 'g', Menge: 250, Kcal: 110, Fett: 5.0,  Gesaettigt: 0.5, Kohlenhydrate: 13.0, Zucker: 0.0, Eiweiss: 2.0,  Salz: 0.88, Ballaststoffe: 2.0 },
         ]
     },
 ];

@@ -40,6 +40,9 @@ Einfache 3-Datei-Struktur unter `WebBased/`:
 - Bei Food: "For me" bleibt leer (Portion muss manuell eingegeben werden)
 - Anzeige-Format in Dropdowns: `Energy Milk Vanilla (ml) - 84 kcal | 330ml`
 
+## Menus - Regeln
+- Saucen (jeglicher Art), Oel und Essig werden in Menus NICHT mitgezaehlt/aufgefuehrt
+
 ## Wichtige Regeln
 - **JS-Crashes vermeiden**: Wenn HTML-Elemente entfernt werden, MUESSEN alle JS-Referenzen abgesichert werden (`if (!el) return`), da ein Fehler in DOMContentLoaded die ganze App crasht.
 - **Keine doppelten `const`** im gleichen Block - verschiedene Variablennamen verwenden (z.B. `saveResult` statt `result`).
