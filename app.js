@@ -173,16 +173,26 @@ const FLEISCH_DB = [
     { name: 'Bratspeck',                          kcal: 370, fett: 33.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
     { name: 'Wienerli',                           kcal: 230, fett: 18.0, ges: 7.0,  kh: 1.0, zucker: 0.5, eiweiss: 14.0, salz: 2.0,  ball: 0.0, gm: 50  },
     { name: 'Schinkewürfeli',                     kcal: 118, fett: 4.0,  ges: 1.5,  kh: 1.0, zucker: 0.5, eiweiss: 19.0, salz: 2.5,  ball: 0.0 },
-    // Gescannte Produkte
-    { name: 'Citterio Salami Milano',             kcal: 383, fett: 31.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 26.0, salz: 4.03, ball: 0.0 },
-    { name: 'Naturafarm Bündnerfleisch',          kcal: 216, fett: 5.0,  ges: 2.2,  kh: 0.8, zucker: 0.8, eiweiss: 43.0, salz: 5.2,  ball: 0.0 },
-    { name: 'Naturafarm Bratspeck',               kcal: 345, fett: 33.0, ges: 9.9,  kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 1.7,  ball: 0.0 },
-    { name: 'Naturafarm Toastschinken',           kcal: 105, fett: 4.0,  ges: 1.5,  kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
-    { name: 'Naturafarm Poulet Lyoner',           kcal: 166, fett: 13.0, ges: 2.5,  kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 2.1,  ball: 0.0 },
+    { name: 'Bündnerfleisch',                      kcal: 216, fett: 5.0,  ges: 2.2,  kh: 0.8, zucker: 0.8, eiweiss: 43.0, salz: 5.2,  ball: 0.0 },
+    { name: 'Mostbröckli',                         kcal: 170, fett: 3.0,  ges: 1.2,  kh: 1.0, zucker: 0.5, eiweiss: 35.0, salz: 4.5,  ball: 0.0 },
+    { name: 'Salsiz',                              kcal: 400, fett: 32.0, ges: 12.0, kh: 1.0, zucker: 0.5, eiweiss: 28.0, salz: 4.0,  ball: 0.0 },
+    { name: 'Landjäger',                           kcal: 380, fett: 30.0, ges: 11.0, kh: 1.0, zucker: 0.5, eiweiss: 25.0, salz: 3.8,  ball: 0.0 },
+    { name: 'Bündner Rohschinken',                 kcal: 200, fett: 8.0,  ges: 3.0,  kh: 0.0, zucker: 0.0, eiweiss: 32.0, salz: 5.0,  ball: 0.0 },
+    { name: 'Walliser Trockenfleisch',             kcal: 210, fett: 5.0,  ges: 2.0,  kh: 0.5, zucker: 0.5, eiweiss: 42.0, salz: 5.0,  ball: 0.0 },
+    { name: 'Appenzeller Pantli',                  kcal: 250, fett: 12.0, ges: 4.5,  kh: 0.5, zucker: 0.0, eiweiss: 35.0, salz: 4.5,  ball: 0.0 },
+    { name: 'Coppa',                               kcal: 250, fett: 16.0, ges: 6.0,  kh: 0.0, zucker: 0.0, eiweiss: 28.0, salz: 4.0,  ball: 0.0 },
+    { name: 'Bresaola',                            kcal: 150, fett: 2.5,  ges: 1.0,  kh: 0.5, zucker: 0.0, eiweiss: 32.0, salz: 3.8,  ball: 0.0 },
+    { name: 'Kochschinken',                        kcal: 107, fett: 3.0,  ges: 1.0,  kh: 1.0, zucker: 0.5, eiweiss: 18.0, salz: 2.3,  ball: 0.0 },
+    { name: 'Hinterschinken (geräuchert)',         kcal: 125, fett: 4.5,  ges: 1.7,  kh: 0.5, zucker: 0.0, eiweiss: 20.0, salz: 2.5,  ball: 0.0 },
+    { name: 'Pouletbrust-Aufschnitt',              kcal: 100, fett: 1.5,  ges: 0.4,  kh: 1.0, zucker: 0.5, eiweiss: 20.0, salz: 2.0,  ball: 0.0 },
+    { name: 'Truthahn-Aufschnitt',                 kcal: 105, fett: 1.5,  ges: 0.4,  kh: 1.0, zucker: 0.5, eiweiss: 21.0, salz: 2.0,  ball: 0.0 },
+    { name: 'Lyoner (Schwein)',                    kcal: 280, fett: 24.0, ges: 9.0,  kh: 1.0, zucker: 0.5, eiweiss: 12.0, salz: 2.0,  ball: 0.0 },
+    { name: 'Poulet Lyoner',                       kcal: 166, fett: 13.0, ges: 2.5,  kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 2.1,  ball: 0.0 },
+    { name: 'Bierschinken',                        kcal: 190, fett: 14.0, ges: 5.0,  kh: 1.0, zucker: 0.5, eiweiss: 13.0, salz: 2.0,  ball: 0.0 },
+    { name: 'Salami Milano',                      kcal: 383, fett: 31.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 26.0, salz: 4.03, ball: 0.0 },
+    { name: 'Toastschinken',                      kcal: 105, fett: 4.0,  ges: 1.5,  kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
+    { name: 'Fleischkäse',                        kcal: 270, fett: 24.0, ges: 10.0, kh: 0.5, zucker: 0.5, eiweiss: 13.0, salz: 1.8,  ball: 0.0 },
     { name: 'Hamburger aus Rinderhack',           kcal: 230, fett: 15.0, ges: 6.0,  kh: 0.5, zucker: 0.0, eiweiss: 18.0, salz: 1.0,  ball: 0.0 },
-    { name: 'Naturafarm Fleischkäse',             kcal: 336, fett: 32.0, ges: 13.0, kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 1.8,  ball: 0.0 },
-    { name: 'Malbuner Fleischkäse',               kcal: 202, fett: 16.0, ges: 6.0,  kh: 0.8, zucker: 0.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0 },
-    { name: 'Würstli Appenzell',                  kcal: 517, fett: 46.0, ges: 0.0,  kh: 0.7, zucker: 0.0, eiweiss: 25.0, salz: 4.0,  ball: 0.0 },
     // Grill & Smoker
     { name: 'Spareribs (Schwein)',                kcal: 250, fett: 18.0, ges: 7.0,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.2,  ball: 0.0 },
     { name: 'Pulled Pork',                        kcal: 210, fett: 12.0, ges: 4.5,  kh: 0.0, zucker: 0.0, eiweiss: 25.0, salz: 0.8,  ball: 0.0 },
@@ -190,6 +200,7 @@ const FLEISCH_DB = [
     { name: 'Dino Ribs (Beef Short Ribs)',        kcal: 280, fett: 21.0, ges: 9.0,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.3,  ball: 0.0 },
     { name: 'Smoked Pork Ribs',                   kcal: 260, fett: 19.0, ges: 7.5,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.5,  ball: 0.0 },
     { name: 'Poulet Flügeli',                     kcal: 190, fett: 12.0, ges: 3.5,  kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.2,  ball: 0.0 },
+    { name: 'Roastbeef (Entrecôte)',              kcal: 212, fett: 14.0, ges: 5.8,  kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.3,  ball: 0.0 },
 ];
 
 // ===== Getränke-Datenbank (pro 100ml, mit Gesamtmenge) =====
@@ -226,7 +237,6 @@ const SNACKS_DB = [
     { name: 'Popcorn (süss)',            kcal: 420, fett: 15.0, ges: 2.0,  kh: 62.0, zucker: 25.0, eiweiss: 7.0,  salz: 1.0,  ball: 10.0, gm: 100 },
     { name: 'Popcorn (salzig)',          kcal: 380, fett: 12.0, ges: 1.5,  kh: 58.0, zucker: 1.0,  eiweiss: 8.0,  salz: 2.5,  ball: 10.0, gm: 100 },
     { name: 'Erdnüsse (gesalzen)',       kcal: 600, fett: 50.0, ges: 7.0,  kh: 12.0, zucker: 4.0,  eiweiss: 26.0, salz: 1.2,  ball: 8.0, gm: 200 },
-
 ];
 
 // ===== Süsses-Datenbank =====
@@ -279,10 +289,10 @@ const FERTIGPRODUKTE_DB = [
     { name: 'SwissTPH Eiersalat Sandwich',       kcal: 258, fett: 12.6, ges: 2.5, kh: 24.6, zucker: 1.5, eiweiss: 8.2,  salz: 1.0, ball: 1.0, gm: 120 },
     { name: 'SwissTPH Schinken-Sandwich',        kcal: 201, fett: 4.5,  ges: 1.5, kh: 23.5, zucker: 2.6, eiweiss: 15.6, salz: 1.2, ball: 1.5, gm: 120 },
     { name: 'SwissTPH Premium Butter-Brezel',    kcal: 380, fett: 18.0, ges: 8.0, kh: 45.0, zucker: 1.3, eiweiss: 6.0,  salz: 1.3, ball: 0.0, gm: 72  },
-    { name: 'Apfelmus',              kcal: 68,  fett: 0.1,  ges: 0.0, kh: 16,  zucker: 13.0, eiweiss: 0.3,  salz: 0.0,  ball: 1.5, gm: null },
-    { name: 'Findus Chicken Nuggets', kcal: 253, fett: 11.0, ges: 1.5, kh: 25,  zucker: 0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
-    { name: 'Curry Balls',            kcal: 193, fett: 9.0,  ges: 2.0, kh: 14,  zucker: 2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
-    { name: 'Pelican Fischstäbchen',      kcal: 214, fett: 8.9, ges: 0.7, kh: 19,  zucker: 0.5, eiweiss: 14.0, salz: 0.59, ball: 0.8, gm: 150 },
+    { name: 'Apfelmus',                          kcal: 68,  fett: 0.1,  ges: 0.0, kh: 16,  zucker: 13.0, eiweiss: 0.3,  salz: 0.0,  ball: 1.5, gm: null },
+    { name: 'Findus Chicken Nuggets',            kcal: 253, fett: 11.0, ges: 1.5, kh: 25,  zucker: 0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
+    { name: 'Curry Balls',                       kcal: 193, fett: 9.0,  ges: 2.0, kh: 14,  zucker: 2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
+    { name: 'Pelican Fischstäbchen',             kcal: 214, fett: 8.9, ges: 0.7, kh: 19,  zucker: 0.5, eiweiss: 14.0, salz: 0.59, ball: 0.8, gm: 150 },
     { name: "Farmer's Best Rahmspinat", kcal:  77, fett: 5.0, ges: 1.1, kh:  4.1, zucker: 1.8, eiweiss:  3.1, salz: 1.0,  ball: 0.0, gm: 600 },
     { name: 'Thon in Wasser (Dose)',    kcal: 109, fett: 0.8, ges: 0.2, kh:  0.0, zucker: 0.0, eiweiss: 25.0, salz: 0.4,  ball: 0.0, gm: 130 },
     { name: 'Thon in Öl (Dose)',        kcal: 198, fett: 10.0, ges: 1.5, kh: 0.0, zucker: 0.0, eiweiss: 27.0, salz: 0.5,  ball: 0.0, gm: 130 },
@@ -438,7 +448,7 @@ const MENU_DB = [
     {
         Name: "Fleischkäse mit Spiegelei",
         Positionen: [
-            { Lebensmittel: 'Malbuner Fleischkäse',   Einheit: 'g', Menge: 150, Kcal: 202, Fett: 16.0, Gesaettigt: 6.0, Kohlenhydrate: 0.8,  Zucker: 0.5, Eiweiss: 14.0, Salz: 1.8, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Fleischkäse',             Einheit: 'g', Menge: 150, Kcal: 270, Fett: 24.0, Gesaettigt: 10.0, Kohlenhydrate: 0.5,  Zucker: 0.5, Eiweiss: 13.0, Salz: 1.8, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Spiegelei (1 Stk)',      Einheit: 'g', Menge: 2,   Kcal: 80,  Fett: 6.5,  Gesaettigt: 1.8, Kohlenhydrate: 0.3,  Zucker: 0.0, Eiweiss: 5.2,  Salz: 0.1, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Rösti FixFertig',        Einheit: 'g', Menge: 250, Kcal: 110, Fett: 5.0,  Gesaettigt: 0.5, Kohlenhydrate: 13.0, Zucker: 0.0, Eiweiss: 2.0,  Salz: 0.88, Ballaststoffe: 2.0 },
         ]
@@ -1306,6 +1316,10 @@ function saveScanPreview() {
 
     const exists = db.findIndex(d => d.Lebensmittel === food.Lebensmittel);
     if (exists >= 0) {
+        $('menu-status').textContent = `${name} bereits in DB – nicht überschrieben`;
+        $('food-display').classList.add('hidden');
+        return;
+    } else if (exists >= 0) {
         db[exists] = food;
     } else {
         db.push(food);
