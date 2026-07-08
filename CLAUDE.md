@@ -49,10 +49,13 @@ Einfache 3-Datei-Struktur (Root-Verzeichnis):
 - **JS-Crashes vermeiden**: Wenn HTML-Elemente entfernt werden, MUESSEN alle JS-Referenzen abgesichert werden (`if (!el) return`), da ein Fehler in DOMContentLoaded die ganze App crasht.
 - **Keine doppelten `const`** im gleichen Block - verschiedene Variablennamen verwenden (z.B. `saveResult` statt `result`).
 - **Buttons auf Englisch**, Beschriftungen/Labels duerfen Deutsch sein.
-- **Deployment**: Dateien manuell auf GitHub hochladen (User macht das selbst). Kein Git-Repo lokal.
-- **Commit-Files immer auflisten**: Nach Aenderungen dem User immer sagen, welche Dateien hochgeladen werden muessen.
+- **Deployment**: Git-Repo lokal eingerichtet, verbunden mit `https://github.com/Gimmli67/KCAL`. Kein manuelles Datei-Hochladen mehr noetig - Aenderungen werden direkt committet und (nach Ruecksprache) gepusht.
+- **Nicht im Repo (`.gitignore`)**: `.claude/` (Tool-Konfiguration) und `kcal_rechner.ps1` (altes Desktop-PowerShell-Tool, separat von der Web-App) bleiben rein lokal.
+- **Git nach Installation/PATH-Aenderung**: Ein neu installiertes CLI-Tool (z.B. via winget) wird erst nach komplettem Neustart von VS Code in dessen Terminals erkannt - reicht nicht, nur ein neues Terminal-Tab zu oeffnen.
 - **Browser-Cache**: Bei Tests lokal immer auf Ctrl+Shift+R (Hard Reload) hinweisen. Mobile Edge: Cache leeren ueber Menue → Verlauf → Browserdaten loeschen.
-- **GitHub Pages Deploy**: Nach Upload 1-2 Minuten warten bis neue Version live ist.
+- **GitHub Pages Deploy**: Nach Push 1-2 Minuten warten bis neue Version live ist. Bei Zweifel `app.js` direkt via `https://gimmli67.github.io/KCAL/app.js` pruefen (zeigt ob Deploy durch ist, unabhaengig vom Client-Cache).
 - **Toast-Feedback**: Bei Mahlzeit-Speicherung und AquaTrack-Aktionen wird ein gruener Toast angezeigt (2s).
 - **Statische DB-Arrays**: Neue Produkte in passende Arrays aufnehmen (GEMUESE_DB, FLEISCH_DB, GETRÄNKE_DB, FERTIGPRODUKTE_DB, HOMEMADE_ICE_DB, etc.). Migration fuegt fehlende automatisch hinzu.
-- **Gescannte Produkte**: Landen in localStorage. Periodisch via Backup-JSON in statische DB einpflegen.
+- **Mehrteilige/selbstgekochte Gerichte** (mehrere Zutaten, z.B. Omelette mit Champignons+Schinken+Kraeutern) gehoeren als **Menu** (Speisekarte, aus bestehenden DB-Zutaten zusammengesetzt) angelegt, NICHT als einzelner Portion-DB-Eintrag mit fix verrechneten Werten - so bleiben einzelne Zutaten sichtbar/anpassbar. Einzelne, nicht weiter zerlegbare Fertigprodukte (Riegel, Fertigmahlzeit) duerfen weiterhin als ein DB-Eintrag angelegt werden.
+- **Portion (p) / Fruit (stk) Einheiten**: Werte sind pro 1 Stueck gespeichert, NICHT pro 100 wie bei g/ml. Ueberall wo mit Menge multipliziert wird, `mengenFaktor(einheit, menge)` (app.js) verwenden statt pauschal durch 100 zu teilen - sonst werden Portion/Fruit-Mengen um Faktor 100 falsch berechnet (siehe Bugfix a11c64e).
+- **Gescannte Produkte**: Landen in localStorage (pro Geraet/Browser, NICHT in Git). Periodisch via Backup-JSON (`kcal_backup.json`, "Export All") in statische DB einpflegen, damit sie dauerhaft/geraeteuebergreifend verfuegbar sind.
