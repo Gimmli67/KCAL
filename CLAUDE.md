@@ -4,7 +4,7 @@
 Mobile-first Calorie Tracker Web-App (PWA-Style), deployed auf GitHub Pages.
 
 ## Architektur
-Einfache 3-Datei-Struktur unter `WebBased/`:
+Einfache 3-Datei-Struktur (Root-Verzeichnis):
 - `index.html` - HTML-Struktur mit allen Tabs
 - `app.js` - Gesamte Logik (vanilla JS, kein Framework)
 - `style.css` - Catppuccin Mocha Theme
@@ -24,7 +24,9 @@ Einfache 3-Datei-Struktur unter `WebBased/`:
 
 ## AquaTrack
 - Tagesziel: 3000ml
-- Quick-Add Buttons: Wasser 750ml, Espresso 30ml, Kaffee 200ml (mit entsprechenden Remove-Buttons)
+- Quick-Add Buttons (Reihenfolge): Bottle (750ml), Coffee (200ml), Espresso (30ml), Water (100ml) - mit entsprechenden Remove-Buttons
+- Buttons nutzen eigene CSS-Klasse `aqua-row` (nicht `button-row`) mit `flex-wrap: nowrap` damit alle 4 auf einer Linie bleiben (iPhone Hochformat)
+- Button-Labels OHNE Mengenangabe (nur Name), Mengen stehen in den Remove-Buttons
 - Zaehlt automatisch alle Drinks (ml) aus Mahlzeiten mit
 - Tropfen wird gruen bei >= 3000ml
 - Eigener localStorage `kcal_aqua`
@@ -49,5 +51,8 @@ Einfache 3-Datei-Struktur unter `WebBased/`:
 - **Buttons auf Englisch**, Beschriftungen/Labels duerfen Deutsch sein.
 - **Deployment**: Dateien manuell auf GitHub hochladen (User macht das selbst). Kein Git-Repo lokal.
 - **Commit-Files immer auflisten**: Nach Aenderungen dem User immer sagen, welche Dateien hochgeladen werden muessen.
-- **Browser-Cache**: Bei Tests lokal immer auf Ctrl+Shift+R (Hard Reload) hinweisen.
+- **Browser-Cache**: Bei Tests lokal immer auf Ctrl+Shift+R (Hard Reload) hinweisen. Mobile Edge: Cache leeren ueber Menue → Verlauf → Browserdaten loeschen.
+- **GitHub Pages Deploy**: Nach Upload 1-2 Minuten warten bis neue Version live ist.
 - **Toast-Feedback**: Bei Mahlzeit-Speicherung und AquaTrack-Aktionen wird ein gruener Toast angezeigt (2s).
+- **Statische DB-Arrays**: Neue Produkte in passende Arrays aufnehmen (GEMUESE_DB, FLEISCH_DB, GETRÄNKE_DB, FERTIGPRODUKTE_DB, HOMEMADE_ICE_DB, etc.). Migration fuegt fehlende automatisch hinzu.
+- **Gescannte Produkte**: Landen in localStorage. Periodisch via Backup-JSON in statische DB einpflegen.

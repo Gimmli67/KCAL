@@ -61,7 +61,7 @@ const GEMUESE_DB = [
     { name: 'Bohnen (grün)',  kcal: 31,  fett: 0.2, ges: 0.0, kh: 7.0, zucker: 3.3, eiweiss: 1.8, salz: 0.0, ball: 3.4 },
     { name: 'Zuckerhut',      kcal: 17,  fett: 0.2, ges: 0.0, kh: 3.2, zucker: 0.5, eiweiss: 1.3, salz: 0.0, ball: 3.1, gm: 400 },
     { name: 'Rettich',        kcal: 16,  fett: 0.1, ges: 0.0, kh: 3.2, zucker: 2.3, eiweiss: 1.1, salz: 0.0, ball: 1.8, gm: 250 },
-    { name: 'Radieschen',     kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6, gm: 10  },
+    { name: 'Radisli',        kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6, gm: 10  },
     { name: 'Champignons',    kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3, gm: 20  },
     { name: 'Cherrytomaten',  kcal: 20,  fett: 0.3, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2, gm: 250 },
 ];
@@ -896,6 +896,14 @@ async function loadInitialData() {
     const brotWeggli = db.filter(d => d.Lebensmittel === 'Brot Weggli');
     if (brotWeggli.length > 0) {
         db = db.filter(d => d.Lebensmittel !== 'Brot Weggli');
+        saveDB();
+        changed = true;
+    }
+
+    // Migration: 'Radieschen' → 'Radisli' umbenennen
+    const radieschen = db.find(d => d.Lebensmittel === 'Radieschen');
+    if (radieschen) {
+        radieschen.Lebensmittel = 'Radisli';
         saveDB();
         changed = true;
     }
