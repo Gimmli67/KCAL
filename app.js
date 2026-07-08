@@ -64,6 +64,8 @@ const GEMUESE_DB = [
     { name: 'Radisli',        kcal: 14,  fett: 0.1, ges: 0.0, kh: 2.8, zucker: 1.8, eiweiss: 0.7, salz: 0.1, ball: 1.6, gm: 10  },
     { name: 'Champignons',    kcal: 20,  fett: 0.3, ges: 0.0, kh: 0.5,  zucker: 0.4, eiweiss: 2.3, salz: 0.2, ball: 1.3, gm: 20  },
     { name: 'Cherrytomaten',  kcal: 20,  fett: 0.3, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2, gm: 250 },
+    { name: 'Peterli',        kcal: 36,  fett: 0.8, ges: 0.1, kh: 6.3, zucker: 0.9, eiweiss: 3.0, salz: 0.14, ball: 3.3 },
+    { name: 'Schnittlauch',   kcal: 30,  fett: 0.7, ges: 0.1, kh: 4.4, zucker: 1.9, eiweiss: 3.3, salz: 0.01, ball: 2.5 },
 ];
 
 // ===== Beilagen-Datenbank (pro 100g, roh/trocken) =====
@@ -105,8 +107,11 @@ const MILCH_DB = [
     { name: 'Joghurt nature (3.5%)',  kcal: 63,  fett: 3.5,  ges: 2.2,  kh: 4.5, zucker: 4.5, eiweiss: 3.5,  salz: 0.1, ball: 0.0 },
     { name: 'Joghurt mager (0.1%)',   kcal: 38,  fett: 0.1,  ges: 0.1,  kh: 5.0, zucker: 5.0, eiweiss: 4.0,  salz: 0.1, ball: 0.0 },
     { name: 'Joghurt griechisch',     kcal: 130, fett: 10.0, ges: 6.0,  kh: 4.0, zucker: 4.0, eiweiss: 6.0,  salz: 0.1, ball: 0.0 },
+    { name: 'Fruchtyoghurt',          kcal: 100, fett: 2.5,  ges: 1.6,  kh: 15.0, zucker: 14.0, eiweiss: 3.5, salz: 0.1, ball: 0.0 },
+    { name: 'Skyr Nature',            kcal: 63,  fett: 0.2,  ges: 0.1,  kh: 4.0, zucker: 4.0, eiweiss: 11.0, salz: 0.1, ball: 0.0 },
+    { name: 'Skyr Vanille',           kcal: 68,  fett: 0.2,  ges: 0.1,  kh: 8.0, zucker: 6.5, eiweiss: 10.5, salz: 0.1, ball: 0.0 },
     // Quark & Frischkäse
-    { name: 'Quark (mager)',          kcal: 67,  fett: 0.3,  ges: 0.2,  kh: 4.0, zucker: 4.0, eiweiss: 12.0, salz: 0.1, ball: 0.0 },
+    { name: 'Magerquark',             kcal: 67,  fett: 0.3,  ges: 0.2,  kh: 4.0, zucker: 4.0, eiweiss: 12.0, salz: 0.1, ball: 0.0 },
     { name: 'Frischkäse (Halbfett)',  kcal: 110, fett: 7.0,  ges: 4.5,  kh: 3.0, zucker: 3.0, eiweiss: 8.0,  salz: 0.5, ball: 0.0 },
     { name: 'Hüttenkäse',             kcal: 85,  fett: 3.5,  ges: 2.0,  kh: 3.0, zucker: 3.0, eiweiss: 10.0, salz: 0.5, ball: 0.0 },
     // Käse
@@ -126,7 +131,6 @@ const MILCH_DB = [
     { name: 'Molini Mozzarella Block',       kcal: 251, fett: 19.0, ges: 0.0,  kh: 1.0, zucker: 0.0, eiweiss: 19.0, salz: 0.6,  ball: 0.0 },
     { name: 'Skyr Alternative Vanille Soja', kcal: 77,  fett: 2.9,  ges: 0.5,  kh: 6.8, zucker: 6.5, eiweiss: 5.1,  salz: 0.24, ball: 1.1 },
     // Eier
-    { name: 'Eier 63+',                      kcal: 95,  fett: 7.0,  ges: 2.0,  kh: 0.5, zucker: 0.0, eiweiss: 8.0,  salz: 0.2,  ball: 0.0 },
 ];
 
 // ===== Brot-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
@@ -336,15 +340,15 @@ const FERTIGPRODUKTE_DB = [
     { name: 'SwissTPH Schinken-Sandwich',     kcal: 201, fett:  4.5, ges: 1.5,  kh: 23.5, zucker:  2.6, eiweiss: 15.6, salz: 1.2,  ball: 1.5, gm: 120  },
     { name: 'SwissTPH Premium Butter-Brezel', kcal: 380, fett: 18.0, ges: 8.0,  kh: 45.0, zucker:  1.3, eiweiss:  6.0, salz: 1.3,  ball: 0.0, gm: 72   },
     { name: 'Apfelmus',                       kcal:  68, fett:  0.1, ges: 0.0,  kh: 16.0, zucker: 13.0, eiweiss:  0.3, salz: 0.0,  ball: 1.5, gm: null  },
-    { name: 'Findus Chicken Nuggets',         kcal: 253, fett: 11.0, ges: 1.5,  kh: 25.0, zucker:  0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
+    { name: 'Chicken Nuggets',                kcal: 253, fett: 11.0, ges: 1.5,  kh: 25.0, zucker:  0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
     { name: 'Curry Balls',                    kcal: 193, fett:  9.0, ges: 2.0,  kh: 14.0, zucker:  2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
-    { name: 'Pelican Fischstäbchen',          kcal: 214, fett:  8.9, ges: 0.7,  kh: 19.0, zucker:  0.5, eiweiss: 14.0, salz: 0.59, ball: 0.8, gm: 150  },
-    { name: "Farmer's Best Rahmspinat",       kcal:  77, fett:  5.0, ges: 1.1,  kh:  4.1, zucker:  1.8, eiweiss:  3.1, salz: 1.0,  ball: 0.0, gm: 600  },
+    { name: 'Fischstäbchen',                  kcal: 214, fett:  8.9, ges: 0.7,  kh: 19.0, zucker:  0.5, eiweiss: 14.0, salz: 0.59, ball: 0.8, gm: 150  },
+    { name: 'Rahmspinat',                     kcal:  77, fett:  5.0, ges: 1.1,  kh:  4.1, zucker:  1.8, eiweiss:  3.1, salz: 1.0,  ball: 0.0, gm: 600  },
     { name: 'Thon in Wasser (Dose)',          kcal: 109, fett:  0.8, ges: 0.2,  kh:  0.0, zucker:  0.0, eiweiss: 25.0, salz: 0.4,  ball: 0.0, gm: 130  },
     { name: 'Thon in Öl (Dose)',              kcal: 198, fett: 10.0, ges: 1.5,  kh:  0.0, zucker:  0.0, eiweiss: 27.0, salz: 0.5,  ball: 0.0, gm: 130  },
     // Tex-Mex
-    { name: 'Old El Paso Tortilla Pockets',   kcal: 300, fett:  7.0, ges: 3.5,  kh: 50.0, zucker:  2.0, eiweiss:  7.0, salz: 1.2,  ball: 2.0, gm: 223  },
-    { name: 'Old El Paso Barquitas',          kcal: 320, fett:  9.0, ges: 4.0,  kh: 50.0, zucker:  2.5, eiweiss:  7.5, salz: 1.3,  ball: 2.5, gm: 312  },
+    { name: 'Tortilla Pockets',               kcal: 300, fett:  7.0, ges: 3.5,  kh: 50.0, zucker:  2.0, eiweiss:  7.0, salz: 1.2,  ball: 2.0, gm: 223  },
+    { name: 'Barquitas',                      kcal: 320, fett:  9.0, ges: 4.0,  kh: 50.0, zucker:  2.5, eiweiss:  7.5, salz: 1.3,  ball: 2.5, gm: 312  },
     { name: 'Salsa Sauce',                    kcal:  35, fett:  0.2, ges: 0.0,  kh:  7.0, zucker:  5.0, eiweiss:  1.0, salz: 1.5,  ball: 1.0, gm: null  },
     // Saucen
     { name: 'Tomatensauce (Passata)',         kcal:  30, fett:  0.2, ges: 0.0,  kh:  5.5, zucker:  4.0, eiweiss:  1.2, salz: 0.5,  ball: 1.5, gm: 500  },
@@ -390,10 +394,9 @@ const PORTION_DB = [
     { name: 'Nissin Asian Soba Chilli',          kcal: 479, fett: 19.7, ges: 9.7, kh: 62.1, zucker: 8.2, eiweiss: 10.2, salz: 2.8, ball: 0.0 },
     { name: 'Knorr Asia Noodles Chicken',        kcal: 336, fett: 15.0, ges: 1.7, kh: 42.0, zucker: 2.6, eiweiss: 6.0,  salz: 2.7, ball: 1.6 },
     { name: 'Knorr Asia Noodles Spicy Chicken',  kcal: 345, fett: 15.0, ges: 1.5, kh: 43.0, zucker: 2.0, eiweiss: 6.9, salz: 2.9, ball: 2.0 },
-    { name: "Z'Morge Ei",                        kcal:  62, fett:  4.6, ges: 1.3, kh:  0.3, zucker: 0.0, eiweiss:  5.2, salz: 0.1, ball: 0.0 },
+    { name: 'Eier 63+',                          kcal:  95, fett:  7.0, ges: 2.0, kh:  0.5, zucker: 0.0, eiweiss:  8.0, salz: 0.2, ball: 0.0 },
     { name: 'Spiegelei (1 Stk)',                 kcal:  80, fett:  6.5, ges: 1.8, kh:  0.3, zucker: 0.0, eiweiss:  5.2, salz: 0.1, ball: 0.0 },
     { name: 'Rührei (2 Eier)',                   kcal: 124, fett:  9.2, ges: 2.6, kh:  0.6, zucker: 0.0, eiweiss: 10.4, salz: 0.2, ball: 0.0 },
-    { name: 'Omelette (Champignon, Schinken, Kräuter)', kcal: 165, fett: 10.2, ges: 2.9, kh: 1.2, zucker: 0.3, eiweiss: 16.8, salz: 1.0, ball: 0.6 },
 ];
 
 // ===== Menü-Vorlagen (werden beim Start eingefügt wenn Name noch nicht existiert) =====
@@ -438,17 +441,17 @@ const MENU_DB = [
     {
         Name: "Fischstäbli mit Spinat",
         Positionen: [
-            { Lebensmittel: 'Pelican Fischstäbchen',    Einheit: 'g', Menge: 150, Kcal: 214, Fett: 8.9,  Gesaettigt: 0.7, Kohlenhydrate: 19.0, Zucker: 0.5, Eiweiss: 14.0, Salz: 0.59, Ballaststoffe: 0.8 },
-            { Lebensmittel: "Farmer's Best Rahmspinat", Einheit: 'g', Menge: 200, Kcal: 77, Fett: 5.0, Gesaettigt: 1.1, Kohlenhydrate: 4.1, Zucker: 1.8, Eiweiss: 3.1, Salz: 1.0, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Fischstäbchen',             Einheit: 'g', Menge: 150, Kcal: 214, Fett: 8.9,  Gesaettigt: 0.7, Kohlenhydrate: 19.0, Zucker: 0.5, Eiweiss: 14.0, Salz: 0.59, Ballaststoffe: 0.8 },
+            { Lebensmittel: 'Rahmspinat',                Einheit: 'g', Menge: 200, Kcal: 77, Fett: 5.0, Gesaettigt: 1.1, Kohlenhydrate: 4.1, Zucker: 1.8, Eiweiss: 3.1, Salz: 1.0, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Härdöpfel',                Einheit: 'g', Menge: 250, Kcal: 77,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 17.0, Zucker: 0.8, Eiweiss: 2.0,  Salz: 0.0, Ballaststoffe: 2.2 },
         ]
     },
     {
         Name: "Buure z'Morge",
         Positionen: [
-            { Lebensmittel: 'Eier 63+',             Einheit: 'g', Menge: 4,   Kcal: 95,  Fett: 7,    Gesaettigt: 2,   Kohlenhydrate: 0.5, Zucker: 0, Eiweiss: 8,  Salz: 0.2,  Ballaststoffe: 0 },
+            { Lebensmittel: 'Eier 63+',             Einheit: 'p', Menge: 4,   Kcal: 95,  Fett: 7,    Gesaettigt: 2,   Kohlenhydrate: 0.5, Zucker: 0, Eiweiss: 8,  Salz: 0.2,  Ballaststoffe: 0 },
             { Lebensmittel: 'Rösti FixFertig',      Einheit: 'g', Menge: 125, Kcal: 110, Fett: 5,    Gesaettigt: 0.5, Kohlenhydrate: 13,  Zucker: 0, Eiweiss: 2,  Salz: 0.88, Ballaststoffe: 2 },
-            { Lebensmittel: 'Naturafarm Bratspeck', Einheit: 'g', Menge: 100, Kcal: 345, Fett: 33,   Gesaettigt: 9.9, Kohlenhydrate: 0,   Zucker: 0, Eiweiss: 12, Salz: 1.7,  Ballaststoffe: 0 },
+            { Lebensmittel: 'Bratspeck',            Einheit: 'g', Menge: 100, Kcal: 370, Fett: 33,   Gesaettigt: 12,  Kohlenhydrate: 0,   Zucker: 0, Eiweiss: 17, Salz: 2.3,  Ballaststoffe: 0 },
         ]
     },
     {
@@ -471,7 +474,7 @@ const MENU_DB = [
     {
         Name: "Tacos",
         Positionen: [
-            { Lebensmittel: 'Old El Paso',                  Einheit: 'g', Menge: 140, Kcal: 310, Fett: 8.0,  Gesaettigt: 3.8, Kohlenhydrate: 50.0, Zucker: 2.3, Eiweiss: 7.3,  Salz: 1.3, Ballaststoffe: 2.3 },
+            { Lebensmittel: 'Taco Shells',                   Einheit: 'g', Menge: 140, Kcal: 310, Fett: 8.0,  Gesaettigt: 3.8, Kohlenhydrate: 50.0, Zucker: 2.3, Eiweiss: 7.3,  Salz: 1.3, Ballaststoffe: 2.3 },
             { Lebensmittel: 'Rindsghackets',                Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Mais',                         Einheit: 'g', Menge: 80,  Kcal: 86,  Fett: 1.2,  Gesaettigt: 0.2, Kohlenhydrate: 19.0, Zucker: 3.2, Eiweiss: 3.2,  Salz: 0.0, Ballaststoffe: 2.7 },
             { Lebensmittel: 'Zwiebel',                      Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
@@ -480,7 +483,7 @@ const MENU_DB = [
     {
         Name: "Chicken Nuggets mit Pommes",
         Positionen: [
-            { Lebensmittel: 'Findus Chicken Nuggets', Einheit: 'g', Menge: 250, Kcal: 253, Fett: 11.0, Gesaettigt: 1.5, Kohlenhydrate: 25.0, Zucker: 0.6, Eiweiss: 13.0, Salz: 1.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Chicken Nuggets',         Einheit: 'g', Menge: 250, Kcal: 253, Fett: 11.0, Gesaettigt: 1.5, Kohlenhydrate: 25.0, Zucker: 0.6, Eiweiss: 13.0, Salz: 1.0, Ballaststoffe: 1.2 },
             { Lebensmittel: 'McCain Pommes Frites',   Einheit: 'g', Menge: 200, Kcal: 158, Fett: 5.0,  Gesaettigt: 0.5, Kohlenhydrate: 24.0, Zucker: 0.5, Eiweiss: 2.9,  Salz: 0.03, Ballaststoffe: 2.8 },
         ]
     },
@@ -496,8 +499,25 @@ const MENU_DB = [
         Name: "Fleischkäse mit Spiegelei",
         Positionen: [
             { Lebensmittel: 'Fleischkäse',            Einheit: 'g', Menge: 150, Kcal: 270, Fett: 24.0, Gesaettigt: 10.0, Kohlenhydrate: 0.5,  Zucker: 0.5, Eiweiss: 13.0, Salz: 1.8, Ballaststoffe: 0.0 },
-            { Lebensmittel: 'Spiegelei (1 Stk)',      Einheit: 'g', Menge: 2,   Kcal: 80,  Fett: 6.5,  Gesaettigt: 1.8, Kohlenhydrate: 0.3,  Zucker: 0.0, Eiweiss: 5.2,  Salz: 0.1, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Spiegelei (1 Stk)',      Einheit: 'p', Menge: 2,   Kcal: 80,  Fett: 6.5,  Gesaettigt: 1.8, Kohlenhydrate: 0.3,  Zucker: 0.0, Eiweiss: 5.2,  Salz: 0.1, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Rösti FixFertig',        Einheit: 'g', Menge: 250, Kcal: 110, Fett: 5.0,  Gesaettigt: 0.5, Kohlenhydrate: 13.0, Zucker: 0.0, Eiweiss: 2.0,  Salz: 0.88, Ballaststoffe: 2.0 },
+        ]
+    },
+    {
+        Name: "Omelette",
+        Positionen: [
+            { Lebensmittel: 'Eier 63+',     Einheit: 'p', Menge: 4,  Kcal: 95,  Fett: 7.0, Gesaettigt: 2.0, Kohlenhydrate: 0.5, Zucker: 0.0, Eiweiss: 8.0,  Salz: 0.2,  Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Champignons',  Einheit: 'g', Menge: 90, Kcal: 20,  Fett: 0.3, Gesaettigt: 0.0, Kohlenhydrate: 0.5, Zucker: 0.4, Eiweiss: 2.3,  Salz: 0.2,  Ballaststoffe: 1.3 },
+            { Lebensmittel: 'Kochschinken', Einheit: 'g', Menge: 75, Kcal: 107, Fett: 3.0, Gesaettigt: 1.0, Kohlenhydrate: 1.0, Zucker: 0.5, Eiweiss: 18.0, Salz: 2.3,  Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Peterli',      Einheit: 'g', Menge: 15, Kcal: 36,  Fett: 0.8, Gesaettigt: 0.1, Kohlenhydrate: 6.3, Zucker: 0.9, Eiweiss: 3.0,  Salz: 0.14, Ballaststoffe: 3.3 },
+            { Lebensmittel: 'Schnittlauch', Einheit: 'g', Menge: 15, Kcal: 30,  Fett: 0.7, Gesaettigt: 0.1, Kohlenhydrate: 4.4, Zucker: 1.9, Eiweiss: 3.3,  Salz: 0.01, Ballaststoffe: 2.5 },
+        ]
+    },
+    {
+        Name: 'Birchermüesli',
+        Positionen: [
+            { Lebensmittel: 'Skyr Vanille',    Einheit: 'g', Menge: 200, Kcal: 68,  Fett: 0.2,  Gesaettigt: 0.1, Kohlenhydrate: 8.0,  Zucker: 6.5,  Eiweiss: 10.5, Salz: 0.1, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Granola Crunchy', Einheit: 'g', Menge: 40,  Kcal: 430, Fett: 15.0, Gesaettigt: 2.0, Kohlenhydrate: 62.0, Zucker: 20.0, Eiweiss: 8.0,  Salz: 0.1, Ballaststoffe: 5.0 },
         ]
     },
 ];
@@ -507,13 +527,13 @@ const MENU_DB = [
 const MENU_PAIRINGS = [
     { keywords: ['fischstäbchen', 'fischstaebchen', 'fischstabchen'],
       items: [
-        { name: 'Pelican Fischstäbchen', menge: 150 },
+        { name: 'Fischstäbchen', menge: 150 },
         { name: 'Härdöpfel', menge: 200 },
-        { name: "Farmer's Best Rahmspinat", menge: 200 },
+        { name: 'Rahmspinat', menge: 200 },
     ]},
     { keywords: ['chicken nuggets', 'nuggets'],
       items: [
-        { name: 'Findus Chicken Nuggets', menge: 250 },
+        { name: 'Chicken Nuggets', menge: 250 },
         { name: 'McCain Pommes Frites', menge: 200 },
     ]},
     { keywords: ['hörnli', 'hoernli', 'ghackets'],
@@ -548,7 +568,7 @@ const MENU_PAIRINGS = [
     { keywords: ['rösti', 'roesti', 'buure'],
       items: [
         { name: 'Rösti FixFertig', menge: 250 },
-        { name: 'Naturafarm Bratspeck', menge: 100 },
+        { name: 'Bratspeck', menge: 100 },
         { name: 'Eier 63+', menge: 4 },
     ]},
     { keywords: ['curry', 'curry balls'],
@@ -565,7 +585,7 @@ const MENU_PAIRINGS = [
     { keywords: ['pommes', 'frites'],
       items: [
         { name: 'McCain Pommes Frites', menge: 250 },
-        { name: 'Findus Chicken Nuggets', menge: 200 },
+        { name: 'Chicken Nuggets', menge: 200 },
     ]},
     { keywords: ['hamburger', 'burger'],
       items: [
@@ -906,10 +926,60 @@ async function loadInitialData() {
         changed = true;
     }
 
+    // Migration: 'Eier 63+' war faelschlich unter Dairy/g (100g) statt Portion/p (1 Ei) einsortiert
+    const eier63 = db.find(d => d.Lebensmittel === 'Eier 63+' && d.Einheit === 'g');
+    if (eier63) {
+        eier63.Einheit = 'p';
+        eier63.Kategorie = 'Portion';
+        eier63.Gesamtmenge = null;
+        saveDB();
+        changed = true;
+    }
+
+    // Migration: alte "Z'Morge Ei" Eintraege entfernen (ersetzt durch 'Eier 63+')
+    const zMorgeEi = db.filter(d => d.Lebensmittel === "Z'Morge Ei");
+    if (zMorgeEi.length > 0) {
+        db = db.filter(d => d.Lebensmittel !== "Z'Morge Ei");
+        saveDB();
+        changed = true;
+    }
+
     // Migration: 'Radieschen' → 'Radisli' umbenennen
     const radieschen = db.find(d => d.Lebensmittel === 'Radieschen');
     if (radieschen) {
         radieschen.Lebensmittel = 'Radisli';
+        saveDB();
+        changed = true;
+    }
+
+    // Migration: "Farmer's Best Rahmspinat" → 'Rahmspinat' umbenennen (kein Markenname)
+    const rahmspinat = db.find(d => d.Lebensmittel === "Farmer's Best Rahmspinat");
+    if (rahmspinat) {
+        rahmspinat.Lebensmittel = 'Rahmspinat';
+        saveDB();
+        changed = true;
+    }
+
+    // Migration: Markennamen entfernen (keine Firmennamen in der DB)
+    const brandRenames = [
+        ['Findus Chicken Nuggets', 'Chicken Nuggets'],
+        ['Pelican Fischstäbchen', 'Fischstäbchen'],
+        ['Old El Paso Tortilla Pockets', 'Tortilla Pockets'],
+        ['Old El Paso Barquitas', 'Barquitas'],
+    ];
+    brandRenames.forEach(([alt, neu]) => {
+        const item = db.find(d => d.Lebensmittel === alt);
+        if (item) {
+            item.Lebensmittel = neu;
+            saveDB();
+            changed = true;
+        }
+    });
+
+    // Migration: 'Quark (mager)' → 'Magerquark' umbenennen
+    const magerquark = db.find(d => d.Lebensmittel === 'Quark (mager)');
+    if (magerquark) {
+        magerquark.Lebensmittel = 'Magerquark';
         saveDB();
         changed = true;
     }
@@ -1858,19 +1928,19 @@ function refreshMenuOverview() {
     });
 }
 
-// ===== Menu als Mahlzeit verwenden (zaehlt zum Tagessoll) =====
-function useMenuAsMeal(tplIdx, mealType) {
-    const tpl = templates[tplIdx];
-    if (!tpl) return;
-
-    const s = { kcal: 0, fett: 0, kh: 0, zucker: 0, eiweiss: 0 };
-    const positions = tpl.Positionen.map(p => {
+// ===== Positionen (Menu-Zutaten) als Mahlzeit verbuchen (zaehlt zum Tagessoll) =====
+function logPositionsAsMeal(positionsSrc, mealType) {
+    const s = { kcal: 0, fett: 0, kh: 0, zucker: 0, eiweiss: 0, ges: 0, salz: 0, ball: 0 };
+    const positions = positionsSrc.map(p => {
         const f = mengenFaktor(p.Einheit, p.Menge);
         s.kcal += (p.Kcal || 0) * f;
         s.fett += (p.Fett || 0) * f;
         s.kh += (p.Kohlenhydrate || 0) * f;
         s.zucker += (p.Zucker || 0) * f;
         s.eiweiss += (p.Eiweiss || 0) * f;
+        s.ges += (p.Gesaettigt || 0) * f;
+        s.salz += (p.Salz || 0) * f;
+        s.ball += (p.Ballaststoffe || 0) * f;
         return { Lebensmittel: p.Lebensmittel, Menge: p.Menge, Einheit: p.Einheit,
                  Kcal: Math.round((p.Kcal || 0) * f * 10) / 10 };
     });
@@ -1881,13 +1951,39 @@ function useMenuAsMeal(tplIdx, mealType) {
         Summe: {
             Kcal: Math.round(s.kcal * 10) / 10, Fett: Math.round(s.fett * 10) / 10,
             Kohlenhydrate: Math.round(s.kh * 10) / 10, Zucker: Math.round(s.zucker * 10) / 10,
-            Eiweiss: Math.round(s.eiweiss * 10) / 10
+            Eiweiss: Math.round(s.eiweiss * 10) / 10, Gesaettigt: Math.round(s.ges * 10) / 10,
+            Salz: Math.round(s.salz * 10) / 10, Ballaststoffe: Math.round(s.ball * 10) / 10
         }
     });
     saveMeals();
     updateDailyCircles();
+    return s;
+}
+
+// ===== Menu als Mahlzeit verwenden (zaehlt zum Tagessoll) =====
+function useMenuAsMeal(tplIdx, mealType) {
+    const tpl = templates[tplIdx];
+    if (!tpl) return;
+    const s = logPositionsAsMeal(tpl.Positionen, mealType);
     $('menus-status').textContent = `'${tpl.Name}' als ${mealType} gespeichert - ${Math.round(s.kcal)} kcal`;
     showToast(`✓ ${tpl.Name} → ${mealType}`);
+}
+
+// ===== Aktuellen Menu-Baukasten (angepasste Mengen) direkt als Mahlzeit loggen, ohne das Rezept zu ueberschreiben =====
+function logMenuBuilderAsMeal(mealType) {
+    if (menuList.length === 0) { $('menus-status').textContent = 'Bitte zuerst Lebensmittel hinzufuegen.'; return; }
+    const label = $('menu-name').value.trim() || 'Menu';
+    const s = logPositionsAsMeal(menuList, mealType);
+
+    editingTemplateIdx = -1;
+    menuList = [];
+    selectedMenuIndex = -1;
+    $('menu-name').value = '';
+    refreshMenuList();
+    $('menu-cancel').classList.add('hidden');
+
+    $('menus-status').textContent = `'${label}' als ${mealType} gespeichert - ${Math.round(s.kcal)} kcal`;
+    showToast(`✓ ${label} → ${mealType}`);
 }
 
 // ===== Mahlzeit speichern (z'Morge / z'Mittag / z'Nacht) =====
@@ -1920,7 +2016,10 @@ function saveMealFromEditor(mealType) {
             Fett: Math.round(food.Fett * f * 10) / 10,
             Kohlenhydrate: Math.round(food.Kohlenhydrate * f * 10) / 10,
             Zucker: Math.round(food.Zucker * f * 10) / 10,
-            Eiweiss: Math.round(food.Eiweiss * f * 10) / 10
+            Eiweiss: Math.round(food.Eiweiss * f * 10) / 10,
+            Gesaettigt: Math.round((food.Gesaettigt || 0) * f * 10) / 10,
+            Salz: Math.round((food.Salz || 0) * f * 10) / 10,
+            Ballaststoffe: Math.round((food.Ballaststoffe || 0) * f * 10) / 10
         }
     });
     saveMeals();
@@ -1993,13 +2092,16 @@ function updateDailyCircles() {
     const todayStr = today();
     const todayMeals = meals.filter(m => m.Datum === todayStr);
 
-    const totals = { kcal: 0, eiweiss: 0, kh: 0, fett: 0, zucker: 0 };
+    const totals = { kcal: 0, eiweiss: 0, kh: 0, fett: 0, zucker: 0, ges: 0, salz: 0, ball: 0 };
     todayMeals.forEach(m => {
         totals.kcal += m.Summe.Kcal || 0;
         totals.eiweiss += m.Summe.Eiweiss || 0;
         totals.kh += m.Summe.Kohlenhydrate || 0;
         totals.fett += m.Summe.Fett || 0;
         totals.zucker += m.Summe.Zucker || 0;
+        totals.ges += m.Summe.Gesaettigt || 0;
+        totals.salz += m.Summe.Salz || 0;
+        totals.ball += m.Summe.Ballaststoffe || 0;
     });
 
     const circumference = 2 * Math.PI * 52; // 326.7
@@ -2031,6 +2133,11 @@ function updateDailyCircles() {
         }
         if (valEl) valEl.textContent = pct + '%';
     });
+
+    const extraStats = $('daily-extra-stats');
+    if (extraStats) {
+        extraStats.textContent = `Salz: ${totals.salz.toFixed(1)}g · gesättigt: ${totals.ges.toFixed(1)}g · Ballaststoffe: ${totals.ball.toFixed(1)}g`;
+    }
 
     renderDailyMeals(todayMeals);
     updateAquaTrack();
@@ -2774,6 +2881,9 @@ document.addEventListener('DOMContentLoaded', () => {
     $('menu-clear').addEventListener('click', menuClear);
     $('menu-cancel').addEventListener('click', menuCancelEdit);
     $('menu-save-recipe').addEventListener('click', menuSaveRecipe);
+    if ($('menu-log-zmorge')) $('menu-log-zmorge').addEventListener('click', () => logMenuBuilderAsMeal("z'Morge"));
+    if ($('menu-log-zmittag')) $('menu-log-zmittag').addEventListener('click', () => logMenuBuilderAsMeal("z'Mittag"));
+    if ($('menu-log-znacht')) $('menu-log-znacht').addEventListener('click', () => logMenuBuilderAsMeal("z'Nacht"));
 
     // --- Editor: Aktionen ---
     $('editor-search-btn').addEventListener('click', () => populateEditorFoodDropdown($('editor-search').value));

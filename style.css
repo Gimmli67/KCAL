@@ -700,6 +700,16 @@ button:active {
   pointer-events: none;
 }
 
+/* === Daily Status: Zusatzwerte (ohne Ziel/Kreis) === */
+.daily-extra-stats {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--overlay);
+  text-align: center;
+  font-size: 11px;
+  color: var(--subtext);
+}
+
 /* === Menu List (inline editable) === */
 .mli {
   display: flex;
