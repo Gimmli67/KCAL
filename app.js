@@ -393,6 +393,7 @@ const PORTION_DB = [
     { name: "Z'Morge Ei",                        kcal:  62, fett:  4.6, ges: 1.3, kh:  0.3, zucker: 0.0, eiweiss:  5.2, salz: 0.1, ball: 0.0 },
     { name: 'Spiegelei (1 Stk)',                 kcal:  80, fett:  6.5, ges: 1.8, kh:  0.3, zucker: 0.0, eiweiss:  5.2, salz: 0.1, ball: 0.0 },
     { name: 'Rührei (2 Eier)',                   kcal: 124, fett:  9.2, ges: 2.6, kh:  0.6, zucker: 0.0, eiweiss: 10.4, salz: 0.2, ball: 0.0 },
+    { name: 'Omelette (Champignon, Schinken, Kräuter)', kcal: 165, fett: 10.2, ges: 2.9, kh: 1.2, zucker: 0.3, eiweiss: 16.8, salz: 1.0, ball: 0.6 },
 ];
 
 // ===== Menü-Vorlagen (werden beim Start eingefügt wenn Name noch nicht existiert) =====
@@ -794,6 +795,11 @@ function parseNum(s) {
 }
 
 function round2(v) { return v != null ? Math.round(v * 100) / 100 : 0; }
+
+// Portion/Fruit (p/stk) speichern Naehrwerte pro 1 Stueck, Food/Drinks pro 100g/ml
+function mengenFaktor(einheit, menge) {
+    return (einheit === 'p' || einheit === 'stk') ? (menge || 0) : (menge || 0) / 100;
+}
 
 function showToast(msg) {
     let toast = $('toast-msg');
@@ -1428,13 +1434,13 @@ function refreshMenuList() {
 
         const kcalSpan = document.createElement('span');
         kcalSpan.className = 'mli-kcal';
-        kcalSpan.textContent = Math.round(item.Kcal * item.Menge / 100) + ' kcal';
+        kcalSpan.textContent = Math.round(item.Kcal * mengenFaktor(item.Einheit, item.Menge)) + ' kcal';
 
         inp.addEventListener('input', () => {
             const v = parseFloat(inp.value);
             if (v > 0) {
                 menuList[i].Menge = v;
-                kcalSpan.textContent = Math.round(item.Kcal * v / 100) + ' kcal';
+                kcalSpan.textContent = Math.round(item.Kcal * mengenFaktor(item.Einheit, v)) + ' kcal';
             }
         });
 
@@ -1555,7 +1561,7 @@ function editorSave() {
         vals[id] = v;
     }
 
-    const unit = $('ed-unit') ? $('ed-unit').value : 'g';
+    const unit = editorLoadedFood ? editorLoadedFood.Einheit : 'g';
     const kategorie = unit === 'ml' ? 'Drinks' : unit === 'p' ? 'Portion' : unit === 'stk' ? 'Fruit' : 'Food';
     const entry = {
         Lebensmittel: name, Einheit: unit, Kategorie: kategorie,
@@ -1778,7 +1784,7 @@ function refreshMenuOverview() {
     templates.forEach((tpl, tplIdx) => {
         let totalKcal = 0;
         tpl.Positionen.forEach(p => {
-            totalKcal += (p.Kcal || 0) * (p.Menge || 0) / 100;
+            totalKcal += (p.Kcal || 0) * mengenFaktor(p.Einheit, p.Menge);
         });
 
         const card = document.createElement('div');
@@ -1797,7 +1803,7 @@ function refreshMenuOverview() {
         items.className = 'menu-card-items';
         tpl.Positionen.forEach(p => {
             const menge = Math.round(p.Menge || 0);
-            const kcal = Math.round((p.Kcal || 0) * menge / 100);
+            const kcal = Math.round((p.Kcal || 0) * mengenFaktor(p.Einheit, p.Menge));
             const div = document.createElement('div');
             div.className = 'menu-card-item';
             div.textContent = `${p.Lebensmittel} - ${menge}${p.Einheit} (${kcal} kcal)`;
@@ -1859,7 +1865,7 @@ function useMenuAsMeal(tplIdx, mealType) {
 
     const s = { kcal: 0, fett: 0, kh: 0, zucker: 0, eiweiss: 0 };
     const positions = tpl.Positionen.map(p => {
-        const f = (p.Menge || 0) / 100;
+        const f = mengenFaktor(p.Einheit, p.Menge);
         s.kcal += (p.Kcal || 0) * f;
         s.fett += (p.Fett || 0) * f;
         s.kh += (p.Kohlenhydrate || 0) * f;
@@ -2673,7 +2679,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let html = '<div class="menu-suggestion">';
         html += '<div class="menu-suggestion-title">Menu-Vorschlag</div>';
         resolved.forEach(item => {
-            const kcal = Math.round(item.Kcal * item.Menge / 100);
+            const kcal = Math.round(item.Kcal * mengenFaktor(item.Einheit, item.Menge));
             totalKcal += kcal;
             html += `<div class="menu-suggestion-item">`;
             html += `<span>${item.Lebensmittel}</span>`;
