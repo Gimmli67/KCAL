@@ -875,6 +875,11 @@ button:active {
   color: #74c7ec;
   margin-top: 6px;
 }
+.aqua-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
 .btn-aqua {
   background: #74c7ec;
   color: var(--bg);
