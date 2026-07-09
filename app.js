@@ -150,6 +150,7 @@ const BROT_DB = [
     { name: 'Zopf',              kcal: 315, fett: 8.0, ges: 4.5, kh: 50.0, zucker: 5.0, eiweiss: 9.5, salz: 0.8, ball: 2.0, gm: 80  },
     { name: 'Steinofen Twister', kcal: 255, fett: 2.5, ges: 0.5, kh: 49.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5, gm: 60  },
     { name: 'Silserkranz',       kcal: 265, fett: 3.0, ges: 0.8, kh: 50.0, zucker: 3.0, eiweiss: 9.0, salz: 1.0, ball: 2.0, gm: 60  },
+    { name: 'Huusbrot Rustico',  kcal: 232, fett: 1.0, ges: 0.2, kh: 45.0, zucker: 0.6, eiweiss: 8.4, salz: 1.87, ball: 4.5 },
     // Gipfeli
     { name: 'Buttergipfeli',     kcal: 400, fett: 22.0, ges: 14.0, kh: 42.0, zucker: 5.0, eiweiss: 8.0, salz: 1.0, ball: 1.5, gm: 60  },
     { name: 'Laugengipfeli',     kcal: 300, fett: 10.0, ges: 5.0,  kh: 44.0, zucker: 3.0, eiweiss: 9.0, salz: 2.0, ball: 2.0, gm: 65  },
@@ -157,7 +158,6 @@ const BROT_DB = [
     // Pizza-/Pinsateig
     { name: 'Pinsa Teig',        kcal: 240, fett: 4.0, ges: 0.6, kh: 42.0, zucker: 1.5, eiweiss: 8.0, salz: 1.2, ball: 2.5, gm: 230 },
     { name: 'Pizzateig',         kcal: 260, fett: 3.5, ges: 0.5, kh: 48.0, zucker: 2.0, eiweiss: 8.5, salz: 1.3, ball: 2.0, gm: 250 },
-    { name: 'Brot Huusbrot Rustico', kcal: 232, fett: 1.0, ges: 0.2, kh: 45.0, zucker: 0.6, eiweiss: 8.4, salz: 1.87, ball: 4.5 },
 ];
 
 // ===== Fleisch-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
