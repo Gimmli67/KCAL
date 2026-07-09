@@ -2506,8 +2506,8 @@ function showResultModal(title, text) {
 
 // ===== Import / Export =====
 async function exportData(data, filename) {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const file = new File([blob], filename, { type: 'application/json' });
+    const json = JSON.stringify(data, null, 2);
+    const file = new File([json], filename, { type: 'text/plain' });
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
             await navigator.share({ files: [file], title: filename });
@@ -2516,6 +2516,7 @@ async function exportData(data, filename) {
             if (e.name === 'AbortError') return;
         }
     }
+    const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
