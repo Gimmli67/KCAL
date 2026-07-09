@@ -157,6 +157,7 @@ const BROT_DB = [
     // Pizza-/Pinsateig
     { name: 'Pinsa Teig',        kcal: 240, fett: 4.0, ges: 0.6, kh: 42.0, zucker: 1.5, eiweiss: 8.0, salz: 1.2, ball: 2.5, gm: 230 },
     { name: 'Pizzateig',         kcal: 260, fett: 3.5, ges: 0.5, kh: 48.0, zucker: 2.0, eiweiss: 8.5, salz: 1.3, ball: 2.0, gm: 250 },
+    { name: 'Brot Huusbrot Rustico', kcal: 232, fett: 1.0, ges: 0.2, kh: 45.0, zucker: 0.6, eiweiss: 8.4, salz: 1.87, ball: 4.5 },
 ];
 
 // ===== Fleisch-Datenbank (pro 100g, Schweizer Durchschnittswerte) =====
@@ -229,7 +230,8 @@ const GETRÄNKE_DB = [
     { name: 'Nestea Eistee Lemon',                   kcal: 19, fett: 0.0, ges: 0.0, kh: 4.5,  zucker: 4.5,  eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 500 },
     { name: 'Anna Best Pink Grapefruit',             kcal: 39, fett: 0.5, ges: 0.0, kh: 8.9,  zucker: 7.5,  eiweiss: 0.5,  salz: 0.02, ball: 0.5,  gm: 330 },
     { name: 'Schweppes Bitter Lemon',                kcal: 18, fett: 0.0, ges: 0.0, kh: 4.4,  zucker: 4.2,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
-    { name: 'Schwepps Wild Berry',                   kcal: 19, fett: 0.0, ges: 0.0, kh: 4.2,  zucker: 4.2,  eiweiss: 0.0,  salz: 0.01, ball: 0.0,  gm: 500 },
+    { name: 'Schweppes Indian Tonic',                kcal: 19, fett: 0.0, ges: 0.0, kh: 4.4,  zucker: 4.4,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
+    { name: 'Schweppes Wild Berry',                   kcal: 19, fett: 0.0, ges: 0.0, kh: 4.2,  zucker: 4.2,  eiweiss: 0.0,  salz: 0.01, ball: 0.0,  gm: 500 },
     { name: 'Pepita Grapefruit',                     kcal: 29.6, fett: 0.0, ges: 0.0, kh: 6.9,  zucker: 6.9,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
     { name: 'Sinalco Original',                      kcal: 46.5, fett: 0.5, ges: 0.0, kh: 10.0, zucker: 10.0, eiweiss: 0.5,  salz: 0.0,  ball: 0.0,  gm: 500 },
 
@@ -339,6 +341,8 @@ const FERTIGPRODUKTE_DB = [
     { name: 'SwissTPH Eiersalat Sandwich',    kcal: 258, fett: 12.6, ges: 2.5,  kh: 24.6, zucker:  1.5, eiweiss:  8.2, salz: 1.0,  ball: 1.0, gm: 120  },
     { name: 'SwissTPH Schinken-Sandwich',     kcal: 201, fett:  4.5, ges: 1.5,  kh: 23.5, zucker:  2.6, eiweiss: 15.6, salz: 1.2,  ball: 1.5, gm: 120  },
     { name: 'SwissTPH Premium Butter-Brezel', kcal: 380, fett: 18.0, ges: 8.0,  kh: 45.0, zucker:  1.3, eiweiss:  6.0, salz: 1.3,  ball: 0.0, gm: 72   },
+    { name: 'SwissTPH Pommes Frites',         kcal: 270, fett: 14.0, ges: 2.0,  kh: 33.0, zucker:  0.5, eiweiss:  3.5, salz: 0.7,  ball: 2.5, gm: 300  },
+    { name: 'SwissTPH Hamburger',            kcal: 250, fett: 12.0, ges: 5.0,  kh: 22.0, zucker:  4.0, eiweiss: 15.0, salz: 1.5,  ball: 1.5, gm: 200  },
     { name: 'Apfelmus',                       kcal:  68, fett:  0.1, ges: 0.0,  kh: 16.0, zucker: 13.0, eiweiss:  0.3, salz: 0.0,  ball: 1.5, gm: null  },
     { name: 'Chicken Nuggets',                kcal: 253, fett: 11.0, ges: 1.5,  kh: 25.0, zucker:  0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
     { name: 'Curry Balls',                    kcal: 193, fett:  9.0, ges: 2.0,  kh: 14.0, zucker:  2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
@@ -518,6 +522,14 @@ const MENU_DB = [
         Positionen: [
             { Lebensmittel: 'Skyr Vanille',    Einheit: 'g', Menge: 200, Kcal: 68,  Fett: 0.2,  Gesaettigt: 0.1, Kohlenhydrate: 8.0,  Zucker: 6.5,  Eiweiss: 10.5, Salz: 0.1, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Granola Crunchy', Einheit: 'g', Menge: 40,  Kcal: 430, Fett: 15.0, Gesaettigt: 2.0, Kohlenhydrate: 62.0, Zucker: 20.0, Eiweiss: 8.0,  Salz: 0.1, Ballaststoffe: 5.0 },
+        ]
+    },
+    {
+        Name: 'Burger Day',
+        Positionen: [
+            { Lebensmittel: 'SwissTPH Hamburger',      Einheit: 'g',  Menge: 200, Kcal: 250, Fett: 12.0, Gesaettigt: 5.0, Kohlenhydrate: 22.0, Zucker: 4.0, Eiweiss: 15.0, Salz: 1.5, Ballaststoffe: 1.5 },
+            { Lebensmittel: 'SwissTPH Pommes Frites',  Einheit: 'g',  Menge: 300, Kcal: 270, Fett: 14.0, Gesaettigt: 2.0, Kohlenhydrate: 33.0, Zucker: 0.5, Eiweiss: 3.5,  Salz: 0.7, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Nestea Eistee Peach',     Einheit: 'ml', Menge: 500, Kcal: 19,  Fett: 0.0,  Gesaettigt: 0.0, Kohlenhydrate: 4.5,  Zucker: 4.5, Eiweiss: 0.0,  Salz: 0.1, Ballaststoffe: 0.0 },
         ]
     },
 ];
