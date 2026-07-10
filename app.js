@@ -151,6 +151,7 @@ const BROT_DB = [
     { name: 'Steinofen Twister', kcal: 255, fett: 2.5, ges: 0.5, kh: 49.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5, gm: 60  },
     { name: 'Silserkranz',       kcal: 265, fett: 3.0, ges: 0.8, kh: 50.0, zucker: 3.0, eiweiss: 9.0, salz: 1.0, ball: 2.0, gm: 60  },
     { name: 'Huusbrot Rustico',  kcal: 232, fett: 1.0, ges: 0.2, kh: 45.0, zucker: 0.6, eiweiss: 8.4, salz: 1.87, ball: 4.5 },
+    { name: 'Brötchen (Ø)',     kcal: 265, fett: 2.5, ges: 0.5, kh: 50.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5, gm: 60  },
     // Gipfeli
     { name: 'Buttergipfeli',     kcal: 400, fett: 22.0, ges: 14.0, kh: 42.0, zucker: 5.0, eiweiss: 8.0, salz: 1.0, ball: 1.5, gm: 60  },
     { name: 'Laugengipfeli',     kcal: 300, fett: 10.0, ges: 5.0,  kh: 44.0, zucker: 3.0, eiweiss: 9.0, salz: 2.0, ball: 2.0, gm: 65  },
@@ -530,6 +531,38 @@ const MENU_DB = [
             { Lebensmittel: 'SwissTPH Hamburger',      Einheit: 'g',  Menge: 200, Kcal: 250, Fett: 12.0, Gesaettigt: 5.0, Kohlenhydrate: 22.0, Zucker: 4.0, Eiweiss: 15.0, Salz: 1.5, Ballaststoffe: 1.5 },
             { Lebensmittel: 'SwissTPH Pommes Frites',  Einheit: 'g',  Menge: 300, Kcal: 270, Fett: 14.0, Gesaettigt: 2.0, Kohlenhydrate: 33.0, Zucker: 0.5, Eiweiss: 3.5,  Salz: 0.7, Ballaststoffe: 2.5 },
             { Lebensmittel: 'Nestea Eistee Peach',     Einheit: 'ml', Menge: 500, Kcal: 19,  Fett: 0.0,  Gesaettigt: 0.0, Kohlenhydrate: 4.5,  Zucker: 4.5, Eiweiss: 0.0,  Salz: 0.1, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Brötchen mit Pouletbrust',
+        Positionen: [
+            { Lebensmittel: 'Fussballbrötchen',         Einheit: 'g', Menge: 55,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Poulet Brust (ohne Haut)', Einheit: 'g', Menge: 100, Kcal: 105, Fett: 1.2,  Gesaettigt: 0.3, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 22.0, Salz: 0.1, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Brötchen mit Hüttenkäse',
+        Positionen: [
+            { Lebensmittel: 'Brötchen (Ø)',       Einheit: 'g', Menge: 60,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Hüttenkäse',         Einheit: 'g', Menge: 100, Kcal: 85,  Fett: 3.5,  Gesaettigt: 2.0, Kohlenhydrate: 3.0,  Zucker: 3.0, Eiweiss: 10.0, Salz: 0.5, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Schnittlauch',       Einheit: 'g', Menge: 10,  Kcal: 30,  Fett: 0.7,  Gesaettigt: 0.1, Kohlenhydrate: 4.4,  Zucker: 1.9, Eiweiss: 3.3,  Salz: 0.01, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Emmenthaler',        Einheit: 'g', Menge: 30,  Kcal: 380, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.5, Zucker: 0.5, Eiweiss: 28.0, Salz: 0.9, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Brötchen mit Trockenfleisch',
+        Positionen: [
+            { Lebensmittel: 'Brötchen (Ø)',        Einheit: 'g', Menge: 60,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Mostbröckli',         Einheit: 'g', Menge: 50,  Kcal: 170, Fett: 3.0,  Gesaettigt: 1.2, Kohlenhydrate: 1.0,  Zucker: 0.5, Eiweiss: 35.0, Salz: 4.5, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Bündnerfleisch',      Einheit: 'g', Menge: 30,  Kcal: 216, Fett: 5.0,  Gesaettigt: 2.2, Kohlenhydrate: 0.8,  Zucker: 0.8, Eiweiss: 43.0, Salz: 5.2, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Brötchen mit Hüttenkäse & Ei',
+        Positionen: [
+            { Lebensmittel: 'Brötchen (Ø)',       Einheit: 'g', Menge: 60,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Hüttenkäse',         Einheit: 'g', Menge: 100, Kcal: 85,  Fett: 3.5,  Gesaettigt: 2.0, Kohlenhydrate: 3.0,  Zucker: 3.0, Eiweiss: 10.0, Salz: 0.5, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Eier 63+',           Einheit: 'p', Menge: 2,   Kcal: 95,  Fett: 7.0,  Gesaettigt: 2.0, Kohlenhydrate: 0.5,  Zucker: 0.0, Eiweiss: 8.0,  Salz: 0.2, Ballaststoffe: 0.0 },
         ]
     },
 ];
@@ -2143,7 +2176,12 @@ function updateDailyCircles() {
                 circle.classList.add('warn');
             }
         }
-        if (valEl) valEl.textContent = pct + '%';
+        if (valEl) {
+            const remaining = Math.max(goal - current, 0);
+            const unit = id === 'kcal' ? '' : 'g';
+            const remText = pct > 100 ? '+' + Math.round(current - goal) + unit : Math.round(remaining) + unit;
+            valEl.innerHTML = pct + '%<br><span class="circle-remaining">' + remText + '</span>';
+        }
     });
 
     const extraStats = $('daily-extra-stats');
