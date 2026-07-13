@@ -212,6 +212,8 @@ const FLEISCH_DB = [
     { name: 'Smoked Pork Ribs',                   kcal: 260, fett: 19.0, ges: 7.5,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.5,  ball: 0.0 },
     { name: 'Poulet Flügeli',                     kcal: 190, fett: 12.0, ges: 3.5,  kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.2,  ball: 0.0 },
     { name: 'Roastbeef (Entrecôte)',              kcal: 212, fett: 14.0, ges: 5.8,  kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.3,  ball: 0.0 },
+    { name: 'Halloumi (Grillkäse)',              kcal: 320, fett: 25.0, ges: 16.0, kh: 2.0, zucker: 1.0, eiweiss: 22.0, salz: 2.5,  ball: 0.0 },
+    { name: 'Würstli Appenzell',                 kcal: 517, fett: 46.0, ges: 0.0,  kh: 0.7, zucker: 0.0, eiweiss: 25.0, salz: 4.0,  ball: 0.0 },
 ];
 
 // ===== Getränke-Datenbank (pro 100ml, mit Gesamtmenge) =====
@@ -246,6 +248,8 @@ const GETRÄNKE_DB = [
     { name: 'Eve Litchi',               kcal: 60, fett: 0.0,  ges: 0.0, kh: 8.0,  zucker: 7.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
     { name: 'Eve Pink Mimosa',          kcal: 55, fett: 0.0,  ges: 0.0, kh: 7.0,  zucker: 6.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
     { name: 'Smirnoff Ice',             kcal: 70, fett: 0.0,  ges: 0.0, kh: 9.0,  zucker: 8.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
+    { name: 'Calanda Radler Mango 0.0%', kcal: 30, fett: 0.5, ges: 0.1, kh: 7.0,  zucker: 5.6,  eiweiss: 0.5,  salz: 0.01, ball: 0.0,  gm: 330 },
+    { name: 'Nestea Eistee',             kcal: 19, fett: 0.0, ges: 0.0, kh: 4.5,  zucker: 4.5,  eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 500 },
 ];
 
 // ===== Snacks-Datenbank (pro 100g) =====
@@ -343,7 +347,7 @@ const FERTIGPRODUKTE_DB = [
     { name: 'SwissTPH Schinken-Sandwich',     kcal: 201, fett:  4.5, ges: 1.5,  kh: 23.5, zucker:  2.6, eiweiss: 15.6, salz: 1.2,  ball: 1.5, gm: 120  },
     { name: 'SwissTPH Premium Butter-Brezel', kcal: 380, fett: 18.0, ges: 8.0,  kh: 45.0, zucker:  1.3, eiweiss:  6.0, salz: 1.3,  ball: 0.0, gm: 72   },
     { name: 'SwissTPH Pommes Frites',         kcal: 270, fett: 14.0, ges: 2.0,  kh: 33.0, zucker:  0.5, eiweiss:  3.5, salz: 0.7,  ball: 2.5, gm: 300  },
-    { name: 'SwissTPH Hamburger',            kcal: 250, fett: 12.0, ges: 5.0,  kh: 22.0, zucker:  4.0, eiweiss: 15.0, salz: 1.5,  ball: 1.5, gm: 200  },
+    { name: 'SwissTPH Hamburger',             kcal: 250, fett: 12.0, ges: 5.0,  kh: 22.0, zucker:  4.0, eiweiss: 15.0, salz: 1.5,  ball: 1.5, gm: 200  },
     { name: 'Apfelmus',                       kcal:  68, fett:  0.1, ges: 0.0,  kh: 16.0, zucker: 13.0, eiweiss:  0.3, salz: 0.0,  ball: 1.5, gm: null  },
     { name: 'Chicken Nuggets',                kcal: 253, fett: 11.0, ges: 1.5,  kh: 25.0, zucker:  0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
     { name: 'Curry Balls',                    kcal: 193, fett:  9.0, ges: 2.0,  kh: 14.0, zucker:  2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
@@ -369,6 +373,8 @@ const FERTIGPRODUKTE_DB = [
     { name: 'Arrabbiata Sauce (Fertig)',      kcal:  55, fett:  2.0, ges: 0.3,  kh:  7.0, zucker:  5.0, eiweiss:  1.5, salz: 1.2,  ball: 1.5, gm: 400  },
     { name: 'Bolognese Sauce (Fertig)',       kcal:  80, fett:  3.5, ges: 1.2,  kh:  6.5, zucker:  4.0, eiweiss:  5.0, salz: 1.0,  ball: 1.0, gm: 400  },
     { name: 'Napoli Sauce (Fertig)',          kcal:  45, fett:  1.5, ges: 0.2,  kh:  6.0, zucker:  4.5, eiweiss:  1.2, salz: 1.0,  ball: 1.5, gm: 400  },
+    { name: 'Mozzarella Stick',               kcal: 235, fett: 17.0, ges: 10.0, kh:  1.5, zucker:  1.5, eiweiss: 19.0, salz: 0.6,  ball: 0.0, gm: null  },
+    { name: 'Spring Rolls mit Poulet (Chicken)', kcal: 221, fett: 11.0, ges: 1.4, kh: 24.0, zucker: 8.0, eiweiss: 5.2, salz: 1.28, ball: 2.5, gm: 370 },
 ];
 
 // ===== Fastfood-Datenbank (pro Portion) =====
