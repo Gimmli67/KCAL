@@ -154,6 +154,8 @@ const BROT_DB = [
     { name: 'Zopf',              kcal: 315, fett: 8.0, ges: 4.5, kh: 50.0, zucker: 5.0, eiweiss: 9.5, salz: 0.8, ball: 2.0, gm: 80  },
     { name: 'Steinofen Twister', kcal: 255, fett: 2.5, ges: 0.5, kh: 49.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5, gm: 60  },
     { name: 'Silserkranz',       kcal: 265, fett: 3.0, ges: 0.8, kh: 50.0, zucker: 3.0, eiweiss: 9.0, salz: 1.0, ball: 2.0, gm: 60  },
+    { name: 'Huusbrot Rustico',  kcal: 232, fett: 1.0, ges: 0.2, kh: 45.0, zucker: 0.6, eiweiss: 8.4, salz: 1.87, ball: 4.5 },
+    { name: 'Brötchen (Ø)',     kcal: 265, fett: 2.5, ges: 0.5, kh: 50.0, zucker: 2.0, eiweiss: 9.0, salz: 1.2, ball: 2.5, gm: 60  },
     // Gipfeli
     { name: 'Buttergipfeli',     kcal: 400, fett: 22.0, ges: 14.0, kh: 42.0, zucker: 5.0, eiweiss: 8.0, salz: 1.0, ball: 1.5, gm: 60  },
     { name: 'Laugengipfeli',     kcal: 300, fett: 10.0, ges: 5.0,  kh: 44.0, zucker: 3.0, eiweiss: 9.0, salz: 2.0, ball: 2.0, gm: 65  },
@@ -214,6 +216,8 @@ const FLEISCH_DB = [
     { name: 'Smoked Pork Ribs',                   kcal: 260, fett: 19.0, ges: 7.5,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.5,  ball: 0.0 },
     { name: 'Poulet Flügeli',                     kcal: 190, fett: 12.0, ges: 3.5,  kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 0.2,  ball: 0.0 },
     { name: 'Roastbeef (Entrecôte)',              kcal: 212, fett: 14.0, ges: 5.8,  kh: 0.0, zucker: 0.0, eiweiss: 20.0, salz: 0.3,  ball: 0.0 },
+    { name: 'Halloumi (Grillkäse)',              kcal: 320, fett: 25.0, ges: 16.0, kh: 2.0, zucker: 1.0, eiweiss: 22.0, salz: 2.5,  ball: 0.0 },
+    { name: 'Würstli Appenzell',                 kcal: 517, fett: 46.0, ges: 0.0,  kh: 0.7, zucker: 0.0, eiweiss: 25.0, salz: 4.0,  ball: 0.0 },
 ];
 
 // ===== Getränke-Datenbank (pro 100ml, mit Gesamtmenge) =====
@@ -233,7 +237,8 @@ const GETRÄNKE_DB = [
     { name: 'Nestea Eistee Lemon',                   kcal: 19, fett: 0.0, ges: 0.0, kh: 4.5,  zucker: 4.5,  eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 500 },
     { name: 'Anna Best Pink Grapefruit',             kcal: 39, fett: 0.5, ges: 0.0, kh: 8.9,  zucker: 7.5,  eiweiss: 0.5,  salz: 0.02, ball: 0.5,  gm: 330 },
     { name: 'Schweppes Bitter Lemon',                kcal: 18, fett: 0.0, ges: 0.0, kh: 4.4,  zucker: 4.2,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
-    { name: 'Schwepps Wild Berry',                   kcal: 19, fett: 0.0, ges: 0.0, kh: 4.2,  zucker: 4.2,  eiweiss: 0.0,  salz: 0.01, ball: 0.0,  gm: 500 },
+    { name: 'Schweppes Indian Tonic',                kcal: 19, fett: 0.0, ges: 0.0, kh: 4.4,  zucker: 4.4,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
+    { name: 'Schweppes Wild Berry',                   kcal: 19, fett: 0.0, ges: 0.0, kh: 4.2,  zucker: 4.2,  eiweiss: 0.0,  salz: 0.01, ball: 0.0,  gm: 500 },
     { name: 'Pepita Grapefruit',                     kcal: 29.6, fett: 0.0, ges: 0.0, kh: 6.9,  zucker: 6.9,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 500 },
     { name: 'Sinalco Original',                      kcal: 46.5, fett: 0.5, ges: 0.0, kh: 10.0, zucker: 10.0, eiweiss: 0.5,  salz: 0.0,  ball: 0.0,  gm: 500 },
 
@@ -247,6 +252,8 @@ const GETRÄNKE_DB = [
     { name: 'Eve Litchi',               kcal: 60, fett: 0.0,  ges: 0.0, kh: 8.0,  zucker: 7.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
     { name: 'Eve Pink Mimosa',          kcal: 55, fett: 0.0,  ges: 0.0, kh: 7.0,  zucker: 6.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
     { name: 'Smirnoff Ice',             kcal: 70, fett: 0.0,  ges: 0.0, kh: 9.0,  zucker: 8.5,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 275 },
+    { name: 'Calanda Radler Mango 0.0%', kcal: 30, fett: 0.5, ges: 0.1, kh: 7.0,  zucker: 5.6,  eiweiss: 0.5,  salz: 0.01, ball: 0.0,  gm: 330 },
+    { name: 'Nestea Eistee',             kcal: 19, fett: 0.0, ges: 0.0, kh: 4.5,  zucker: 4.5,  eiweiss: 0.0,  salz: 0.1,  ball: 0.0,  gm: 500 },
 ];
 
 // ===== Snacks-Datenbank (pro 100g) =====
@@ -346,6 +353,8 @@ const FERTIGPRODUKTE_DB = [
     { name: 'SwissTPH Eiersalat Sandwich',    kcal: 258, fett: 12.6, ges: 2.5,  kh: 24.6, zucker:  1.5, eiweiss:  8.2, salz: 1.0,  ball: 1.0, gm: 120  },
     { name: 'SwissTPH Schinken-Sandwich',     kcal: 201, fett:  4.5, ges: 1.5,  kh: 23.5, zucker:  2.6, eiweiss: 15.6, salz: 1.2,  ball: 1.5, gm: 120  },
     { name: 'SwissTPH Premium Butter-Brezel', kcal: 380, fett: 18.0, ges: 8.0,  kh: 45.0, zucker:  1.3, eiweiss:  6.0, salz: 1.3,  ball: 0.0, gm: 72   },
+    { name: 'SwissTPH Pommes Frites',         kcal: 270, fett: 14.0, ges: 2.0,  kh: 33.0, zucker:  0.5, eiweiss:  3.5, salz: 0.7,  ball: 2.5, gm: 300  },
+    { name: 'SwissTPH Hamburger',             kcal: 250, fett: 12.0, ges: 5.0,  kh: 22.0, zucker:  4.0, eiweiss: 15.0, salz: 1.5,  ball: 1.5, gm: 200  },
     { name: 'Apfelmus',                       kcal:  68, fett:  0.1, ges: 0.0,  kh: 16.0, zucker: 13.0, eiweiss:  0.3, salz: 0.0,  ball: 1.5, gm: null  },
     { name: 'Chicken Nuggets',                kcal: 253, fett: 11.0, ges: 1.5,  kh: 25.0, zucker:  0.6, eiweiss: 13.0, salz: 1.0,  ball: 1.2, gm: 250  },
     { name: 'Curry Balls',                    kcal: 193, fett:  9.0, ges: 2.0,  kh: 14.0, zucker:  2.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0, gm: 250  },
@@ -371,6 +380,8 @@ const FERTIGPRODUKTE_DB = [
     { name: 'Arrabbiata Sauce (Fertig)',      kcal:  55, fett:  2.0, ges: 0.3,  kh:  7.0, zucker:  5.0, eiweiss:  1.5, salz: 1.2,  ball: 1.5, gm: 400  },
     { name: 'Bolognese Sauce (Fertig)',       kcal:  80, fett:  3.5, ges: 1.2,  kh:  6.5, zucker:  4.0, eiweiss:  5.0, salz: 1.0,  ball: 1.0, gm: 400  },
     { name: 'Napoli Sauce (Fertig)',          kcal:  45, fett:  1.5, ges: 0.2,  kh:  6.0, zucker:  4.5, eiweiss:  1.2, salz: 1.0,  ball: 1.5, gm: 400  },
+    { name: 'Mozzarella Stick',               kcal: 235, fett: 17.0, ges: 10.0, kh:  1.5, zucker:  1.5, eiweiss: 19.0, salz: 0.6,  ball: 0.0, gm: null  },
+    { name: 'Spring Rolls mit Poulet (Chicken)', kcal: 221, fett: 11.0, ges: 1.4, kh: 24.0, zucker: 8.0, eiweiss: 5.2, salz: 1.28, ball: 2.5, gm: 370 },
 ];
 
 // ===== Fastfood-Datenbank (pro Portion) =====
@@ -543,6 +554,46 @@ const MENU_DB = [
             { Lebensmittel: 'Protein Milk (Emmi Good Day, UHT)',  Einheit: 'g',   Menge: 400, Kcal: 42,  Fett: 0.1,  Gesaettigt: 0.1, Kohlenhydrate: 2.7,  Zucker: 2.7,  Eiweiss: 7.0,  Salz: 0.08, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Banane',                             Einheit: 'stk', Menge: 0.5, Kcal: 97.9, Fett: 0.33, Gesaettigt: 0.11, Kohlenhydrate: 25.3, Zucker: 13.2, Eiweiss: 1.21, Salz: 0.0, Ballaststoffe: 2.86 },
             { Lebensmittel: 'Aprikose',                           Einheit: 'stk', Menge: 0.5, Kcal: 72,   Fett: 0.6,  Gesaettigt: 0.0,  Kohlenhydrate: 16.5, Zucker: 13.5, Eiweiss: 2.1,  Salz: 0.0, Ballaststoffe: 3.0 },
+        ]
+    },
+    {
+        Name: 'Burger Day',
+        Positionen: [
+            { Lebensmittel: 'SwissTPH Hamburger',      Einheit: 'g',  Menge: 200, Kcal: 250, Fett: 12.0, Gesaettigt: 5.0, Kohlenhydrate: 22.0, Zucker: 4.0, Eiweiss: 15.0, Salz: 1.5, Ballaststoffe: 1.5 },
+            { Lebensmittel: 'SwissTPH Pommes Frites',  Einheit: 'g',  Menge: 300, Kcal: 270, Fett: 14.0, Gesaettigt: 2.0, Kohlenhydrate: 33.0, Zucker: 0.5, Eiweiss: 3.5,  Salz: 0.7, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Nestea Eistee Peach',     Einheit: 'ml', Menge: 500, Kcal: 19,  Fett: 0.0,  Gesaettigt: 0.0, Kohlenhydrate: 4.5,  Zucker: 4.5, Eiweiss: 0.0,  Salz: 0.1, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Brötchen mit Pouletbrust',
+        Positionen: [
+            { Lebensmittel: 'Fussballbrötchen',         Einheit: 'g', Menge: 55,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Poulet Brust (ohne Haut)', Einheit: 'g', Menge: 100, Kcal: 105, Fett: 1.2,  Gesaettigt: 0.3, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 22.0, Salz: 0.1, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Brötchen mit Hüttenkäse',
+        Positionen: [
+            { Lebensmittel: 'Brötchen (Ø)',       Einheit: 'g', Menge: 60,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Hüttenkäse',         Einheit: 'g', Menge: 100, Kcal: 85,  Fett: 3.5,  Gesaettigt: 2.0, Kohlenhydrate: 3.0,  Zucker: 3.0, Eiweiss: 10.0, Salz: 0.5, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Schnittlauch',       Einheit: 'g', Menge: 10,  Kcal: 30,  Fett: 0.7,  Gesaettigt: 0.1, Kohlenhydrate: 4.4,  Zucker: 1.9, Eiweiss: 3.3,  Salz: 0.01, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Emmenthaler',        Einheit: 'g', Menge: 30,  Kcal: 380, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.5, Zucker: 0.5, Eiweiss: 28.0, Salz: 0.9, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Brötchen mit Trockenfleisch',
+        Positionen: [
+            { Lebensmittel: 'Brötchen (Ø)',        Einheit: 'g', Menge: 60,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Mostbröckli',         Einheit: 'g', Menge: 50,  Kcal: 170, Fett: 3.0,  Gesaettigt: 1.2, Kohlenhydrate: 1.0,  Zucker: 0.5, Eiweiss: 35.0, Salz: 4.5, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Bündnerfleisch',      Einheit: 'g', Menge: 30,  Kcal: 216, Fett: 5.0,  Gesaettigt: 2.2, Kohlenhydrate: 0.8,  Zucker: 0.8, Eiweiss: 43.0, Salz: 5.2, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Brötchen mit Hüttenkäse & Ei',
+        Positionen: [
+            { Lebensmittel: 'Brötchen (Ø)',       Einheit: 'g', Menge: 60,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Hüttenkäse',         Einheit: 'g', Menge: 100, Kcal: 85,  Fett: 3.5,  Gesaettigt: 2.0, Kohlenhydrate: 3.0,  Zucker: 3.0, Eiweiss: 10.0, Salz: 0.5, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Eier 63+',           Einheit: 'p', Menge: 2,   Kcal: 95,  Fett: 7.0,  Gesaettigt: 2.0, Kohlenhydrate: 0.5,  Zucker: 0.0, Eiweiss: 8.0,  Salz: 0.2, Ballaststoffe: 0.0 },
         ]
     },
 ];
@@ -2156,7 +2207,12 @@ function updateDailyCircles() {
                 circle.classList.add('warn');
             }
         }
-        if (valEl) valEl.textContent = pct + '%';
+        if (valEl) {
+            const remaining = Math.max(goal - current, 0);
+            const unit = id === 'kcal' ? '' : 'g';
+            const remText = pct > 100 ? '+' + Math.round(current - goal) + unit : Math.round(remaining) + unit;
+            valEl.innerHTML = pct + '%<br><span class="circle-remaining">' + remText + '</span>';
+        }
     });
 
     const extraStats = $('daily-extra-stats');
@@ -2530,8 +2586,18 @@ function showResultModal(title, text) {
 }
 
 // ===== Import / Export =====
-function exportData(data, filename) {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+async function exportData(data, filename) {
+    const json = JSON.stringify(data, null, 2);
+    const file = new File([json], filename, { type: 'text/plain' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+            await navigator.share({ files: [file], title: filename });
+            return;
+        } catch (e) {
+            if (e.name === 'AbortError') return;
+        }
+    }
+    const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
