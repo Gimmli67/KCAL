@@ -484,6 +484,16 @@ const MENU_DB = [
         ]
     },
     {
+        Name: "Härdöpfelsalat",
+        Gruppe: "Salat",
+        Positionen: [
+            { Lebensmittel: 'Härdöpfel',   Einheit: 'g', Menge: 300, Kcal: 77,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 17.0, Zucker: 0.8, Eiweiss: 2.0, Salz: 0.0, Ballaststoffe: 2.2 },
+            { Lebensmittel: 'Mayonnaise',  Einheit: 'g', Menge: 50,  Kcal: 680, Fett: 75.0, Gesaettigt: 6.0, Kohlenhydrate: 1.5,  Zucker: 1.0, Eiweiss: 1.0, Salz: 1.0, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Eier 63+',    Einheit: 'p', Menge: 2,   Kcal: 95,  Fett: 7.0,  Gesaettigt: 2.0, Kohlenhydrate: 0.5,  Zucker: 0.0, Eiweiss: 8.0, Salz: 0.2, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Peterli',     Einheit: 'g', Menge: 10,  Kcal: 36,  Fett: 0.8,  Gesaettigt: 0.1, Kohlenhydrate: 6.3,  Zucker: 0.9, Eiweiss: 3.0, Salz: 0.14, Ballaststoffe: 3.3 },
+        ]
+    },
+    {
         Name: "Icebergsalat mit Toppings",
         Gruppe: "Salat",
         Positionen: [
