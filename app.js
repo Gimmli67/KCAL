@@ -66,6 +66,7 @@ const GEMUESE_DB = [
     { name: 'Cherrytomaten',  kcal: 20,  fett: 0.3, ges: 0.0, kh: 3.9, zucker: 2.6, eiweiss: 0.9, salz: 0.0, ball: 1.2, gm: 250 },
     { name: 'Peterli',        kcal: 36,  fett: 0.8, ges: 0.1, kh: 6.3, zucker: 0.9, eiweiss: 3.0, salz: 0.14, ball: 3.3 },
     { name: 'Schnittlauch',   kcal: 30,  fett: 0.7, ges: 0.1, kh: 4.4, zucker: 1.9, eiweiss: 3.3, salz: 0.01, ball: 2.5 },
+    { name: 'Basilikum (frisch)', kcal: 23, fett: 0.6, ges: 0.0, kh: 2.7, zucker: 0.3, eiweiss: 3.2, salz: 0.0, ball: 1.6 },
 ];
 
 // ===== Beilagen-Datenbank (pro 100g, roh/trocken) =====
@@ -270,6 +271,7 @@ const SNACKS_DB = [
     { name: 'Popcorn (süss)',            kcal: 420, fett: 15.0, ges: 2.0,  kh: 62.0, zucker: 25.0, eiweiss: 7.0,  salz: 1.0,  ball: 10.0, gm: 100 },
     { name: 'Popcorn (salzig)',          kcal: 380, fett: 12.0, ges: 1.5,  kh: 58.0, zucker: 1.0,  eiweiss: 8.0,  salz: 2.5,  ball: 10.0, gm: 100 },
     { name: 'Erdnüsse (gesalzen)',       kcal: 600, fett: 50.0, ges: 7.0,  kh: 12.0, zucker: 4.0,  eiweiss: 26.0, salz: 1.2,  ball: 8.0, gm: 200 },
+    { name: 'Pinienkerne',               kcal: 673, fett: 68.0, ges: 5.0,  kh: 13.0, zucker: 3.6,  eiweiss: 14.0, salz: 0.0,  ball: 3.7, gm: 100 },
 ];
 
 // ===== Süsses-Datenbank =====
@@ -458,7 +460,7 @@ const MENU_DB = [
         Name: "Icebergsalat mit Toppings",
         Gruppe: "Salat",
         Positionen: [
-            { Lebensmittel: 'Icebergsalat',       Einheit: 'g', Menge: 150, Kcal: 13,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 2.2,  Zucker: 1.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Icebergsalat',       Einheit: 'g', Menge: 400, Kcal: 13,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 2.2,  Zucker: 1.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
             { Lebensmittel: 'Cherrytomaten',      Einheit: 'g', Menge: 100, Kcal: 20,  Fett: 0.3,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
             { Lebensmittel: 'Pouletgschnätzelts', Einheit: 'g', Menge: 120, Kcal: 203, Fett: 9.0, Gesaettigt: 2.5, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 30.0, Salz: 0.3, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Emmenthaler',        Einheit: 'g', Menge: 40,  Kcal: 380, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.5, Zucker: 0.5, Eiweiss: 28.0, Salz: 0.9, Ballaststoffe: 0.0 },
@@ -623,7 +625,14 @@ const MENU_DB = [
         ]
     },
     {
-        Name: 'Spaghetti Pesto',
+        Name: 'Spaghetti Carbonara (Fertigsauce)',
+        Positionen: [
+            { Lebensmittel: 'Spaghetti (roh)',          Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Carbonara Sauce (Fertig)', Einheit: 'g', Menge: 125, Kcal: 130, Fett: 10.0, Gesaettigt: 5.5, Kohlenhydrate: 4.0,  Zucker: 1.5, Eiweiss: 5.0,  Salz: 1.3, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Spaghetti Pesto (Glas)',
         Positionen: [
             { Lebensmittel: 'Spaghetti (roh)',    Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
             { Lebensmittel: 'Pesto (Basilico)',   Einheit: 'g', Menge: 50,  Kcal: 380, Fett: 36.0, Gesaettigt: 6.0,  Kohlenhydrate: 5.0,  Zucker: 2.0, Eiweiss: 5.0,  Salz: 2.5, Ballaststoffe: 2.0 },
@@ -631,12 +640,33 @@ const MENU_DB = [
         ]
     },
     {
-        Name: 'Spaghetti Tomatensauce',
+        Name: 'Spaghetti Pesto (frisch)',
+        Positionen: [
+            { Lebensmittel: 'Spaghetti (roh)',       Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Basilikum (frisch)',    Einheit: 'g', Menge: 15,  Kcal: 23,  Fett: 0.6,  Gesaettigt: 0.0, Kohlenhydrate: 2.7,  Zucker: 0.3, Eiweiss: 3.2,  Salz: 0.0, Ballaststoffe: 1.6 },
+            { Lebensmittel: 'Pinienkerne',           Einheit: 'g', Menge: 20,  Kcal: 673, Fett: 68.0, Gesaettigt: 5.0, Kohlenhydrate: 13.0, Zucker: 3.6, Eiweiss: 14.0, Salz: 0.0, Ballaststoffe: 3.7 },
+            { Lebensmittel: 'Knoblauch',             Einheit: 'g', Menge: 5,   Kcal: 149, Fett: 0.5,  Gesaettigt: 0.1, Kohlenhydrate: 33.0, Zucker: 1.0, Eiweiss: 6.4,  Salz: 0.0, Ballaststoffe: 2.1 },
+            { Lebensmittel: 'Parmesan',              Einheit: 'g', Menge: 20,  Kcal: 431, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 38.0, Salz: 1.8, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Spaghetti Tomatensauce (Packung)',
         Positionen: [
             { Lebensmittel: 'Spaghetti (roh)',        Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
             { Lebensmittel: 'Tomatensauce (Passata)', Einheit: 'g', Menge: 200, Kcal: 30,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 5.5,  Zucker: 4.0, Eiweiss: 1.2,  Salz: 0.5, Ballaststoffe: 1.5 },
             { Lebensmittel: 'Zwiebel',                Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
             { Lebensmittel: 'Parmesan',               Einheit: 'g', Menge: 15,  Kcal: 431, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 38.0, Salz: 1.8, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Spaghetti Tomatensauce (frisch)',
+        Positionen: [
+            { Lebensmittel: 'Spaghetti (roh)',    Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Tomate',             Einheit: 'g', Menge: 300, Kcal: 18,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Zwiebel',            Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
+            { Lebensmittel: 'Knoblauch',          Einheit: 'g', Menge: 10,  Kcal: 149, Fett: 0.5,  Gesaettigt: 0.1, Kohlenhydrate: 33.0, Zucker: 1.0, Eiweiss: 6.4,  Salz: 0.0, Ballaststoffe: 2.1 },
+            { Lebensmittel: 'Basilikum (frisch)', Einheit: 'g', Menge: 5,   Kcal: 23,  Fett: 0.6,  Gesaettigt: 0.0, Kohlenhydrate: 2.7,  Zucker: 0.3, Eiweiss: 3.2,  Salz: 0.0, Ballaststoffe: 1.6 },
+            { Lebensmittel: 'Parmesan',           Einheit: 'g', Menge: 15,  Kcal: 431, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 38.0, Salz: 1.8, Ballaststoffe: 0.0 },
         ]
     },
 ];
