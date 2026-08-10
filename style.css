@@ -83,6 +83,23 @@ main {
   margin-bottom: 8px;
   font-weight: 700;
 }
+.group-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.group-header-row .group-header {
+  margin-bottom: 0;
+}
+.group-header-row select {
+  flex: 0 0 auto;
+  width: auto;
+  font-size: 11px;
+  height: 30px;
+  padding: 2px 8px;
+}
 
 /* === Layout === */
 .row {

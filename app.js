@@ -989,6 +989,7 @@ let db = [];
 let meals = [];
 let templates = [];
 let menuList = [];
+let menuSortMode = 'default';
 let scanFavorit = false;
 let selectedMenuIndex = -1;
 let html5QrCode = null;
@@ -1429,6 +1430,23 @@ async function loadInitialData() {
         }
     });
     if (fastfoodAdded) { saveDB(); changed = true; }
+
+    // Alt-Namen bereinigen: Duplikate von vor Umbenennungen entfernen (nur wenn
+    // der neue Name schon existiert, sonst bleibt der alte stehen)
+    const legacyRenames = {
+        'Karotte': 'Rüebli',
+        'Kartoffel': 'Härdöpfel',
+        'Eisbergsalat': 'Icebergsalat'
+    };
+    let legacyRemoved = false;
+    Object.entries(legacyRenames).forEach(([oldName, newName]) => {
+        const oldIdx = db.findIndex(d => d.Lebensmittel === oldName);
+        if (oldIdx !== -1 && db.some(d => d.Lebensmittel === newName)) {
+            db.splice(oldIdx, 1);
+            legacyRemoved = true;
+        }
+    });
+    if (legacyRemoved) { saveDB(); changed = true; }
 
     if (changed) {
         populateMenuFoodDropdown();
@@ -2226,6 +2244,19 @@ function refreshMenuOverview() {
         }
         groupMap[key].push(tplIdx);
     });
+
+    // Sortierung "Meiste Eiweiss": pro Gruppe die beste Eiweiss-pro-100-kcal-Dichte
+    // unter den Varianten nehmen, danach absteigend sortieren.
+    if (menuSortMode === 'protein') {
+        const density = key => Math.max(...groupMap[key].map(idx => {
+            const tpl = templates[idx];
+            const kcal = menuTotalKcal(tpl);
+            let eiweiss = 0;
+            tpl.Positionen.forEach(p => { eiweiss += (p.Eiweiss || 0) * mengenFaktor(p.Einheit, p.Menge); });
+            return kcal > 0 ? (eiweiss / kcal) * 100 : 0;
+        }));
+        groupOrder.sort((a, b) => density(b) - density(a));
+    }
 
     groupOrder.forEach(key => {
         const indices = groupMap[key];
@@ -3102,15 +3133,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }).filter(Boolean);
     }
 
-    function renderMenuSuggestion(pairing) {
+    // Sucht direkt in der Speisekarte (echte, selbst angelegte Menus) nach einem Namenstreffer
+    function findRealMenuMatch(query) {
+        return templates.find(t => t.Name.toLowerCase().includes(query));
+    }
+
+    function renderMenuSuggestion(resolved, title) {
         const sugBox = $('lust-suggestion');
         if (!sugBox) return;
-        const resolved = resolvePairingItems(pairing);
         if (resolved.length === 0) { sugBox.classList.add('hidden'); sugBox.innerHTML = ''; return; }
 
         let totalKcal = 0;
         let html = '<div class="menu-suggestion">';
-        html += '<div class="menu-suggestion-title">Menu-Vorschlag</div>';
+        html += `<div class="menu-suggestion-title">${title}</div>`;
         resolved.forEach(item => {
             const kcal = Math.round(item.Kcal * mengenFaktor(item.Einheit, item.Menge));
             totalKcal += kcal;
@@ -3142,18 +3177,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const sugBox = $('lust-suggestion');
         if (!q) { box.classList.add('hidden'); box.innerHTML = ''; if (sugBox) { sugBox.classList.add('hidden'); sugBox.innerHTML = ''; } return; }
 
-        // Menu-Pairing pruefen
-        const pairing = findMenuPairing(q);
-        if (pairing) {
-            renderMenuSuggestion(pairing);
-        } else if (sugBox) {
-            sugBox.classList.add('hidden');
-            sugBox.innerHTML = '';
+        // Zuerst: echte Speisekarte durchsuchen; erst wenn nichts passt, auf die alten
+        // Keyword-Pairings/Smart-Fallback zurueckfallen.
+        const realMenu = findRealMenuMatch(q);
+        let pairing = null;
+        if (realMenu) {
+            renderMenuSuggestion(realMenu.Positionen, `Aus deiner Speisekarte: ${realMenu.Name}`);
+        } else {
+            pairing = findMenuPairing(q);
+            if (pairing) {
+                renderMenuSuggestion(resolvePairingItems(pairing), 'Menu-Vorschlag');
+            } else if (sugBox) {
+                sugBox.classList.add('hidden');
+                sugBox.innerHTML = '';
+            }
         }
 
         // Einzelne Treffer weiterhin anzeigen
         const hits = db.filter(d => d.Lebensmittel.toLowerCase().includes(q));
-        if (hits.length === 0 && !pairing) { box.classList.remove('hidden'); box.innerHTML = '<span style="font-size:12px;color:var(--subtext)">Nichts gefunden</span>'; return; }
+        if (hits.length === 0 && !realMenu && !pairing) { box.classList.remove('hidden'); box.innerHTML = '<span style="font-size:12px;color:var(--subtext)">Nichts gefunden</span>'; return; }
         if (hits.length === 0) { box.classList.add('hidden'); box.innerHTML = ''; return; }
         box.classList.remove('hidden');
         box.innerHTML = '';
@@ -3207,6 +3249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('menu-clear').addEventListener('click', menuClear);
     $('menu-cancel').addEventListener('click', menuCancelEdit);
     $('menu-save-recipe').addEventListener('click', menuSaveRecipe);
+    if ($('menu-sort')) $('menu-sort').addEventListener('change', e => { menuSortMode = e.target.value; refreshMenuOverview(); });
     if ($('menu-log-zmorge')) $('menu-log-zmorge').addEventListener('click', () => logMenuBuilderAsMeal("z'Morge"));
     if ($('menu-log-zmittag')) $('menu-log-zmittag').addEventListener('click', () => logMenuBuilderAsMeal("z'Mittag"));
     if ($('menu-log-znacht')) $('menu-log-znacht').addEventListener('click', () => logMenuBuilderAsMeal("z'Nacht"));
