@@ -716,6 +716,12 @@ button:active {
   font-size: 11px;
   color: var(--subtext);
 }
+.salz-ok { color: var(--green); font-weight: 600; }
+.salz-warn { color: var(--yellow); font-weight: 600; }
+.salz-over { color: var(--red); font-weight: 600; animation: salzBlink 1s step-start infinite; }
+@keyframes salzBlink {
+  50% { opacity: 0.3; }
+}
 
 /* === Menu List (inline editable) === */
 .mli {

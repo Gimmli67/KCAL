@@ -94,7 +94,7 @@ const BEILAGEN_DB = [
     { name: 'Haferflocken (zart)',  kcal: 367, fett: 7.0, ges: 1.3, kh: 59.0, zucker: 1.1, eiweiss: 13.0, salz: 0.0, ball: 10.0 },
     { name: 'Granola Crunchy',      kcal: 430, fett: 15.0, ges: 2.0, kh: 62.0, zucker: 20.0, eiweiss: 8.0, salz: 0.1, ball: 5.0 },
     // Milchbrei-Zutaten
-    { name: 'Milchreis (roh)',      kcal: 348, fett: 0.7, ges: 0.2, kh: 77.0, zucker: 0.2, eiweiss: 6.7,  salz: 0.0, ball: 1.0 },
+    { name: 'Milchreis',            kcal: 348, fett: 0.7, ges: 0.2, kh: 77.0, zucker: 0.2, eiweiss: 6.7,  salz: 0.0, ball: 1.0 },
     { name: 'Griess (Hartweizen, roh)', kcal: 348, fett: 1.0, ges: 0.2, kh: 71.0, zucker: 1.5, eiweiss: 12.5, salz: 0.0, ball: 3.5 },
 ];
 
@@ -186,6 +186,7 @@ const FLEISCH_DB = [
     { name: 'Bratwurst (roh)',                    kcal: 265, fett: 22.0, ges: 8.0,  kh: 2.0, zucker: 0.5, eiweiss: 13.0, salz: 1.5,  ball: 0.0 },
     { name: 'Speckwürfel',                        kcal: 330, fett: 28.0, ges: 10.0, kh: 0.0, zucker: 0.0, eiweiss: 18.0, salz: 2.0,  ball: 0.0 },
     { name: 'Bratspeck',                          kcal: 370, fett: 33.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
+    { name: 'Naturafarm Bratspeck',               kcal: 345, fett: 33.0, ges: 9.9,  kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 1.7,  ball: 0.0 },
     { name: 'Wienerli',                           kcal: 230, fett: 18.0, ges: 7.0,  kh: 1.0, zucker: 0.5, eiweiss: 14.0, salz: 2.0,  ball: 0.0, gm: 50  },
     { name: 'Schinkewürfeli',                     kcal: 118, fett: 4.0,  ges: 1.5,  kh: 1.0, zucker: 0.5, eiweiss: 19.0, salz: 2.5,  ball: 0.0 },
     { name: 'Bündnerfleisch',                     kcal: 216, fett: 5.0,  ges: 2.2,  kh: 0.8, zucker: 0.8, eiweiss: 43.0, salz: 5.2,  ball: 0.0 },
@@ -207,6 +208,8 @@ const FLEISCH_DB = [
     { name: 'Salami Milano',                      kcal: 383, fett: 31.0, ges: 12.0, kh: 0.0, zucker: 0.0, eiweiss: 26.0, salz: 4.03, ball: 0.0 },
     { name: 'Toastschinken',                      kcal: 105, fett: 4.0,  ges: 1.5,  kh: 0.0, zucker: 0.0, eiweiss: 17.0, salz: 2.3,  ball: 0.0 },
     { name: 'Fleischkäse',                        kcal: 270, fett: 24.0, ges: 10.0, kh: 0.5, zucker: 0.5, eiweiss: 13.0, salz: 1.8,  ball: 0.0 },
+    { name: 'Naturafarm Fleischkäse',             kcal: 336, fett: 32.0, ges: 13.0, kh: 0.0, zucker: 0.0, eiweiss: 12.0, salz: 1.8,  ball: 0.0 },
+    { name: 'Malbuner Fleischkäse',                kcal: 202, fett: 16.0, ges: 6.0,  kh: 0.8, zucker: 0.5, eiweiss: 14.0, salz: 1.8,  ball: 0.0 },
     { name: 'Hamburger aus Rinderhack',           kcal: 230, fett: 15.0, ges: 6.0,  kh: 0.5, zucker: 0.0, eiweiss: 18.0, salz: 1.0,  ball: 0.0 },
     // Grill & Smoker
     { name: 'Spareribs (Schwein)',                kcal: 250, fett: 18.0, ges: 7.0,  kh: 0.0, zucker: 0.0, eiweiss: 22.0, salz: 0.2,  ball: 0.0 },
@@ -224,6 +227,7 @@ const FLEISCH_DB = [
 const GETRÄNKE_DB = [
     { name: 'Emi Energy Milk Vanilla',               kcal: 62, fett: 0.8,  ges: 0.5, kh: 4.9,  zucker: 4.8,  eiweiss: 8.0,  salz: 0.35, ball: 0.0,  gm: 330 },
     { name: 'Emi Energy Milk Skyr Mango/Passion',    kcal: 61, fett: 0.1,  ges: 0.1, kh: 5.3,  zucker: 4.4,  eiweiss: 8.8,  salz: 0.03, ball: 0.0,  gm: 330 },
+    { name: 'Emi Energy Milk Vanilla Double Zero',   kcal: 61, fett: 0.7,  ges: 0.4, kh: 4.6,  zucker: 4.5,  eiweiss: 8.0,  salz: 0.34, ball: 0.0,  gm: 330 },
     { name: 'Innocent Orangensaft mit Fruchtfleisch',kcal: 43, fett: 0.0,  ges: 0.0, kh: 9.5,  zucker: 8.8,  eiweiss: 0.73, salz: 0.0,  ball: 0.88, gm: 330 },
     { name: 'Innocent Apfel & Mango',                kcal: 45, fett: 0.4,  ges: 0.1, kh: 11.0, zucker: 9.9,  eiweiss: 0.17, salz: 0.0,  ball: 0.66, gm: 330 },
     { name: 'Bilz Stellare Limone',                  kcal: 21, fett: 0.0,  ges: 0.0, kh: 5.0,  zucker: 3.9,  eiweiss: 0.0,  salz: 0.0,  ball: 0.0,  gm: 330 },
@@ -276,6 +280,7 @@ const SÜSSES_DB_100 = [
     { name: 'Dunkle Schokolade (70%)',   kcal: 590, fett: 42.0, ges: 25.0, kh: 33.0, zucker: 25.0, eiweiss: 8.0,  salz: 0.1,  ball: 10.0, gm: 100 },
     { name: 'Schokolade mit Nüssen',     kcal: 560, fett: 36.0, ges: 15.0, kh: 48.0, zucker: 45.0, eiweiss: 9.0,  salz: 0.2,  ball: 3.0,  gm: 100 },
     { name: 'Weisse Schokolade',         kcal: 540, fett: 32.0, ges: 19.0, kh: 59.0, zucker: 58.0, eiweiss: 6.0,  salz: 0.3,  ball: 0.0,  gm: 100 },
+    { name: 'Mars',                      kcal: 443, fett: 16.0, ges: 7.4,  kh: 70.0, zucker: 62.0, eiweiss: 4.51, salz: 0.67, ball: 0.0,  gm: 51  },
     // Gummibärli (gm = 1 Beutel)
     { name: 'Haribo Goldbären',          kcal: 340, fett: 0.5,  ges: 0.1,  kh: 77.0, zucker: 46.0, eiweiss: 6.9,  salz: 0.1,  ball: 0.0,  gm: 25  }, // ~10 Stk
     { name: 'Haribo Colaflaschen',       kcal: 340, fett: 0.5,  ges: 0.1,  kh: 77.0, zucker: 45.0, eiweiss: 6.5,  salz: 0.1,  ball: 0.0,  gm: 50  }, // ~10 Stk
@@ -362,6 +367,8 @@ const FERTIGPRODUKTE_DB = [
     { name: 'Rahmspinat',                     kcal:  77, fett:  5.0, ges: 1.1,  kh:  4.1, zucker:  1.8, eiweiss:  3.1, salz: 1.0,  ball: 0.0, gm: 600  },
     { name: 'Thon in Wasser (Dose)',          kcal: 109, fett:  0.8, ges: 0.2,  kh:  0.0, zucker:  0.0, eiweiss: 25.0, salz: 0.4,  ball: 0.0, gm: 130  },
     { name: 'Thon in Öl (Dose)',              kcal: 198, fett: 10.0, ges: 1.5,  kh:  0.0, zucker:  0.0, eiweiss: 27.0, salz: 0.5,  ball: 0.0, gm: 130  },
+    { name: 'Lachs (roh)',                    kcal: 208, fett: 13.0, ges: 2.5,  kh:  0.0, zucker:  0.0, eiweiss: 20.0, salz: 0.1,  ball: 0.0, gm: null },
+    { name: 'Räucherlachs',                   kcal: 142, fett:  8.0, ges: 1.5,  kh:  0.0, zucker:  0.0, eiweiss: 18.3, salz: 3.7,  ball: 0.0, gm: null },
     // Tex-Mex
     { name: 'Tortilla Pockets',               kcal: 300, fett:  7.0, ges: 3.5,  kh: 50.0, zucker:  2.0, eiweiss:  7.0, salz: 1.2,  ball: 2.0, gm: 223  },
     { name: 'Barquitas',                      kcal: 320, fett:  9.0, ges: 4.0,  kh: 50.0, zucker:  2.5, eiweiss:  7.5, salz: 1.3,  ball: 2.5, gm: 312  },
@@ -541,7 +548,7 @@ const MENU_DB = [
     {
         Name: 'Milchreis mit Zucker & Zimt',
         Positionen: [
-            { Lebensmittel: 'Milchreis (roh)',                    Einheit: 'g', Menge: 60,  Kcal: 348, Fett: 0.7, Gesaettigt: 0.2, Kohlenhydrate: 77.0, Zucker: 0.2,   Eiweiss: 6.7, Salz: 0.0, Ballaststoffe: 1.0 },
+            { Lebensmittel: 'Milchreis',                          Einheit: 'g', Menge: 60,  Kcal: 348, Fett: 0.7, Gesaettigt: 0.2, Kohlenhydrate: 77.0, Zucker: 0.2,   Eiweiss: 6.7, Salz: 0.0, Ballaststoffe: 1.0 },
             { Lebensmittel: 'Protein Milk (Emmi Good Day, UHT)',  Einheit: 'g', Menge: 400, Kcal: 42, Fett: 0.1, Gesaettigt: 0.1, Kohlenhydrate: 2.7, Zucker: 2.7, Eiweiss: 7.0, Salz: 0.08, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Zucker (Haushaltszucker)',           Einheit: 'g', Menge: 5, Kcal: 400, Fett: 0.0, Gesaettigt: 0.0, Kohlenhydrate: 100.0, Zucker: 100.0, Eiweiss: 0.0, Salz: 0.0, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Zimt (gemahlen)',                    Einheit: 'g', Menge: 1,  Kcal: 247, Fett: 1.2, Gesaettigt: 0.1, Kohlenhydrate: 80.6, Zucker: 2.2,   Eiweiss: 4.0, Salz: 0.0, Ballaststoffe: 53.1 },
@@ -594,6 +601,14 @@ const MENU_DB = [
             { Lebensmittel: 'Brötchen (Ø)',       Einheit: 'g', Menge: 60,  Kcal: 265, Fett: 2.5,  Gesaettigt: 0.5, Kohlenhydrate: 50.0, Zucker: 2.0, Eiweiss: 9.0,  Salz: 1.2, Ballaststoffe: 2.5 },
             { Lebensmittel: 'Hüttenkäse',         Einheit: 'g', Menge: 100, Kcal: 85,  Fett: 3.5,  Gesaettigt: 2.0, Kohlenhydrate: 3.0,  Zucker: 3.0, Eiweiss: 10.0, Salz: 0.5, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Eier 63+',           Einheit: 'p', Menge: 2,   Kcal: 95,  Fett: 7.0,  Gesaettigt: 2.0, Kohlenhydrate: 0.5,  Zucker: 0.0, Eiweiss: 8.0,  Salz: 0.2, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Lachsbrötchen',
+        Positionen: [
+            { Lebensmittel: 'Toastbrot',    Einheit: 'g', Menge: 50, Kcal: 265, Fett: 3.5, Gesaettigt: 0.8, Kohlenhydrate: 48.0, Zucker: 4.0, Eiweiss: 8.5,  Salz: 1.3, Ballaststoffe: 2.0 },
+            { Lebensmittel: 'Räucherlachs', Einheit: 'g', Menge: 40, Kcal: 142, Fett: 8.0, Gesaettigt: 1.5, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 18.3, Salz: 3.7, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Zwiebel',      Einheit: 'g', Menge: 15, Kcal: 40,  Fett: 0.1, Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
         ]
     },
 ];
@@ -2217,7 +2232,9 @@ function updateDailyCircles() {
 
     const extraStats = $('daily-extra-stats');
     if (extraStats) {
-        extraStats.textContent = `Salz: ${totals.salz.toFixed(1)}g · gesättigt: ${totals.ges.toFixed(1)}g · Ballaststoffe: ${totals.ball.toFixed(1)}g`;
+        const SALZ_REF = 5; // WHO-Richtwert pro Tag
+        const salzClass = totals.salz >= SALZ_REF ? 'salz-over' : totals.salz >= SALZ_REF / 2 ? 'salz-warn' : 'salz-ok';
+        extraStats.innerHTML = `Salz: <span class="${salzClass}">${totals.salz.toFixed(1)}g</span> · gesättigt: ${totals.ges.toFixed(1)}g · Ballaststoffe: ${totals.ball.toFixed(1)}g`;
     }
 
     renderDailyMeals(todayMeals);
