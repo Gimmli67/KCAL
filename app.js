@@ -93,6 +93,9 @@ const BEILAGEN_DB = [
     // Frühstück
     { name: 'Haferflocken (zart)',  kcal: 367, fett: 7.0, ges: 1.3, kh: 59.0, zucker: 1.1, eiweiss: 13.0, salz: 0.0, ball: 10.0 },
     { name: 'Granola Crunchy',      kcal: 430, fett: 15.0, ges: 2.0, kh: 62.0, zucker: 20.0, eiweiss: 8.0, salz: 0.1, ball: 5.0 },
+    // Milchbrei-Zutaten
+    { name: 'Milchreis (roh)',      kcal: 348, fett: 0.7, ges: 0.2, kh: 77.0, zucker: 0.2, eiweiss: 6.7,  salz: 0.0, ball: 1.0 },
+    { name: 'Griess (Hartweizen, roh)', kcal: 348, fett: 1.0, ges: 0.2, kh: 71.0, zucker: 1.5, eiweiss: 12.5, salz: 0.0, ball: 3.5 },
 ];
 
 // ===== Milchprodukte-Datenbank (pro 100g/ml, Schweizer Durchschnittswerte) =====
@@ -100,6 +103,7 @@ const MILCH_DB = [
     // Milch
     { name: 'Vollmilch (3.5%)',       kcal: 64,  fett: 3.5,  ges: 2.2,  kh: 4.8, zucker: 4.8, eiweiss: 3.3,  salz: 0.1, ball: 0.0 },
     { name: 'Halbmilch (1.5%)',       kcal: 47,  fett: 1.5,  ges: 1.0,  kh: 4.8, zucker: 4.8, eiweiss: 3.3,  salz: 0.1, ball: 0.0 },
+    { name: 'Protein Milk (Emmi Good Day, UHT)', kcal: 42, fett: 0.1, ges: 0.1, kh: 2.7, zucker: 2.7, eiweiss: 7.0, salz: 0.08, ball: 0.0 },
     // Rahm
     { name: 'Halbrahm (15%)',         kcal: 160, fett: 15.0, ges: 9.5,  kh: 3.5, zucker: 3.5, eiweiss: 2.8,  salz: 0.1, ball: 0.0 },
     { name: 'Rahm (35%)',             kcal: 340, fett: 35.0, ges: 22.0, kh: 3.0, zucker: 3.0, eiweiss: 2.5,  salz: 0.1, ball: 0.0 },
@@ -269,6 +273,9 @@ const SÜSSES_DB_100 = [
     { name: 'Haribo Goldbären',          kcal: 340, fett: 0.5,  ges: 0.1,  kh: 77.0, zucker: 46.0, eiweiss: 6.9,  salz: 0.1,  ball: 0.0,  gm: 25  }, // ~10 Stk
     { name: 'Haribo Colaflaschen',       kcal: 340, fett: 0.5,  ges: 0.1,  kh: 77.0, zucker: 45.0, eiweiss: 6.5,  salz: 0.1,  ball: 0.0,  gm: 50  }, // ~10 Stk
     { name: 'Haribo Saure Bären',        kcal: 335, fett: 0.4,  ges: 0.1,  kh: 76.0, zucker: 43.0, eiweiss: 6.5,  salz: 0.3,  ball: 0.0,  gm: 25  }, // ~10 Stk
+    // Süssungsmittel/Gewürze
+    { name: 'Zucker (Haushaltszucker)',  kcal: 400, fett: 0.0,  ges: 0.0,  kh: 100.0, zucker: 100.0, eiweiss: 0.0,  salz: 0.0,  ball: 0.0 },
+    { name: 'Zimt (gemahlen)',           kcal: 247, fett: 1.2,  ges: 0.1,  kh: 80.6,  zucker: 2.2,   eiweiss: 4.0,  salz: 0.0,  ball: 53.1 },
 ];
 // Pro Portion
 const SÜSSES_DB_PORTION = [
@@ -441,9 +448,9 @@ const MENU_DB = [
     {
         Name: "Fischstäbli mit Spinat",
         Positionen: [
-            { Lebensmittel: 'Fischstäbchen',             Einheit: 'g', Menge: 150, Kcal: 214, Fett: 8.9,  Gesaettigt: 0.7, Kohlenhydrate: 19.0, Zucker: 0.5, Eiweiss: 14.0, Salz: 0.59, Ballaststoffe: 0.8 },
-            { Lebensmittel: 'Rahmspinat',                Einheit: 'g', Menge: 200, Kcal: 77, Fett: 5.0, Gesaettigt: 1.1, Kohlenhydrate: 4.1, Zucker: 1.8, Eiweiss: 3.1, Salz: 1.0, Ballaststoffe: 0.0 },
-            { Lebensmittel: 'Härdöpfel',                Einheit: 'g', Menge: 250, Kcal: 77,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 17.0, Zucker: 0.8, Eiweiss: 2.0,  Salz: 0.0, Ballaststoffe: 2.2 },
+            { Lebensmittel: 'Fischstäbchen',     Einheit: 'g', Menge: 150, Kcal: 214, Fett: 8.9,  Gesaettigt: 0.7, Kohlenhydrate: 19.0, Zucker: 0.5, Eiweiss: 14.0, Salz: 0.59, Ballaststoffe: 0.8 },
+            { Lebensmittel: 'Rahmspinat',        Einheit: 'g', Menge: 200, Kcal: 77, Fett: 5.0, Gesaettigt: 1.1, Kohlenhydrate: 4.1, Zucker: 1.8, Eiweiss: 3.1, Salz: 1.0, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Härdöpfel',         Einheit: 'g', Menge: 250, Kcal: 77,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 17.0, Zucker: 0.8, Eiweiss: 2.0,  Salz: 0.0, Ballaststoffe: 2.2 },
         ]
     },
     {
@@ -474,7 +481,7 @@ const MENU_DB = [
     {
         Name: "Tacos",
         Positionen: [
-            { Lebensmittel: 'Taco Shells',                   Einheit: 'g', Menge: 140, Kcal: 310, Fett: 8.0,  Gesaettigt: 3.8, Kohlenhydrate: 50.0, Zucker: 2.3, Eiweiss: 7.3,  Salz: 1.3, Ballaststoffe: 2.3 },
+            { Lebensmittel: 'Taco Shells',                  Einheit: 'g', Menge: 140, Kcal: 310, Fett: 8.0,  Gesaettigt: 3.8, Kohlenhydrate: 50.0, Zucker: 2.3, Eiweiss: 7.3,  Salz: 1.3, Ballaststoffe: 2.3 },
             { Lebensmittel: 'Rindsghackets',                Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Mais',                         Einheit: 'g', Menge: 80,  Kcal: 86,  Fett: 1.2,  Gesaettigt: 0.2, Kohlenhydrate: 19.0, Zucker: 3.2, Eiweiss: 3.2,  Salz: 0.0, Ballaststoffe: 2.7 },
             { Lebensmittel: 'Zwiebel',                      Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
@@ -484,7 +491,7 @@ const MENU_DB = [
         Name: "Chicken Nuggets mit Pommes",
         Positionen: [
             { Lebensmittel: 'Chicken Nuggets',         Einheit: 'g', Menge: 250, Kcal: 253, Fett: 11.0, Gesaettigt: 1.5, Kohlenhydrate: 25.0, Zucker: 0.6, Eiweiss: 13.0, Salz: 1.0, Ballaststoffe: 1.2 },
-            { Lebensmittel: 'McCain Pommes Frites',   Einheit: 'g', Menge: 200, Kcal: 158, Fett: 5.0,  Gesaettigt: 0.5, Kohlenhydrate: 24.0, Zucker: 0.5, Eiweiss: 2.9,  Salz: 0.03, Ballaststoffe: 2.8 },
+            { Lebensmittel: 'McCain Pommes Frites',    Einheit: 'g', Menge: 200, Kcal: 158, Fett: 5.0,  Gesaettigt: 0.5, Kohlenhydrate: 24.0, Zucker: 0.5, Eiweiss: 2.9,  Salz: 0.03, Ballaststoffe: 2.8 },
         ]
     },
     {
@@ -518,6 +525,24 @@ const MENU_DB = [
         Positionen: [
             { Lebensmittel: 'Skyr Vanille',    Einheit: 'g', Menge: 200, Kcal: 68,  Fett: 0.2,  Gesaettigt: 0.1, Kohlenhydrate: 8.0,  Zucker: 6.5,  Eiweiss: 10.5, Salz: 0.1, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Granola Crunchy', Einheit: 'g', Menge: 40,  Kcal: 430, Fett: 15.0, Gesaettigt: 2.0, Kohlenhydrate: 62.0, Zucker: 20.0, Eiweiss: 8.0,  Salz: 0.1, Ballaststoffe: 5.0 },
+        ]
+    },
+    {
+        Name: 'Milchreis mit Zucker & Zimt',
+        Positionen: [
+            { Lebensmittel: 'Milchreis (roh)',                    Einheit: 'g', Menge: 60,  Kcal: 348, Fett: 0.7, Gesaettigt: 0.2, Kohlenhydrate: 77.0, Zucker: 0.2,   Eiweiss: 6.7, Salz: 0.0, Ballaststoffe: 1.0 },
+            { Lebensmittel: 'Protein Milk (Emmi Good Day, UHT)',  Einheit: 'g', Menge: 400, Kcal: 42, Fett: 0.1, Gesaettigt: 0.1, Kohlenhydrate: 2.7, Zucker: 2.7, Eiweiss: 7.0, Salz: 0.08, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Zucker (Haushaltszucker)',           Einheit: 'g', Menge: 5, Kcal: 400, Fett: 0.0, Gesaettigt: 0.0, Kohlenhydrate: 100.0, Zucker: 100.0, Eiweiss: 0.0, Salz: 0.0, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Zimt (gemahlen)',                    Einheit: 'g', Menge: 1,  Kcal: 247, Fett: 1.2, Gesaettigt: 0.1, Kohlenhydrate: 80.6, Zucker: 2.2,   Eiweiss: 4.0, Salz: 0.0, Ballaststoffe: 53.1 },
+        ]
+    },
+    {
+        Name: 'Griessbrei mit Banane & Aprikose',
+        Positionen: [
+            { Lebensmittel: 'Griess (Hartweizen, roh)',           Einheit: 'g',   Menge: 50,  Kcal: 348, Fett: 1.0,  Gesaettigt: 0.2, Kohlenhydrate: 71.0, Zucker: 1.5,  Eiweiss: 12.5, Salz: 0.0, Ballaststoffe: 3.5 },
+            { Lebensmittel: 'Protein Milk (Emmi Good Day, UHT)',  Einheit: 'g',   Menge: 400, Kcal: 42,  Fett: 0.1,  Gesaettigt: 0.1, Kohlenhydrate: 2.7,  Zucker: 2.7,  Eiweiss: 7.0,  Salz: 0.08, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Banane',                             Einheit: 'stk', Menge: 0.5, Kcal: 97.9, Fett: 0.33, Gesaettigt: 0.11, Kohlenhydrate: 25.3, Zucker: 13.2, Eiweiss: 1.21, Salz: 0.0, Ballaststoffe: 2.86 },
+            { Lebensmittel: 'Aprikose',                           Einheit: 'stk', Menge: 0.5, Kcal: 72,   Fett: 0.6,  Gesaettigt: 0.0,  Kohlenhydrate: 16.5, Zucker: 13.5, Eiweiss: 2.1,  Salz: 0.0, Ballaststoffe: 3.0 },
         ]
     },
 ];
