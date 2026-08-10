@@ -2065,7 +2065,8 @@ function renderGroupedMenuCard(container, tplIndices) {
     card.className = 'menu-card';
 
     const names = tplIndices.map(idx => templates[idx].Name);
-    const prefix = (commonWordPrefix(names) || names[0].split(' ')[0]) + '...';
+    const firstWord = names[0].split(' ')[0];
+    const prefix = (commonWordPrefix(names) || firstWord) + '...';
 
     const header = document.createElement('div');
     header.className = 'menu-card-header';
@@ -2079,10 +2080,13 @@ function renderGroupedMenuCard(container, tplIndices) {
     placeholderOpt.disabled = true;
     select.appendChild(placeholderOpt);
 
+    // Optionen zeigen nur den Rest nach dem ersten (gemeinsamen) Wort, z.B. "mit Pouletbrust"
+    // statt "Brötchen mit Pouletbrust" - kuerzer, passt auf eine Zeile.
     tplIndices.forEach(idx => {
         const opt = document.createElement('option');
         opt.value = idx;
-        opt.textContent = templates[idx].Name;
+        const full = templates[idx].Name;
+        opt.textContent = full.startsWith(firstWord + ' ') ? full.slice(firstWord.length + 1) : full;
         select.appendChild(opt);
     });
     select.value = ''; // zeigt zugeklappt immer den Platzhalter-Titel
