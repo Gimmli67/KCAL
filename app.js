@@ -456,6 +456,7 @@ const MENU_DB = [
     },
     {
         Name: "Icebergsalat mit Toppings",
+        Gruppe: "Salat",
         Positionen: [
             { Lebensmittel: 'Icebergsalat',       Einheit: 'g', Menge: 150, Kcal: 13,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 2.2,  Zucker: 1.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
             { Lebensmittel: 'Cherrytomaten',      Einheit: 'g', Menge: 100, Kcal: 20,  Fett: 0.3,  Gesaettigt: 0.0, Kohlenhydrate: 3.9,  Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
@@ -514,6 +515,7 @@ const MENU_DB = [
     },
     {
         Name: "Thon-Salat",
+        Gruppe: "Salat",
         Positionen: [
             { Lebensmittel: 'Thon in Wasser (Dose)',  Einheit: 'g', Menge: 130, Kcal: 109, Fett: 0.8,  Gesaettigt: 0.2, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 25.0, Salz: 0.4, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Icebergsalat',           Einheit: 'g', Menge: 150, Kcal: 13,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 2.2,  Zucker: 1.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
@@ -2060,13 +2062,15 @@ function commonWordPrefix(names) {
 // Gruppierte Karte: mehrere Menus mit gleichem erstem Namenswort (z.B. "Spaghetti Bolognese"/
 // "Spaghetti Carbonara") teilen sich eine Karte. Zugeklappt zeigt das Dropdown immer den
 // fixen Titel ("Brötchen mit..."); aufgeklappt stehen die vollen Namen aller Varianten zur Wahl.
-function renderGroupedMenuCard(container, tplIndices) {
+function renderGroupedMenuCard(container, tplIndices, explicitLabel) {
     const card = document.createElement('div');
     card.className = 'menu-card';
 
     const names = tplIndices.map(idx => templates[idx].Name);
-    const commonPrefix = commonWordPrefix(names) || names[0].split(' ')[0];
-    const prefix = commonPrefix + '...';
+    // Bei explizitem "Gruppe"-Feld (z.B. "Salat") gibt es keinen gemeinsamen Namens-Praefix
+    // zum Abschneiden - dann volle Namen in der Auswahl zeigen.
+    const commonPrefix = explicitLabel ? null : (commonWordPrefix(names) || names[0].split(' ')[0]);
+    const prefix = (explicitLabel || commonPrefix) + '...';
 
     const header = document.createElement('div');
     header.className = 'menu-card-header';
@@ -2081,12 +2085,13 @@ function renderGroupedMenuCard(container, tplIndices) {
     select.appendChild(placeholderOpt);
 
     // Optionen zeigen nur den Rest nach dem gemeinsamen Praefix, z.B. "Pouletbrust"
-    // statt "Brötchen mit Pouletbrust" - kuerzer, passt auf eine Zeile.
+    // statt "Brötchen mit Pouletbrust" - kuerzer, passt auf eine Zeile. Ohne Praefix
+    // (explizite Gruppe) werden die vollen Namen gezeigt.
     tplIndices.forEach(idx => {
         const opt = document.createElement('option');
         opt.value = idx;
         const full = templates[idx].Name;
-        opt.textContent = full.startsWith(commonPrefix + ' ') ? full.slice(commonPrefix.length + 1) : full;
+        opt.textContent = (commonPrefix && full.startsWith(commonPrefix + ' ')) ? full.slice(commonPrefix.length + 1) : full;
         select.appendChild(opt);
     });
     select.value = ''; // zeigt zugeklappt immer den Platzhalter-Titel
@@ -2132,14 +2137,18 @@ function refreshMenuOverview() {
         return;
     }
 
-    // Gruppierung nach erstem Wort im Namen (z.B. "Spaghetti", "Brötchen")
+    // Gruppierung: explizites "Gruppe"-Feld hat Vorrang (z.B. "Salat" bei Icebergsalat/
+    // Thon-Salat, die sich keinen Namens-Praefix teilen), sonst automatisch nach erstem
+    // Wort im Namen (z.B. "Spaghetti", "Brötchen").
     const groupOrder = [];
     const groupMap = {};
+    const groupLabel = {};
     templates.forEach((tpl, tplIdx) => {
-        const key = tpl.Name.split(' ')[0].toLowerCase();
+        const key = (tpl.Gruppe || tpl.Name.split(' ')[0]).toLowerCase();
         if (!(key in groupMap)) {
             groupMap[key] = [];
             groupOrder.push(key);
+            groupLabel[key] = tpl.Gruppe || null;
         }
         groupMap[key].push(tplIdx);
     });
@@ -2149,7 +2158,7 @@ function refreshMenuOverview() {
         if (indices.length === 1) {
             renderMenuCard(container, indices[0]);
         } else {
-            renderGroupedMenuCard(container, indices);
+            renderGroupedMenuCard(container, indices, groupLabel[key]);
         }
     });
 }
