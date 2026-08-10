@@ -604,7 +604,7 @@ const MENU_DB = [
         ]
     },
     {
-        Name: 'Lachsbrötchen',
+        Name: 'Brötchen mit Lachs',
         Positionen: [
             { Lebensmittel: 'Toastbrot',    Einheit: 'g', Menge: 50, Kcal: 265, Fett: 3.5, Gesaettigt: 0.8, Kohlenhydrate: 48.0, Zucker: 4.0, Eiweiss: 8.5,  Salz: 1.3, Ballaststoffe: 2.0 },
             { Lebensmittel: 'Räucherlachs', Einheit: 'g', Menge: 40, Kcal: 142, Fett: 8.0, Gesaettigt: 1.5, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 18.3, Salz: 3.7, Ballaststoffe: 0.0 },
