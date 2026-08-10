@@ -522,6 +522,7 @@ const MENU_DB = [
     },
     {
         Name: "Reis mit Ghackets & Gemüse",
+        Gruppe: "Reis",
         Positionen: [
             { Lebensmittel: 'Weisser Reis (roh)',  Einheit: 'g', Menge: 80,  Kcal: 350, Fett: 0.6,  Gesaettigt: 0.2, Kohlenhydrate: 78.0, Zucker: 0.0, Eiweiss: 7.0,  Salz: 0.0, Ballaststoffe: 1.3 },
             { Lebensmittel: 'Rindsghackets',       Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 17.0, Salz: 0.1, Ballaststoffe: 0.0 },
@@ -531,6 +532,7 @@ const MENU_DB = [
     },
     {
         Name: "Riz Casimir (ohne Früchte)",
+        Gruppe: "Reis",
         Positionen: [
             { Lebensmittel: 'Pouletgschnätzelts',        Einheit: 'g', Menge: 180, Kcal: 203, Fett: 9.0,  Gesaettigt: 2.5, Kohlenhydrate: 0.0,  Zucker: 0.0, Eiweiss: 30.0, Salz: 0.3, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Weisser Reis (roh)',        Einheit: 'g', Menge: 80,  Kcal: 350, Fett: 0.6,  Gesaettigt: 0.2, Kohlenhydrate: 78.0, Zucker: 0.0, Eiweiss: 7.0,  Salz: 0.0, Ballaststoffe: 1.3 },
