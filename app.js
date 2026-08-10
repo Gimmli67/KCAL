@@ -431,6 +431,7 @@ const PORTION_DB = [
 const MENU_DB = [
     {
         Name: "Hörnli & Ghackets",
+        Gruppe: "Pasta",
         Positionen: [
             { Lebensmittel: 'Hörnli (roh)',   Einheit: 'g', Menge: 100, Kcal: 370, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 74, Zucker: 3,  Eiweiss: 13,  Salz: 0.1, Ballaststoffe: 3   },
             { Lebensmittel: 'Rindsghackets',  Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0,  Zucker: 0,  Eiweiss: 17,  Salz: 0.1, Ballaststoffe: 0   },
