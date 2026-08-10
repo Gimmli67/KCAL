@@ -611,6 +611,32 @@ const MENU_DB = [
             { Lebensmittel: 'Zwiebel',      Einheit: 'g', Menge: 15, Kcal: 40,  Fett: 0.1, Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
         ]
     },
+    {
+        Name: 'Spaghetti Carbonara',
+        Positionen: [
+            { Lebensmittel: 'Spaghetti (roh)', Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Speckwürfel',     Einheit: 'g', Menge: 80,  Kcal: 330, Fett: 28.0, Gesaettigt: 10.0, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 18.0, Salz: 2.0, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Eier 63+',        Einheit: 'p', Menge: 2,   Kcal: 95,  Fett: 7.0,  Gesaettigt: 2.0, Kohlenhydrate: 0.5,  Zucker: 0.0, Eiweiss: 8.0,  Salz: 0.2, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Parmesan',        Einheit: 'g', Menge: 20,  Kcal: 431, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 38.0, Salz: 1.8, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Spaghetti Pesto',
+        Positionen: [
+            { Lebensmittel: 'Spaghetti (roh)',    Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Pesto (Basilico)',   Einheit: 'g', Menge: 50,  Kcal: 380, Fett: 36.0, Gesaettigt: 6.0,  Kohlenhydrate: 5.0,  Zucker: 2.0, Eiweiss: 5.0,  Salz: 2.5, Ballaststoffe: 2.0 },
+            { Lebensmittel: 'Parmesan',           Einheit: 'g', Menge: 15,  Kcal: 431, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 38.0, Salz: 1.8, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: 'Spaghetti Tomatensauce',
+        Positionen: [
+            { Lebensmittel: 'Spaghetti (roh)',        Einheit: 'g', Menge: 100, Kcal: 365, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 73.0, Zucker: 2.5, Eiweiss: 13.0, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Tomatensauce (Passata)', Einheit: 'g', Menge: 200, Kcal: 30,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 5.5,  Zucker: 4.0, Eiweiss: 1.2,  Salz: 0.5, Ballaststoffe: 1.5 },
+            { Lebensmittel: 'Zwiebel',                Einheit: 'g', Menge: 50,  Kcal: 40,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 9.3,  Zucker: 4.2, Eiweiss: 1.1,  Salz: 0.0, Ballaststoffe: 1.7 },
+            { Lebensmittel: 'Parmesan',               Einheit: 'g', Menge: 15,  Kcal: 431, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 38.0, Salz: 1.8, Ballaststoffe: 0.0 },
+        ]
+    },
 ];
 
 // ===== Menu-Pairings (automatische Menu-Vorschlaege) =====
@@ -1932,6 +1958,166 @@ function menuSaveRecipe() {
 }
 
 // ===== Menue-Uebersicht (Speisekarte) =====
+function menuTotalKcal(tpl) {
+    let totalKcal = 0;
+    tpl.Positionen.forEach(p => { totalKcal += (p.Kcal || 0) * mengenFaktor(p.Einheit, p.Menge); });
+    return totalKcal;
+}
+
+// Baut Zutatenliste + Aktions-Buttons fuer ein Menu (per tplIdx); wird sowohl fuer
+// einzelne Karten als auch fuer die Varianten innerhalb einer gruppierten Karte genutzt.
+function buildMenuCardDetails(tplIdx) {
+    const tpl = templates[tplIdx];
+    const details = document.createElement('div');
+    details.className = 'menu-card-details hidden';
+
+    const items = document.createElement('div');
+    items.className = 'menu-card-items';
+    tpl.Positionen.forEach(p => {
+        const menge = Math.round(p.Menge || 0);
+        const kcal = Math.round((p.Kcal || 0) * mengenFaktor(p.Einheit, p.Menge));
+        const div = document.createElement('div');
+        div.className = 'menu-card-item';
+        div.textContent = `${p.Lebensmittel} - ${menge}${p.Einheit} (${kcal} kcal)`;
+        items.appendChild(div);
+    });
+    details.appendChild(items);
+
+    const actions = document.createElement('div');
+    actions.className = 'button-row';
+    actions.style.marginTop = '8px';
+
+    ["z'Morge", "z'Mittag", "z'Nacht"].forEach(meal => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-meal';
+        btn.textContent = meal;
+        btn.addEventListener('click', e => { e.stopPropagation(); useMenuAsMeal(tplIdx, meal); });
+        actions.appendChild(btn);
+    });
+
+    const btnEdit = document.createElement('button');
+    btnEdit.className = 'btn-green';
+    btnEdit.textContent = 'Edit';
+    btnEdit.addEventListener('click', e => {
+        e.stopPropagation();
+        menuEditTemplate(tplIdx);
+    });
+
+    const btnDelete = document.createElement('button');
+    btnDelete.className = 'btn-red';
+    btnDelete.textContent = 'Delete';
+    btnDelete.addEventListener('click', e => {
+        e.stopPropagation();
+        if (!confirm(`Menu '${tpl.Name}' entfernen?`)) return;
+        templates.splice(tplIdx, 1);
+        saveTemplates();
+        refreshMenuOverview();
+        $('menus-status').textContent = `Menu '${tpl.Name}' entfernt.`;
+    });
+
+    actions.appendChild(btnEdit);
+    actions.appendChild(btnDelete);
+    details.appendChild(actions);
+    return details;
+}
+
+// Einzelkarte (keine Varianten) - wie bisher
+function renderMenuCard(container, tplIdx) {
+    const tpl = templates[tplIdx];
+
+    const card = document.createElement('div');
+    card.className = 'menu-card';
+
+    const header = document.createElement('div');
+    header.className = 'menu-card-header';
+    header.innerHTML = `<span class="menu-card-name">${tpl.Name}</span><span class="menu-card-kcal">${Math.round(menuTotalKcal(tpl))} kcal</span>`;
+    card.appendChild(header);
+
+    const details = buildMenuCardDetails(tplIdx);
+    card.appendChild(details);
+
+    header.addEventListener('click', () => {
+        details.classList.toggle('hidden');
+    });
+
+    container.appendChild(card);
+}
+
+// Laengstes gemeinsames Wort-Praefix mehrerer Namen (z.B. "Brötchen mit" bei
+// "Brötchen mit Pouletbrust" / "Brötchen mit Hüttenkäse" / ...)
+function commonWordPrefix(names) {
+    const wordArrays = names.map(n => n.split(' '));
+    const minLen = Math.min(...wordArrays.map(w => w.length));
+    const prefixWords = [];
+    for (let i = 0; i < minLen; i++) {
+        const word = wordArrays[0][i];
+        if (wordArrays.every(w => w[i] === word)) prefixWords.push(word);
+        else break;
+    }
+    return prefixWords.join(' ');
+}
+
+// Gruppierte Karte: mehrere Menus mit gleichem erstem Namenswort (z.B. "Spaghetti Bolognese"/
+// "Spaghetti Carbonara") teilen sich eine Karte. Zugeklappt zeigt das Dropdown immer den
+// fixen Titel ("Brötchen mit..."); aufgeklappt stehen die vollen Namen aller Varianten zur Wahl.
+function renderGroupedMenuCard(container, tplIndices) {
+    const card = document.createElement('div');
+    card.className = 'menu-card';
+
+    const names = tplIndices.map(idx => templates[idx].Name);
+    const prefix = (commonWordPrefix(names) || names[0].split(' ')[0]) + '...';
+
+    const header = document.createElement('div');
+    header.className = 'menu-card-header';
+
+    const select = document.createElement('select');
+    select.className = 'menu-card-name menu-card-variant-select';
+
+    const placeholderOpt = document.createElement('option');
+    placeholderOpt.value = '';
+    placeholderOpt.textContent = prefix;
+    placeholderOpt.disabled = true;
+    select.appendChild(placeholderOpt);
+
+    tplIndices.forEach(idx => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = templates[idx].Name;
+        select.appendChild(opt);
+    });
+    select.value = ''; // zeigt zugeklappt immer den Platzhalter-Titel
+
+    const kcalSpan = document.createElement('span');
+    kcalSpan.className = 'menu-card-kcal';
+
+    header.appendChild(select);
+    header.appendChild(kcalSpan);
+    card.appendChild(header);
+
+    let details = null;
+    function showVariant(tplIdx, forceOpen) {
+        const tpl = templates[tplIdx];
+        kcalSpan.textContent = Math.round(menuTotalKcal(tpl)) + ' kcal';
+        const wasOpen = details && !details.classList.contains('hidden');
+        if (details) details.remove();
+        details = buildMenuCardDetails(tplIdx);
+        if (wasOpen || forceOpen) details.classList.remove('hidden');
+        card.appendChild(details);
+    }
+
+    select.addEventListener('change', () => {
+        showVariant(parseInt(select.value, 10), true);
+        select.selectedIndex = 0; // zurueck auf Platzhalter-Titel (Index 0 = placeholder)
+    });
+    header.addEventListener('click', e => {
+        if (e.target === select) return;
+        if (details) details.classList.toggle('hidden');
+    });
+
+    showVariant(tplIndices[0]);
+    container.appendChild(card);
+}
+
 function refreshMenuOverview() {
     const container = $('menu-overview');
     if (!container) return;
@@ -1942,80 +2128,25 @@ function refreshMenuOverview() {
         return;
     }
 
+    // Gruppierung nach erstem Wort im Namen (z.B. "Spaghetti", "Brötchen")
+    const groupOrder = [];
+    const groupMap = {};
     templates.forEach((tpl, tplIdx) => {
-        let totalKcal = 0;
-        tpl.Positionen.forEach(p => {
-            totalKcal += (p.Kcal || 0) * mengenFaktor(p.Einheit, p.Menge);
-        });
+        const key = tpl.Name.split(' ')[0].toLowerCase();
+        if (!(key in groupMap)) {
+            groupMap[key] = [];
+            groupOrder.push(key);
+        }
+        groupMap[key].push(tplIdx);
+    });
 
-        const card = document.createElement('div');
-        card.className = 'menu-card';
-
-        const header = document.createElement('div');
-        header.className = 'menu-card-header';
-        header.innerHTML = `<span class="menu-card-name">${tpl.Name}</span><span class="menu-card-kcal">${Math.round(totalKcal)} kcal</span>`;
-        card.appendChild(header);
-
-        // Details: erst hidden, per Klick aufklappen
-        const details = document.createElement('div');
-        details.className = 'menu-card-details hidden';
-
-        const items = document.createElement('div');
-        items.className = 'menu-card-items';
-        tpl.Positionen.forEach(p => {
-            const menge = Math.round(p.Menge || 0);
-            const kcal = Math.round((p.Kcal || 0) * mengenFaktor(p.Einheit, p.Menge));
-            const div = document.createElement('div');
-            div.className = 'menu-card-item';
-            div.textContent = `${p.Lebensmittel} - ${menge}${p.Einheit} (${kcal} kcal)`;
-            items.appendChild(div);
-        });
-        details.appendChild(items);
-
-        const actions = document.createElement('div');
-        actions.className = 'button-row';
-        actions.style.marginTop = '8px';
-
-        ["z'Morge", "z'Mittag", "z'Nacht"].forEach(meal => {
-            const btn = document.createElement('button');
-            btn.className = 'btn-meal';
-            btn.textContent = meal;
-            btn.addEventListener('click', e => { e.stopPropagation(); useMenuAsMeal(tplIdx, meal); });
-            actions.appendChild(btn);
-        });
-
-        const btnEdit = document.createElement('button');
-        btnEdit.className = 'btn-green';
-        btnEdit.textContent = 'Edit';
-        btnEdit.addEventListener('click', e => {
-            e.stopPropagation();
-            menuEditTemplate(tplIdx);
-        });
-
-        const btnDelete = document.createElement('button');
-        btnDelete.className = 'btn-red';
-        btnDelete.textContent = 'Delete';
-        btnDelete.addEventListener('click', e => {
-            e.stopPropagation();
-            if (!confirm(`Menu '${tpl.Name}' entfernen?`)) return;
-            templates.splice(tplIdx, 1);
-            saveTemplates();
-            refreshMenuOverview();
-            $('menus-status').textContent = `Menu '${tpl.Name}' entfernt.`;
-        });
-
-        actions.appendChild(btnEdit);
-        actions.appendChild(btnDelete);
-        details.appendChild(actions);
-
-        card.appendChild(details);
-
-        // Klick auf Header klappt Details auf/zu
-        header.addEventListener('click', () => {
-            details.classList.toggle('hidden');
-        });
-
-        container.appendChild(card);
+    groupOrder.forEach(key => {
+        const indices = groupMap[key];
+        if (indices.length === 1) {
+            renderMenuCard(container, indices[0]);
+        } else {
+            renderGroupedMenuCard(container, indices);
+        }
     });
 }
 

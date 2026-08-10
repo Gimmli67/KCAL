@@ -776,6 +776,17 @@ button:active {
   color: var(--primary);
   font-size: 15px;
 }
+.menu-card-variant-select {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 15px;
+  height: auto;
+  padding: 4px 8px 4px 0;
+  max-width: 70%;
+  border: none;
+  background: transparent;
+  outline: none;
+}
 .menu-card-kcal {
   font-weight: 700;
   color: var(--green);
