@@ -385,6 +385,7 @@ const FERTIGPRODUKTE_DB = [
     { name: 'Pfeffersauce',                   kcal:  95, fett:  7.0, ges: 4.0,  kh:  5.0, zucker:  1.0, eiweiss:  2.0, salz: 1.5,  ball: 0.3, gm: null  },
     { name: 'BBQ Sauce',                      kcal: 150, fett:  0.5, ges: 0.1,  kh: 35.0, zucker: 28.0, eiweiss:  1.0, salz: 2.5,  ball: 0.5, gm: null  },
     { name: 'Currysauce',                     kcal:  85, fett:  5.0, ges: 2.5,  kh:  8.0, zucker:  4.0, eiweiss:  1.5, salz: 1.5,  ball: 0.5, gm: null  },
+    { name: 'Mayonnaise',                     kcal: 680, fett: 75.0, ges: 6.0,  kh:  1.5, zucker:  1.0, eiweiss:  1.0, salz: 1.0,  ball: 0.0, gm: null  },
     { name: 'Carbonara Sauce (Fertig)',       kcal: 130, fett: 10.0, ges: 5.5,  kh:  4.0, zucker:  1.5, eiweiss:  5.0, salz: 1.3,  ball: 0.0, gm: 250  },
     { name: 'Arrabbiata Sauce (Fertig)',      kcal:  55, fett:  2.0, ges: 0.3,  kh:  7.0, zucker:  5.0, eiweiss:  1.5, salz: 1.2,  ball: 1.5, gm: 400  },
     { name: 'Bolognese Sauce (Fertig)',       kcal:  80, fett:  3.5, ges: 1.2,  kh:  6.5, zucker:  4.0, eiweiss:  5.0, salz: 1.0,  ball: 1.0, gm: 400  },
@@ -454,6 +455,15 @@ const MENU_DB = [
             { Lebensmittel: 'Bratensauce',          Einheit: 'g', Menge: 80,  Kcal: 25,  Fett: 0.8,  Gesaettigt: 0.3, Kohlenhydrate: 3.5,  Zucker: 0.5, Eiweiss: 0.5,  Salz: 1.0, Ballaststoffe: 0.0 },
             { Lebensmittel: 'Rüebli',               Einheit: 'g', Menge: 150, Kcal: 41,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 10.0, Zucker: 5.0, Eiweiss: 0.9,  Salz: 0.1, Ballaststoffe: 2.8 },
             { Lebensmittel: 'Grüne Bohnen (Dose)',  Einheit: 'g', Menge: 150, Kcal: 22,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 3.2,  Zucker: 1.0, Eiweiss: 1.5,  Salz: 0.5, Ballaststoffe: 2.5 },
+        ]
+    },
+    {
+        Name: "Coleslaw",
+        Gruppe: "Salat",
+        Positionen: [
+            { Lebensmittel: 'Weißkohl',    Einheit: 'g', Menge: 200, Kcal: 25,  Fett: 0.1,  Gesaettigt: 0.0, Kohlenhydrate: 5.8, Zucker: 3.2, Eiweiss: 1.3, Salz: 0.0, Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Rüebli',      Einheit: 'g', Menge: 80,  Kcal: 41,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 10.0, Zucker: 4.7, Eiweiss: 0.9, Salz: 0.1, Ballaststoffe: 2.8 },
+            { Lebensmittel: 'Mayonnaise',  Einheit: 'g', Menge: 27,  Kcal: 680, Fett: 75.0, Gesaettigt: 6.0, Kohlenhydrate: 1.5, Zucker: 1.0, Eiweiss: 1.0, Salz: 1.0, Ballaststoffe: 0.0 },
         ]
     },
     {
