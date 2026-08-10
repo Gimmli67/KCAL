@@ -1251,11 +1251,15 @@ async function loadInitialData() {
     });
     if (brotAdded) { saveDB(); changed = true; }
 
-    // Menü-Vorlagen: fehlende Einträge nachfügen
+    // Menü-Vorlagen: fehlende Einträge nachfügen; Gruppe-Feld bei bestehenden nachsynchronisieren
     let vorlagenAdded = false;
     MENU_DB.forEach(v => {
-        if (!templates.find(t => t.Name === v.Name)) {
+        const existing = templates.find(t => t.Name === v.Name);
+        if (!existing) {
             templates.push(v);
+            vorlagenAdded = true;
+        } else if (v.Gruppe && existing.Gruppe !== v.Gruppe) {
+            existing.Gruppe = v.Gruppe;
             vorlagenAdded = true;
         }
     });
