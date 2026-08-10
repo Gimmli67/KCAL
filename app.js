@@ -386,6 +386,7 @@ const FERTIGPRODUKTE_DB = [
     { name: 'BBQ Sauce',                      kcal: 150, fett:  0.5, ges: 0.1,  kh: 35.0, zucker: 28.0, eiweiss:  1.0, salz: 2.5,  ball: 0.5, gm: null  },
     { name: 'Currysauce',                     kcal:  85, fett:  5.0, ges: 2.5,  kh:  8.0, zucker:  4.0, eiweiss:  1.5, salz: 1.5,  ball: 0.5, gm: null  },
     { name: 'Mayonnaise',                     kcal: 680, fett: 75.0, ges: 6.0,  kh:  1.5, zucker:  1.0, eiweiss:  1.0, salz: 1.0,  ball: 0.0, gm: null  },
+    { name: 'Chüggelisauce',                  kcal: 170, fett: 15.0, ges: 3.3,  kh:  3.2, zucker:  0.35, eiweiss: 5.1, salz: 1.02, ball: 0.25, gm: null  },
     { name: 'Carbonara Sauce (Fertig)',       kcal: 130, fett: 10.0, ges: 5.5,  kh:  4.0, zucker:  1.5, eiweiss:  5.0, salz: 1.3,  ball: 0.0, gm: 250  },
     { name: 'Arrabbiata Sauce (Fertig)',      kcal:  55, fett:  2.0, ges: 0.3,  kh:  7.0, zucker:  5.0, eiweiss:  1.5, salz: 1.2,  ball: 1.5, gm: 400  },
     { name: 'Bolognese Sauce (Fertig)',       kcal:  80, fett:  3.5, ges: 1.2,  kh:  6.5, zucker:  4.0, eiweiss:  5.0, salz: 1.0,  ball: 1.0, gm: 400  },
@@ -436,6 +437,14 @@ const MENU_DB = [
             { Lebensmittel: 'Hörnli (roh)',   Einheit: 'g', Menge: 100, Kcal: 370, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 74, Zucker: 3,  Eiweiss: 13,  Salz: 0.1, Ballaststoffe: 3   },
             { Lebensmittel: 'Rindsghackets',  Einheit: 'g', Menge: 150, Kcal: 195, Fett: 14.0, Gesaettigt: 5.8, Kohlenhydrate: 0,  Zucker: 0,  Eiweiss: 17,  Salz: 0.1, Ballaststoffe: 0   },
             { Lebensmittel: 'Apfelmus',       Einheit: 'g', Menge: 40,  Kcal: 68,  Fett: 0.1,  Gesaettigt: 0,   Kohlenhydrate: 16, Zucker: 13, Eiweiss: 0.3, Salz: 0,   Ballaststoffe: 1.5 },
+        ]
+    },
+    {
+        Name: "Penne mit Chüggelisauce",
+        Gruppe: "Pasta",
+        Positionen: [
+            { Lebensmittel: 'Penne (roh)',      Einheit: 'g', Menge: 100, Kcal: 360, Fett: 1.5,  Gesaettigt: 0.3, Kohlenhydrate: 72.0, Zucker: 2.5,  Eiweiss: 13.0, Salz: 0.0,  Ballaststoffe: 2.5 },
+            { Lebensmittel: 'Chüggelisauce',    Einheit: 'g', Menge: 200, Kcal: 170, Fett: 15.0, Gesaettigt: 3.3, Kohlenhydrate: 3.2,  Zucker: 0.35, Eiweiss: 5.1,  Salz: 1.02, Ballaststoffe: 0.25 },
         ]
     },
     {
