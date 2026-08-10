@@ -467,6 +467,23 @@ const MENU_DB = [
         ]
     },
     {
+        Name: "Kopfsalat mit Toppings",
+        Gruppe: "Salat",
+        Positionen: [
+            { Lebensmittel: 'Kopfsalat',           Einheit: 'g', Menge: 200, Kcal: 14,  Fett: 0.2,  Gesaettigt: 0.0, Kohlenhydrate: 2.0, Zucker: 0.9, Eiweiss: 1.3,  Salz: 0.0, Ballaststoffe: 1.5 },
+            { Lebensmittel: 'Cherrytomaten',       Einheit: 'g', Menge: 100, Kcal: 20,  Fett: 0.3,  Gesaettigt: 0.0, Kohlenhydrate: 3.9, Zucker: 2.6, Eiweiss: 0.9,  Salz: 0.0, Ballaststoffe: 1.2 },
+            { Lebensmittel: 'Pouletgschnätzelts',  Einheit: 'g', Menge: 120, Kcal: 203, Fett: 9.0,  Gesaettigt: 2.5, Kohlenhydrate: 0.0, Zucker: 0.0, Eiweiss: 30.0, Salz: 0.3, Ballaststoffe: 0.0 },
+            { Lebensmittel: 'Emmenthaler',         Einheit: 'g', Menge: 40,  Kcal: 380, Fett: 29.0, Gesaettigt: 18.0, Kohlenhydrate: 0.5, Zucker: 0.5, Eiweiss: 28.0, Salz: 0.9, Ballaststoffe: 0.0 },
+        ]
+    },
+    {
+        Name: "Rüeblisalat",
+        Gruppe: "Salat",
+        Positionen: [
+            { Lebensmittel: 'Rüebli', Einheit: 'g', Menge: 150, Kcal: 41, Fett: 0.2, Gesaettigt: 0.0, Kohlenhydrate: 10.0, Zucker: 4.7, Eiweiss: 0.9, Salz: 0.1, Ballaststoffe: 2.8 },
+        ]
+    },
+    {
         Name: "Icebergsalat mit Toppings",
         Gruppe: "Salat",
         Positionen: [
